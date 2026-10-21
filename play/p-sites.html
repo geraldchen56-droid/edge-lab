@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Where to Practise: Reference: solvers, sims and play-money tables. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Where to Practise · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page ref-page" data-scene3d="deck" data-game="p-sites">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Poker room · 5/5</small><b>Where to Practise</b></div>
+  <div class="tb-r"><button class="tb-btn" data-done="p-sites" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<article class="desk ref"><p>Use play-money tables and trainers only. Real-money online poker is illegal in mainland China and age-restricted almost everywhere, and for interview prep the decisions matter, not the stakes.</p>
+<div class="sites">
+<div class="site"><div class="kind">Solver trainer</div><a href="https://gtowizard.com" rel="noopener" target="_blank">GTO Wizard</a><p>The leading solver-based trainer and the official WSOP training partner. Play hands against a GTO bot and see the EV you lost on each decision. Start here once you know the rules.</p></div>
+<div class="site"><div class="kind">GTO trainer</div><a href="https://www.fearlessriver.com/gto/" rel="noopener" target="_blank">Fearless River GTO Trainer</a><p>Formerly the WPT GTO Trainer. Play solved spots with instant feedback on EV loss per action; has a free tier.</p></div>
+<div class="site"><div class="kind">Free play money</div><a href="https://www.replaypoker.com" rel="noopener" target="_blank">Replay Poker</a><p>Free play-money cash games and tournaments around the clock. Good for practising reads against humans.</p></div>
+<div class="site"><div class="kind">Courses</div><a href="https://upswingpoker.com" rel="noopener" target="_blank">Upswing Poker</a><p>Rated the most complete structured curriculum. Free articles cover preflop charts and basics well.</p></div>
+<div class="site"><div class="kind">Video library</div><a href="https://www.runitonce.com" rel="noopener" target="_blank">Run It Once</a><p>Phil Galfond's site with the deepest library of elite players thinking aloud through hands.</p></div>
+<div class="site"><div class="kind">Trading card game</div><a href="https://www.figgie.com" rel="noopener" target="_blank">Figgie by Jane Street</a><p>Invented at Jane Street to simulate open-outcry trading. You deduce a hidden goal suit while trading cards. Closer to a trading desk than poker is. Also on iOS and Android.</p></div>
+<div class="site"><div class="kind">Market games</div><a href="https://www.tradermath.org/market-games" rel="noopener" target="_blank">Tradermath Market Games</a><p>The eight games from Part II, timed and scored. Easy mode is free with no login.</p></div>
+<div class="site"><div class="kind">Code a bot</div><a href="https://pokerbots.org" rel="noopener" target="_blank">MIT Pokerbots</a><p>Annual competition where you program a poker bot; past course materials teach game theory through code. Pairs well with your Python projects.</p></div>
+</div>
+<div class="tip"><b class="lbl">Suggested order</b><ul>
+<li>Week 1–2: rules, hand ranks, pot odds drill above until 90% correct.</li>
+<li>Week 3–4: preflop ranges by position (Upswing free charts), play-money sessions on Replay Poker.</li>
+<li>Then: GTO Wizard or Fearless River for 20 minutes a day, review your worst EV-loss spots.</li>
+<li>In parallel: Figgie and Tradermath for the market side.</li>
+</ul></div></article>
+<nav class="pager" aria-label="More tables"><a href="p-rules.html" data-nav>← Rules &amp; Hand Ranks</a><a href="../index.html" data-nav class="lob">All tables</a><a href="ev.html" data-nav>Expected Value →</a></nav>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

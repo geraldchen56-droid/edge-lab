@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Expected Value: Price any bet and watch the variance. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Expected Value · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="dice" data-game="ev">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Study hall · 1/6</small><b>Expected Value</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="ev" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · build a payoff table <span><button id="evDie">Preset: one die</button> <button id="evBet">Preset: win $10 on a 6</button> <button id="evAdd">Add row</button></span></div>
+<div class="tbl"><table id="evTable"><thead><tr><th>Payoff x</th><th>Probability p</th><th>p·x</th><th></th></tr></thead><tbody></tbody></table></div>
+<div class="stats" id="evStats" style="margin-top:10px"></div>
+<div class="out" id="evOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Desk · variance, column by column (uses the payoff table above)</div>
+<div class="tbl"><table id="varTable"></table></div>
+<div class="out" id="varOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="p-sites.html" data-nav>← Where to Practise</a><a href="../index.html" data-nav class="lob">All tables</a><a href="linear.html" data-nav>Linearity &amp; Spread →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Study hall</small><h2 id="tutTitle">Expected Value</h2><div class="tags"><span class="tag">Used in: every game</span></div></div>
+    <div class="tut-b"><p>Expected value is the long-run average of a random payoff. List every outcome, multiply each by its probability, and add.</p>
+<div class="formula">EV = Σ pᵢ · xᵢ</div>
+<p>Variance measures how far results spread around that average, and the standard deviation (σ) is its square root. EV tells you <i>whether</i> to trade; σ tells you how wide to quote and how much to bet.</p>
+<div class="formula">Var = Σ pᵢ · (xᵢ − EV)²  =  E[X²] − EV²</div>
+<details class="deep"><summary>Under the hood: every symbol in EV and variance</summary><div class="deep-body">
+<h4>Reading EV = Σ pᵢ · xᵢ</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>X</td><td>The random quantity: a number you won't know until the event happens, such as the die roll.</td></tr>
+<tr><td>i</td><td>A label for each possible outcome, counting 1, 2, 3 … For a die, i runs from 1 to 6.</td></tr>
+<tr><td>xᵢ</td><td>The payoff of outcome i. For a die, x₁ = 1, x₂ = 2 … x₆ = 6.</td></tr>
+<tr><td>pᵢ</td><td>The probability of outcome i, between 0 and 1. All the pᵢ together add to exactly 1.</td></tr>
+<tr><td>pᵢ · xᵢ</td><td>That one outcome's contribution to the average.</td></tr>
+<tr><td>Σ</td><td>Greek capital sigma, meaning "sum over every i": do the thing for each outcome and add the results.</td></tr>
+<tr><td>EV, E[X], μ</td><td>Three names for the same answer. μ (mu) is the usual symbol once you use it inside other formulas.</td></tr>
+</tbody></table></div>
+<p><b>Why multiply by p?</b> Picture rolling a die 600 times. You get about 100 of each face, so the total is about 100·1 + 100·2 + … + 100·6 = 2,100, and the average is 2,100 ÷ 600 = 3.5. Divide each count by 600 and the counts become probabilities: (1/6)·1 + (1/6)·2 + … + (1/6)·6. EV is an ordinary average where each outcome counts in proportion to how often it happens.</p>
+<h4>Reading Var(X) = Σ pᵢ · (xᵢ − μ)²</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>μ</td><td>The EV from above: the centre of the outcomes.</td></tr>
+<tr><td>xᵢ − μ</td><td>The <b>deviation</b>: how far outcome i lands from the centre. Negative means below the centre.</td></tr>
+<tr><td>( … )²</td><td>The <b>squared deviation</b>. Squaring makes every distance positive, and it punishes big misses far more than small ones (a miss of 3 counts 9, a miss of 1 counts 1).</td></tr>
+<tr><td>pᵢ · ( … )²</td><td>Each squared miss, weighted by how often it happens.</td></tr>
+<tr><td>Σ</td><td>Add them up. Variance is the <b>average squared distance from the centre</b>.</td></tr>
+<tr><td>σ = √Var</td><td>Standard deviation (lower-case sigma). Taking the square root undoes the squaring, so the answer is back in the payoff's own units (pips, dollars) and you can compare it with the EV.</td></tr>
+</tbody></table></div>
+<p><b>Why square instead of just averaging the deviations?</b> Because the plain average deviation is <i>always exactly zero</i>. The centre is defined as the balance point, so misses above and below cancel. The table below proves it: the p·(x − μ) column always sums to 0. You could use absolute distance |x − μ| instead, but squares have one property that makes everything later work: variances of independent quantities add. That is where the √n rule comes from.</p>
+<p><b>Why the shortcut E[X²] − μ² works.</b> E[X²] means "the average of the squared payoffs", Σ pᵢxᵢ². Expand (x − μ)² = x² − 2μx + μ², then average each piece: E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ². For a die: 91/6 − 3.5² = 15.17 − 12.25 = 2.92.</p>
+
+</div></details>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Uniform 1…n → (n+1)/2.</b> Die 3.5, card (A=1…K=13) 7.</li>
+<li><b>Die variance = 35/12 ≈ 2.92</b>, σ ≈ 1.71. Card variance = 14, σ ≈ 3.74.</li>
+<li><b>Probabilities must sum to 1.</b> Check this first, every time.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Linearity &amp; Spread: Why risk grows with the square root of n. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Linearity &amp; Spread · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="bell" data-game="linear">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Study hall · 2/6</small><b>Linearity &amp; Spread</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="linear" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · roll n dice 4,000 times</div>
+<div class="row"><label for="ldN">Dice n</label><input id="ldN" max="12" min="1" type="range" value="2"/><span class="stat" id="ldNv">2</span><button class="go" id="ldRoll">Roll</button></div>
+<canvas height="230" id="ldCanvas" width="760"></canvas>
+<div class="stats" id="ldStats" style="margin-top:10px"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="ev.html" data-nav>← Expected Value</a><a href="../index.html" data-nav class="lob">All tables</a><a href="stopping.html" data-nav>Stop or Continue →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Study hall</small><h2 id="tutTitle">Linearity &amp; Spread</h2><div class="tags"><span class="tag">Used in: Dice, Trading Game, Card Game</span></div></div>
+    <div class="tut-b"><p>The expected value of a sum equals the sum of the expected values. This holds even when the parts are dependent, which is why you never list 36 outcomes to price two dice.</p>
+<div class="formula">E[X + Y] = E[X] + E[Y]</div>
+<p>Variances add only when the parts are independent. So σ grows with the <i>square root</i> of the number of parts: ten dice have ten times the EV of one, but only about 3.2 times the spread. This is why sums look like a bell curve and why your quote width should grow slower than your fair value.</p>
+<div class="formula">σ(sum of n independent) = σ₁ · √n</div>
+<details class="deep"><summary>Under the hood: why EVs always add but spread doesn't</summary><div class="deep-body">
+<h4>Reading E[X + Y] = E[X] + E[Y]</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>E[ · ]</td><td>"The expected value of" whatever is inside the brackets.</td></tr>
+<tr><td>X, Y</td><td>Two random quantities, such as die 1 and die 2.</td></tr>
+<tr><td>X + Y</td><td>A new random quantity: their total on each roll.</td></tr>
+</tbody></table></div>
+<p><b>Why it always holds.</b> An average is "add everything, then divide", and the order you add things in doesn't matter. Over 600 rolls of two dice, the grand total of all the sums equals the total of die 1's column plus the total of die 2's column. Dependence changes <i>which</i> values appear together on the same row, but not what each column adds up to.</p>
+<h4>Reading Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>Cov(X, Y)</td><td><b>Covariance</b>: do X and Y tend to be high together (positive), move in opposite directions (negative), or ignore each other (zero)? It is the average of (X − μₓ)(Y − μᵧ).</td></tr>
+<tr><td>independent</td><td>Knowing one tells you nothing about the other. Then Cov = 0 and the variances simply add.</td></tr>
+</tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Setup</th><th>Relationship</th><th class="n">Variance</th><th class="n">σ</th></tr></thead><tbody>
+<tr><td>Two separate dice, X + Y</td><td>Independent, Cov = 0</td><td class="n">2.92 + 2.92 = 5.83</td><td class="n">2.42</td></tr>
+<tr><td>One die counted twice, X + X</td><td>Perfectly together</td><td class="n">4 × 2.92 = 11.67</td><td class="n">3.42</td></tr>
+<tr><td>X + (7 − X)</td><td>Perfectly opposite</td><td class="n">0</td><td class="n">0</td></tr>
+</tbody></table></div>
+<p>The last row is a <b>hedge</b>: two risky positions whose errors cancel exactly. All three setups have EV 7, so only the spread differs.</p>
+<h4>Where √n comes from</h4>
+<p>Add n independent copies, each with variance σ₁². The variances add to n·σ₁², so σ = √(n·σ₁²) = σ₁·√n. Ten dice: 1.71 × √10 ≈ 5.40, against an EV of 35. In finance, this is why diversification works: holding many assets that aren't perfectly correlated grows expected return faster than it grows risk.</p>
+</div></details>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Sum → add EVs.</b> n dice = 3.5n. n cards without replacement = 7n.</li>
+<li><b>Spread → √n.</b> n dice σ ≈ 1.71√n. Roughly 95% of outcomes fall within 2σ.</li>
+<li><b>Known part → plug it in.</b> One die shows 5: fair for two dice is 5 + 3.5 = 8.5.</li>
+<li><b>Without replacement:</b> unknown cards average the <i>remaining</i> deck, not 7.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Market Making Dice: Quote three dice and survive informed flow. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Market Making Dice · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="dice" data-game="g-dice">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 2/8</small><b>Market Making Dice</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-dice" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · you are the market maker <span class="stat" id="mdTot">Total P&amp;L 0.00 · rounds 0</span></div>
+<div class="row"><label for="mdInf">Informed share</label><input id="mdInf" max="60" min="0" type="range" value="25"/><span class="stat" id="mdInfv">25%</span></div>
+<div class="mm">
+<div class="scene" id="mdScene">
+<div class="lbl">Settles at the sum of three dice</div>
+<div class="items" id="mdDice"></div>
+<div class="lbl" style="margin-top:10px">Traders (N noise · I informed · ↑ lifted your ask · ↓ hit your bid)</div>
+<div class="queue" id="mdQueue"></div>
+<div class="settle" id="mdMsg"></div>
+</div>
+<div><div aria-label="Price ladder" class="ladder" id="mdLadder"></div><div class="small mono" style="color:var(--muted);margin-top:4px">Click a left cell to set your bid, a right cell for your ask.</div></div>
+</div>
+<div class="row"><label for="mdBid">Your bid</label><input id="mdBid" step="0.5" type="number" value="9.5"/><label for="mdAsk">Your ask</label><input id="mdAsk" step="0.5" type="number" value="11.5"/>
+<button class="go" id="mdNext">Next trader</button><button id="mdNew">New round</button></div>
+<div class="stats" id="mdStats"></div>
+<div class="out" id="mdOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-card.html" data-nav>← Card Game</a><a href="../index.html" data-nav class="lob">All tables</a><a href="g-trade.html" data-nav>Trading Game →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Market Making Dice</h2><div class="tags"><span class="tag">Skill: two-way pricing, width, inventory, event risk</span><span class="tag">Firm echo: Optiver, Flow Traders</span></div></div>
+    <div class="tut-b"><p>Now you are the one quoting. The contract settles at the <b>sum of three dice</b>. Five traders arrive one at a time and trade 1 lot against your quote if they like it. Most are noise traders. Some have seen one die. Midway, one die is revealed to everyone.</p>
+<ul class="steps">
+<li><b>Centre</b> your quote on fair value (10.5 to start).</li>
+<li><b>Width</b> pays for risk. Too tight and informed traders pick you off; too wide and nobody trades.</li>
+<li><b>Skew</b> after a fill. If you sold, you are short: raise both prices so the next fill is more likely to be a sale to you.</li>
+<li><b>Re-centre</b> instantly when the die is revealed. Fair = revealed die + 7.</li>
+</ul>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Start width ≈ 1σ of what you don't know.</b> Three dice σ ≈ 3.0, so ±1 to ±1.5.</li>
+<li><b>Lifted? Move up. Hit? Move down.</b> Shift both sides by about a quarter of your width.</li>
+<li><b>More informed flow → wider.</b> Spread earned on noise must cover losses to the informed.</li>
+<li><b>Known die collapses risk:</b> two unknown dice σ ≈ 2.4, so tighten.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

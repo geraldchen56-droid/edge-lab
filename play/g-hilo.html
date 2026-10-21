@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Higher or Lower: Count the deck and size each bet with Kelly. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Higher or Lower · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="hilo" data-game="g-hilo">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 7/8</small><b>Higher or Lower</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-hilo" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · bankroll <span class="hud"><span class="pill" id="hlStreak">Streak 0</span><span class="pill stat" id="hlBank">1,000</span></span></div>
+<div class="duo">
+<div class="scene" id="hlScene"><div class="lbl">Current card · <span id="hlLeft"></span></div><div class="items" id="hlCard"></div><div class="lbl" style="margin-top:8px">Your stake: <span id="hlStakeTxt"></span></div><div id="hlChips"></div></div>
+<div class="scene"><div class="lbl">Cards left, by rank</div><canvas aria-label="Remaining deck by rank" class="felt" height="170" id="hlHist" width="400"></canvas></div>
+</div>
+<canvas aria-label="Bankroll history" height="90" id="hlSpark" width="760"></canvas>
+<div class="row"><label for="hlF">Stake % of bankroll</label><input id="hlF" max="100" min="0" type="range" value="20"/><span class="stat" id="hlFv">20%</span>
+<button class="buy" id="hlHi">Higher</button><button class="sell" id="hlLo">Lower</button><button id="hlReset">New deck</button></div>
+<div class="out" id="hlOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-event.html" data-nav>← Event Contracts</a><a href="../index.html" data-nav class="lob">All tables</a><a href="g-board.html" data-nav>Betting Board →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Higher or Lower</h2><div class="tags"><span class="tag">Skill: conditional probability, Kelly sizing, ruin</span></div></div>
+    <div class="tut-b"><p>A card is shown. Call whether the next card from the same deck is higher or lower, and choose what share of your bankroll to bet at even money. Ties lose. The deck is not reshuffled, so count what has gone.</p>
+<div class="formula">p(higher) = cards left strictly above ÷ cards left      bet f* = 2p − 1</div>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>On a 7, both sides are ~46%.</b> Ties make it a losing bet. Stake 0.</li>
+<li><b>Count the deck.</b> After many low cards, "higher" gets better even from a 6.</li>
+<li><b>Stake = 2p − 1.</b> A 2 showing: p ≈ 0.92, Kelly ≈ 84%. Half-Kelly ≈ 42%.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

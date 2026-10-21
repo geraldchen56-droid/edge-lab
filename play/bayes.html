@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Bayes in Odds Form: Prior odds × likelihood ratio = posterior. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Bayes in Odds Form · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="chips" data-game="bayes">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Study hall · 4/6</small><b>Bayes in Odds Form</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="bayes" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · update a belief</div>
+<div class="grid2">
+<div><label for="byP">Prior probability</label><div class="row"><input id="byP" max="99" min="1" type="range" value="20"/><span class="stat" id="byPv">20%</span></div></div>
+<div><label for="byL">Likelihood ratio of the news</label><div class="row"><input id="byL" max="30" min="-30" type="range" value="10"/><span class="stat" id="byLv">3.0×</span></div></div>
+</div>
+<canvas height="90" id="byCanvas" width="760"></canvas>
+<div class="out" id="byOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Desk · natural frequencies</div>
+<div class="grid2">
+<div><label for="nfP">Prior P(H)</label><div class="row"><input id="nfP" max="90" min="1" type="range" value="20"/><span class="stat" id="nfPv">20%</span></div></div>
+<div><label for="nfA">P(E | H): evidence rate when true</label><div class="row"><input id="nfA" max="100" min="1" type="range" value="70"/><span class="stat" id="nfAv">70%</span></div></div>
+<div><label for="nfB">P(E | not H): evidence rate when false</label><div class="row"><input id="nfB" max="100" min="1" type="range" value="20"/><span class="stat" id="nfBv">20%</span></div></div>
+</div>
+<div class="legend"><span><i style="background:var(--felt)"></i>H and evidence</span><span><i style="background:var(--felt);opacity:.25"></i>H, no evidence</span><span><i style="background:var(--ask)"></i>not H, evidence</span><span><i style="background:var(--muted);opacity:.25"></i>not H, no evidence</span></div>
+<canvas height="475" id="nfCanvas" width="760"></canvas>
+<div class="out" id="nfOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="stopping.html" data-nav>← Stop or Continue</a><a href="../index.html" data-nav class="lob">All tables</a><a href="kelly.html" data-nav>Kelly Sizing →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Study hall</small><h2 id="tutTitle">Bayes in Odds Form</h2><div class="tags"><span class="tag">Used in: Event Contracts, Fermi, Trading Game, poker reads</span></div></div>
+    <div class="tut-b"><p>Traders update probabilities in <b>odds</b>, because the arithmetic becomes one multiplication. Odds are p / (1 − p). A likelihood ratio (LR) says how many times more likely the news is if the event is true than if it is false.</p>
+<div class="formula">posterior odds = prior odds × LR      p = odds / (1 + odds)</div>
+<details class="deep"><summary>Under the hood: prior, likelihood, posterior</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>H</td><td>The <b>hypothesis</b>: the thing you're unsure about, e.g. "it rains today".</td></tr>
+<tr><td>E</td><td>The <b>evidence</b>: the news you observe, e.g. "the morning is overcast".</td></tr>
+<tr><td>P(H)</td><td>The <b>prior</b>: your probability <i>before</i> seeing the evidence (Latin <i>prior</i>, "earlier"). Usually a base rate, such as "it rains on 20% of days this month".</td></tr>
+<tr><td>P(E | H)</td><td>A <b>likelihood</b>: how often you'd see this evidence <i>if H were true</i>. The bar "|" is read "given". Example: on rainy days, mornings are overcast 70% of the time.</td></tr>
+<tr><td>P(E | not H)</td><td>How often you'd see the same evidence if H were false. Example: on dry days, 20% of mornings are overcast.</td></tr>
+<tr><td>P(H | E)</td><td>The <b>posterior</b>: your probability <i>after</i> the evidence (Latin <i>posterior</i>, "coming after"). This is what you actually want. Today's posterior becomes tomorrow's prior when new news arrives.</td></tr>
+<tr><td>odds = p ÷ (1 − p)</td><td>Chance for against chance against. 20% → 0.2 ÷ 0.8 = 0.25, said "1 to 4".</td></tr>
+<tr><td>LR</td><td><b>Likelihood ratio</b> = P(E | H) ÷ P(E | not H). How many times more common the evidence is when H is true: 0.7 ÷ 0.2 = 3.5. This is the strength of the news.</td></tr>
+</tbody></table></div>
+<h4>Where the odds form comes from</h4>
+<p>Bayes' rule is <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>. Write the same rule for "not H", then divide one by the other. The awkward P(E) term cancels and you get <span class="mono">posterior odds = prior odds × LR</span>. Rain example: 0.25 × 3.5 = 0.875, and 0.875 ÷ 1.875 = 46.7%.</p>
+<h4>See it as 1,000 cases</h4>
+<p>The clearest way to understand a posterior is to count. Each dot below is one day. Once you see the evidence, you are standing on one of the solid dots, so throw away the faded ones. The posterior is the share of solid dots that are green.</p>
+
+<h4>The classic trap</h4>
+<p>P(E | H) is not P(H | E). Suppose a system catches 90% of fraudulent trades and wrongly flags 5% of good ones, and 1% of trades are fraud. A flagged trade feels 90% likely to be fraud, but: prior odds 1:99, LR = 0.90 ÷ 0.05 = 18, posterior odds = 18/99 ≈ 0.18, so p ≈ <b>15%</b>. A low base rate swamps even strong evidence. Set the sliders to 1%, 90%, 5% to see it.</p>
+</div></details>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Convert, multiply, convert back.</b> 20% → 1:4 → ×3 → 3:4 → 3/7 ≈ 43%.</li>
+<li><b>LR = 1 means the news says nothing.</b> LR below 1 moves you down.</li>
+<li><b>Two independent clues → multiply both LRs.</b></li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

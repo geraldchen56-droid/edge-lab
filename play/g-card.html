@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Card Game: Price a random contract. Buy, sell or pass. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Card Game · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="deal" data-game="g-card">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 1/8</small><b>Card Game</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-card" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · take or pass <span class="hud"><span class="pill" id="cgStreak">Streak 0 · best 0</span><label class="pill"><input id="cgClock" type="checkbox"/> 8s clock</label></span></div>
+<div class="duo">
+<div class="scene" id="cgScene"><div class="lbl">The contract</div><div class="scene-q" id="cgQ"></div><div class="items" id="cgItems"></div><div class="settle" id="cgSettle"></div></div>
+<div class="screen" id="cgScreen"><div class="dim lbl">Their market</div><div class="bigq"><span class="bidc" id="cgBidTxt"></span><span class="dim">/</span><span class="askc" id="cgAskTxt"></span></div><div class="dim small">bid / ask · you buy at the ask, sell at the bid</div><div class="timer" hidden="" id="cgTimer"><i></i></div></div>
+</div>
+<div class="row"><button class="buy" id="cgBuy">Buy at ask</button><button class="sell" id="cgSell">Sell at bid</button><button id="cgPass">Pass</button><button class="go" id="cgNext">Next contract</button></div>
+<div class="stats" id="cgStats"></div>
+<div class="out" id="cgOut">Work out the fair value before you click.</div>
+<p class="small" style="color:var(--muted)">Every contract settles for real after you decide. Expected edge measures the quality of your decision; realised P&amp;L adds luck. Over many trades the two converge.</p>
+</div>
+<nav class="pager" aria-label="More tables"><span></span><a href="../index.html" data-nav class="lob">All tables</a><a href="g-dice.html" data-nav>Market Making Dice →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Card Game</h2><div class="tags"><span class="tag">Skill: EV, edge detection</span><span class="tag">Firm echo: SIG</span></div></div>
+    <div class="tut-b"><p>Someone quotes you a two-way price on a random quantity. You may <b>buy at their ask</b>, <b>sell at their bid</b>, or pass. Your only job is to compute fair value fast and compare.</p>
+<ul class="steps"><li>Fair value above the ask → buy. Edge = fair − ask.</li><li>Fair value below the bid → sell. Edge = bid − fair.</li><li>Fair value inside the quote → pass. Trading there loses money on average.</li></ul>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Max of two dice = 161/36 ≈ 4.47. Min = 91/36 ≈ 2.53.</b> They sum to 7.</li>
+<li><b>Waiting time for probability p → 1/p.</b> Rolls until a 6 = 6.</li>
+<li><b>Product of independents → multiply EVs.</b> Two dice: 3.5² = 12.25.</li>
+<li><b>E[X²] = Var + EV².</b> One die squared: 35/12 + 12.25 = 15.17.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>
