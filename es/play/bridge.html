@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/bridge.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Finanzas y econometría · Edge Lab</title>
+<meta content="Finanzas y econometría: Estadístico t: cuántas manos prueban que tienes habilidad." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/bridge.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bridge.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bridge.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bridge.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Finanzas y econometría · Edge Lab" property="og:title"/>
+<meta content="Finanzas y econometría: Estadístico t: cuántas manos prueban que tienes habilidad." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/bridge.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bridge" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de estudio · 6/6</small><b>Finanzas y econometría</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="bridge">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · ¿ventaja o suerte?</div>
+<div class="row"><label for="brM">Ventaja por operación/mano</label><input id="brM" step="0.01" type="number" value="0.05"/><label for="brS">σ por operación/mano</label><input id="brS" step="0.1" type="number" value="1"/><label for="brN">Número n</label><input id="brN" max="5" min="1" step="0.05" type="range" value="3"/><span class="stat" id="brNv">1,000</span></div>
+<div class="stats" id="brStats"></div>
+<div class="out" id="brOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="kelly.html">← Apuesta de Kelly</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><span></span></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de estudio</small><h2 id="tutTitle">Finanzas y econometría</h2></div>
+<div class="tut-b"><p>Nada de esto es un desvío. Cada herramienta de los juegos reaparece con otro nombre en la economía financiera y la econometría.</p>
+<div class="tbl"><table>
+<thead><tr><th>Aquí</th><th>En finanzas</th><th>En econometría</th></tr></thead>
+<tbody>
+<tr><td>Valor esperado</td><td>Rendimiento esperado, valoración neutral al riesgo (precio de la opción = pago esperado descontado)</td><td>Media poblacional, esperanza condicional E[Y|X], el objetivo de la regresión</td></tr>
+<tr><td>Varianza, σ√n</td><td>Volatilidad, riesgo de cartera, diversificación</td><td>Los errores estándar se reducen con √n; por eso importa el tamaño de la muestra</td></tr>
+<tr><td>Linealidad</td><td>Rendimiento de cartera = suma ponderada de los rendimientos de los activos</td><td>MCO: Y = β₀ + β₁X + ε, lineal en los parámetros</td></tr>
+<tr><td>Actualizar el VE condicional</td><td>Los precios reaccionan a las noticias; hipótesis del mercado eficiente</td><td>Condicionar con controles; sesgo de variable omitida si no lo haces</td></tr>
+<tr><td>Bayes en odds</td><td>Actualizar previsiones, modelos de impago</td><td>Estimación bayesiana, regresión logística (las log-odds son lineales)</td></tr>
+<tr><td>Apuesta de Kelly</td><td>Tamaño de posición, apalancamiento, ratio de Sharpe</td><td>Maximizar la utilidad logarítmica esperada; media geométrica frente a aritmética</td></tr>
+<tr><td>Selección adversa</td><td>Teoría del diferencial bid-ask (Glosten–Milgrom, Kyle)</td><td>Sesgo de selección, endogeneidad</td></tr>
+<tr><td>Intervalos calibrados</td><td>Valor en riesgo, confianza en las previsiones</td><td>Intervalos de confianza y contrastes de hipótesis</td></tr>
+<tr><td>Equity por Monte Carlo</td><td>Valoración de opciones por Monte Carlo</td><td>Bootstrap, inferencia basada en simulación</td></tr>
+</tbody></table></div>
+<p>El puente más importante es la significación estadística. ¿Tu estrategia, o tu tasa de ganancia en póker, es ventaja real o suerte? La respuesta es el estadístico t, el contraste central de la econometría.</p>
+<div class="formula">t = (ventaja media por operación) × √n ÷ σ P(beneficio tras n) ≈ Φ(t)</div>
+<details class="deep"><summary>Por dentro: cómo leer t = m · √n ÷ σ</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>m</td><td>Tu ventaja media por operación o mano: el VE de una repetición.</td></tr>
+<tr><td>σ</td><td>La desviación típica del resultado de una operación: cuánto ruido tiene cada repetición.</td></tr>
+<tr><td>n</td><td>Cuántas operaciones o manos has jugado.</td></tr>
+<tr><td>m · n</td><td>Beneficio total esperado. Crece en proporción a n.</td></tr>
+<tr><td>σ · √n</td><td>Dispersión del beneficio total, por la regla de √n. Crece más despacio.</td></tr>
+<tr><td>t</td><td>Señal ÷ ruido = (m·n) ÷ (σ·√n) = m·√n ÷ σ. Cuenta a cuántas desviaciones típicas está tu resultado de cero.</td></tr>
+<tr><td>Φ(t)</td><td>La probabilidad acumulada de la distribución normal: la probabilidad de que una variable en forma de campana quede por debajo de t. Aquí, la probabilidad de ir ganando tras n operaciones.</td></tr>
+<tr><td>1.96</td><td>El t a partir del cual solo el 5 % de los resultados de pura suerte se verían así de bien. Por encima, los econometristas llaman a la ventaja «estadísticamente significativa».</td></tr>
+</tbody></table></div>
+</div></details>
+<h3 style="margin-top:28px;font-family:var(--f-display);font-size:20px">Ruta de lectura</h3>
+<div class="tbl"><table>
+<thead><tr><th>Etapa</th><th>Recurso</th><th>Por qué</th></tr></thead>
+<tbody>
+<tr><td>Ahora</td><td>Blitzstein y Hwang, <i>Introduction to Probability</i> (Harvard Stat 110, clases gratuitas)</td><td>La probabilidad detrás de cada juego de aquí, explicada con intuición</td></tr>
+<tr><td>Ahora</td><td>Zhou, <i>A Practical Guide to Quantitative Finance Interviews</i>; Crack, <i>Heard on the Street</i></td><td>Los bancos de preguntas de entrevista de referencia</td></tr>
+<tr><td>Ahora</td><td>Mosteller, <i>Fifty Challenging Problems in Probability</i></td><td>Acertijos de VE breves y clásicos</td></tr>
+<tr><td>Año 1</td><td>Wooldridge, <i>Introductory Econometrics</i></td><td>Regresión, errores estándar, causalidad; el núcleo de una mención en econometría</td></tr>
+<tr><td>Años 1–2</td><td>Hull, <i>Options, Futures and Other Derivatives</i>; Natenberg, <i>Option Volatility and Pricing</i></td><td>Cómo valoran y cubren de verdad los traders</td></tr>
+<tr><td>Año 2+</td><td>Harris, <i>Trading and Exchanges</i></td><td>Microestructura de mercado: por qué existen los spreads y contra quién operas</td></tr>
+</tbody></table></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

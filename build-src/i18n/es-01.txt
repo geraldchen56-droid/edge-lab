@@ -1,0 +1,174 @@
+6c42669a|||<i aria-hidden="true"></i>Edge Lab
+e5f79aa1|||Instalar app
+89b86ab0|||Idioma
+ac7a0712|||Sonido no
+15ced74a|||Preparación para entrevistas de trading · after hours
+7aca61ba|||La banca conoce las probabilidades. <b>Ahora tú también.</b>
+193e49b4|||Elige una mesa. Cada juego se abre a pantalla completa, con una explicación solo la primera vez.
+ba017b8f|||Desafío diario
+7d4d3a74|||Diez preguntas. Las mismas para todos. Un intento clasificatorio al día.
+2e1aad10|||Jugar hoy →
+0381247a|||Clasificación
+76deec39|||Hoy y de todos los tiempos
+93a334b1|||Sala de trading <span>8</span>
+09cfb59e|||Sala de póker <span>5</span>
+fdc16b6a|||Sala de estudio <span>6</span>
+3ceab3c0|||Juego de cartas
+5b705d67|||Pon precio a un contrato aleatorio. Compra, vende o pasa.
+8b7a7139|||Jugar →
+963ef6f8|||Market making con dados
+41dc85ab|||Cotiza tres dados y sobrevive al flujo informado.
+7ba4c2b2|||Juego de trading
+6505c372|||Cinco cartas ocultas. Revalora con cada una que se descubre.
+280778d7|||Arbitraje de ETF
+a7cc3d71|||NAV frente a precio, con 15 segundos de reloj.
+1fb0f773|||Estimación de Fermi
+bb5e563c|||Rangos del 90 % para preguntas que no puedes buscar.
+84dd885b|||Contratos de eventos
+4db5a2d6|||Actualiza con Bayes y luego cotiza un mercado sí/no.
+7e3e5eaf|||Mayor o menor
+e9433589|||Cuenta la baraja y dimensiona cada apuesta con Kelly.
+b01793bd|||Tablero de apuestas
+8799b90d|||Detecta cuotas mal valoradas y asegura el arbitraje.
+6e5b2682|||Pot odds
+9be3ce7d|||¿Pagar o tirar? Tu equity frente al precio.
+6997a45a|||Calculadora de equity
+ffb98947|||Cualquier mano contra cualquier mano, 20.000 simulaciones.
+4eab18f2|||Matemáticas del farol
+4e873c43|||Cuántas veces debe funcionar un farol y cuántas debes defender.
+9c39f6aa|||Reglas y jugadas
+bafdb19a|||Referencia: cómo se juega al Hold'em.
+ae83d74f|||Dónde practicar
+05f5012f|||Referencia: solvers, simuladores y mesas con fichas de juego.
+0cd67921|||Valor esperado
+82b4ab12|||Valora cualquier apuesta y observa la varianza.
+8a87109f|||Linealidad y dispersión
+e002827b|||Por qué el riesgo crece con la raíz cuadrada de n.
+eba4d02b|||Parar o seguir
+f399ca53|||Parada óptima con un dado.
+36c7780b|||Bayes en forma de odds
+c7555278|||Odds previas × razón de verosimilitud = posterior.
+b17c9adb|||Apuesta de Kelly
+755002ec|||Cuánto apostar cuando tienes ventaja.
+2602f302|||Finanzas y econometría
+a401d941|||Estadístico t: cuántas manos prueban que tienes habilidad.
+14f31212|||Basado en los <a href="https://www.tradermath.org/market-games" rel="noopener" target="_blank">juegos de mercado de Tradermath</a>. Las probabilidades son exactas donde se indica; la equity se obtiene por simulación. <a href="https://github.com/geraldchen56-droid/edge-lab" rel="noopener" target="_blank">Código en GitHub</a>.
+fd6c3ebf|||Instalar
+9dfebd3a|||Edge Lab como app
+a0ffd2ab|||<b>iPhone o iPad (Safari):</b> toca Compartir y luego <b>Añadir a pantalla de inicio</b>.
+c02075be|||<b>Android (Chrome):</b> toca el menú ⋮ y luego <b>Instalar aplicación</b>.
+d1a9ea1a|||<b>Ordenador (Chrome o Edge):</b> haz clic en el icono de instalar a la derecha de la barra de direcciones.
+bb194426|||Se abre a pantalla completa con su propio icono, y los juegos funcionan sin conexión.
+5b8027fa|||Entendido
+3a28d6f0|||Salas
+4a5cacbc|||Edge Lab · Juegos para entrevistas de trading
+325c572e|||Un casino en 3D para preparar entrevistas de trading: market making, arbitraje de ETF, Bayes, apuesta de Kelly y matemáticas del póker, además de un Desafío diario con clasificación.
+b5ac08fd|||← Mesas
+64516065|||Sala de trading · 1/8
+4ec00394|||Cómo jugar
+0911cce7|||Marcar hecho
+d15f886d|||Pantalla completa
+8ecc0869|||Mesa · tomar o pasar
+d25db06a|||Racha 0 · mejor 0
+a42faf56|||Reloj de 8 s
+c82ea674|||El contrato
+54c19b4e|||Su mercado
+741df9c0|||bid / ask · compras en el ask, vendes en el bid
+e45a7982|||Comprar en el ask
+6dc38fb5|||Vender en el bid
+d7cd56f2|||Pasar
+bbfcbaaf|||Siguiente contrato
+7f5fb204|||Calcula el valor justo antes de hacer clic.
+87abc9c6|||Cada contrato se liquida de verdad después de decidir. La ventaja esperada mide la calidad de tu decisión; el P&amp;L realizado añade suerte. Con muchas operaciones, ambos convergen.
+8ebf23b7|||Todas las mesas
+0ef4a62b|||Instrucciones · Sala de trading
+b91a2db9|||Habilidad: VE, detectar ventaja
+4b93319e|||Empresa afín: SIG
+21e1846c|||Alguien te cotiza un precio de doble sentido sobre una cantidad aleatoria. Puedes <b>comprar en su ask</b>, <b>vender en su bid</b> o pasar. Tu único trabajo es calcular rápido el valor justo y comparar.
+8d6c7a13|||Valor justo por encima del ask → compra. Ventaja = justo − ask.
+0bf0b66c|||Valor justo por debajo del bid → vende. Ventaja = bid − justo.
+52d0f9c3|||Valor justo dentro de la cotización → pasa. Operar ahí pierde dinero en promedio.
+5433cd73|||Atajos
+d07b3952|||<b>Máximo de dos dados = 161/36 ≈ 4,47. Mínimo = 91/36 ≈ 2,53.</b> Suman 7.
+3b7c44ab|||<b>Tiempo de espera para probabilidad p → 1/p.</b> Tiradas hasta un 6 = 6.
+80da7776|||<b>Producto de independientes → multiplica los VE.</b> Dos dados: 3,5² = 12,25.
+7bfec0ad|||<b>E[X²] = Var + VE².</b> Un dado al cuadrado: 35/12 + 12,25 = 15,17.
+95423f42|||Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.
+677bb40b|||Repárteme
+5ef2647a|||Volver a todas las mesas
+926f80e9|||Más mesas
+05cf1da5|||Sala de trading · 2/8
+aa8a60a9|||Mesa · tú eres el market maker
+e864cd06|||P&amp;L total 0.00 · rondas 0
+4989b5a0|||Proporción de informados
+33ae01b6|||Se liquida a la suma de tres dados
+bb6c79ec|||Traders (N ruido · I informado · ↑ te compraron en el ask · ↓ te vendieron en el bid)
+6910e2a0|||Haz clic en una celda izquierda para fijar tu bid y en una derecha para tu ask.
+8fd5f6c4|||Tu bid
+650f11d5|||Tu ask
+7b0bf541|||Siguiente trader
+9634e445|||Nueva ronda
+01291898|||Habilidad: precios de doble sentido, amplitud, inventario, riesgo de evento
+938fab78|||Empresas afines: Optiver, Flow Traders
+a9013dc8|||Ahora cotizas tú. El contrato se liquida a la <b>suma de tres dados</b>. Llegan cinco traders, uno a uno, y operan 1 lote contra tu cotización si les conviene. La mayoría son traders de ruido. Algunos han visto un dado. A mitad de ronda se revela un dado a todos.
+fdd7c403|||<b>Centra</b> tu cotización en el valor justo (10,5 al principio).
+271133e0|||La <b>amplitud</b> paga el riesgo. Demasiado estrecha y los informados te cazan; demasiado ancha y nadie opera.
+d054c017|||<b>Inclina</b> tras una ejecución. Si vendiste, estás corto: sube ambos precios para que la siguiente ejecución sea más probablemente una venta hacia ti.
+5c3de9e4|||<b>Recentra</b> en cuanto se revele el dado. Justo = dado revelado + 7.
+176d262c|||<b>Amplitud inicial ≈ 1σ de lo que no sabes.</b> Tres dados σ ≈ 3,0, así que de ±1 a ±1,5.
+4e196148|||<b>¿Te compraron? Sube. ¿Te vendieron? Baja.</b> Mueve ambos lados un cuarto de tu amplitud.
+b5e28f76|||<b>Más flujo informado → más amplitud.</b> El spread ganado al ruido debe cubrir lo que pierdes con los informados.
+8f3e08fe|||<b>Un dado conocido reduce el riesgo:</b> dos dados desconocidos σ ≈ 2,4, así que estrecha.
+13d77486|||Escalera de precios
+59ccc062|||Sala de trading · 3/8
+769bc9fe|||Mesa · suma de cinco cartas
+e5b033ec|||P&amp;L total 0.00
+780c7958|||Mostrar mi valor justo (modo aprendizaje)
+b1e5d1bf|||Se liquida a la suma de cinco cartas · A=1 … K=13
+136dc213|||Mercado del bot
+f1312310|||Tu posición (−10 a +10)
+79029175|||Lotes
+ea415408|||Revelar siguiente carta
+602b26d9|||Nueva partida
+1f4d9034|||Habilidad: VE condicional, gestión de posición
+6e84233c|||El contrato se liquida a la <b>suma de cinco cartas</b> repartidas sin reposición de una baraja de 52 (A=1, J=11, Q=12, K=13). Las cartas se revelan una a una. Antes de cada revelación, un bot cotiza un mercado. Puedes comprar o vender hasta 2 lotes por paso para construir una posición.
+6fbf567c|||En cualquier momento, el valor justo es el total revelado más el número de cartas ocultas por la media de las cartas que quedan en la baraja.
+3b7d73e6|||justo = Σ reveladas + (cartas ocultas) × (total restante de la baraja ÷ cartas restantes)
+43423f04|||<b>Cinco cartas empiezan en 35.</b> Con cada revelación, el justo se mueve aproximadamente (carta − media de la baraja).
+1ca02ee3|||<b>Ver una carta baja hace el resto de la baraja algo más rico.</b> Usa la media restante.
+4eacf8e9|||<b>Posición = riesgo.</b> Si estás largo 4 y el justo cae 3, pierdes 12. Dimensiona según la ventaja.
+120639d7|||Gráfico de historial de precios
+9fb505ac|||Sala de trading · 4/8
+26b3dfd3|||Mesa · encuentra el error de precio
+f7ecb317|||Racha 0
+4ef94296|||P&amp;L 0.00 · 0 decisiones
+020b4183|||Cesta
+27ed56c8|||15 segundos por decisión ·
+773d1927|||Comprar ETF / vender cesta
+609c9baa|||Vender ETF / comprar cesta
+72154e11|||No operar
+bc981983|||Siguiente
+8bfbb97d|||Habilidad: valoración entre activos, velocidad
+f8800028|||Empresas afines: IMC, Jane Street
+c5b37381|||Un ETF es una cesta. Su valor justo, el valor liquidativo (NAV), es lo que valen las acciones que contiene. Si el ETF cotiza lejos del NAV por más que tus costes, operas uno contra el otro y aseguras la diferencia.
+7fbab5fe|||NAV = Σ (acciones por unidad × precio de la acción).
+82031d5f|||<b>Ask</b> del ETF por debajo de NAV − coste → compra el ETF y vende las acciones. Beneficio = NAV − ask − coste.
+fd4416cc|||<b>Bid</b> del ETF por encima de NAV + coste → vende el ETF y compra las acciones. Beneficio = bid − NAV − coste.
+caefe271|||Si no, no operes.
+2b8974b7|||<b>Valora primero la cesta y luego mira el ETF.</b> Nunca al revés.
+4a3e3239|||<b>Compara el NAV con el precio al que de verdad puedes operar:</b> compra en el ask, vende en el bid.
+01cce37e|||<b>Redondea para ahorrar tiempo:</b> 2 × 49,8 es 100 − 0,4 = 99,6.
+3419e7c7|||Sala de trading · 5/8
+a4198a2f|||Mesa · intervalo del 90 %
+023c3267|||Aciertos 0/0 · puntos 0
+a124947c|||Mínimo
+b1a5954a|||Máximo
+2dacf659|||Enviar
+2cc42c6e|||Siguiente pregunta
+db1adbbc|||Calibración (objetivo 9 de 10):
+d1c94b56|||Admite notación científica: 3e5 = 300.000. También abreviaturas como 25m u 8bn.
+5edf8223|||Habilidad: descomposición, intervalos calibrados
+a31a4b52|||Empresas afines: la mayoría de las prop firms
+5e9f95aa|||Da un rango que estés <b>90 % seguro</b> de que contiene la respuesta. Puntúas por acertar y por ser estrecho. Con muchas preguntas, unas 9 de cada 10 deberían caer dentro. Si caen 5 de 10, eres demasiado confiado, que en trading significa cotizar demasiado estrecho.
+bb584d58|||Divide la cantidad en factores que puedas adivinar (personas × frecuencia × tiempo).
+5f3eb6d4|||Estima en potencias de diez; suma los exponentes.

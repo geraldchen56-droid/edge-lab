@@ -1,0 +1,40 @@
+{
+ "name": "Edge Lab",
+ "short_name": "Edge Lab",
+ "lang": "es",
+ "description": "Trading-interview games: market making, ETF arbitrage, Bayes, Kelly sizing and poker maths.",
+ "start_url": "./index.html",
+ "scope": "../",
+ "display": "standalone",
+ "background_color": "#050a08",
+ "theme_color": "#050a08",
+ "orientation": "any",
+ "icons": [
+  {
+   "src": "../icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "../icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "../icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Daily Gauntlet",
+   "url": "./play/daily.html"
+  },
+  {
+   "name": "Leaderboard",
+   "url": "./play/leaderboard.html"
+  }
+ ]
+}

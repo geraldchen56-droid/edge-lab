@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/bayes.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>赔率形式的贝叶斯 · Edge Lab</title>
+<meta content="赔率形式的贝叶斯：先验赔率 × 似然比 = 后验。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bayes.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bayes.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bayes.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bayes.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="赔率形式的贝叶斯 · Edge Lab" property="og:title"/>
+<meta content="赔率形式的贝叶斯：先验赔率 × 似然比 = 后验。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/bayes.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bayes" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>自习室 · 4/6</small><b>赔率形式的贝叶斯</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="bayes">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 更新信念</div>
+<div class="grid2">
+<div><label for="byP">先验概率</label><div class="row"><input id="byP" max="99" min="1" type="range" value="20"/><span class="stat" id="byPv">20%</span></div></div>
+<div><label for="byL">这条消息的似然比</label><div class="row"><input id="byL" max="30" min="-30" type="range" value="10"/><span class="stat" id="byLv">3.0×</span></div></div>
+</div>
+<canvas height="90" id="byCanvas" width="760"></canvas>
+<div class="out" id="byOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">操作台 · 自然频率</div>
+<div class="grid2">
+<div><label for="nfP">先验 P(H)</label><div class="row"><input id="nfP" max="90" min="1" type="range" value="20"/><span class="stat" id="nfPv">20%</span></div></div>
+<div><label for="nfA">P(E | H)：为真时证据出现的比率</label><div class="row"><input id="nfA" max="100" min="1" type="range" value="70"/><span class="stat" id="nfAv">70%</span></div></div>
+<div><label for="nfB">P(E | 非 H)：为假时证据出现的比率</label><div class="row"><input id="nfB" max="100" min="1" type="range" value="20"/><span class="stat" id="nfBv">20%</span></div></div>
+</div>
+<div class="legend"><span><i style="background:var(--felt)"></i>H 且有证据</span><span><i style="background:var(--felt);opacity:.25"></i>H，无证据</span><span><i style="background:var(--ask)"></i>非 H，有证据</span><span><i style="background:var(--muted);opacity:.25"></i>非 H，无证据</span></div>
+<canvas height="475" id="nfCanvas" width="760"></canvas>
+<div class="out" id="nfOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="stopping.html">← 停还是继续</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="kelly.html">凯利下注 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 自习室</small><h2 id="tutTitle">赔率形式的贝叶斯</h2><div class="tags"><span class="tag">用于：事件合约、费米估算、交易游戏、扑克读牌</span></div></div>
+<div class="tut-b"><p>交易员用<b>赔率</b>来更新概率，因为这样算术只需要一次乘法。赔率是 p / (1 − p)。似然比（LR）表示：事件为真时这条消息出现的可能性，是事件为假时的多少倍。</p>
+<div class="formula">后验赔率 = 先验赔率 × LR p = 赔率 / (1 + 赔率)</div>
+<details class="deep"><summary>原理：先验、似然、后验</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>H</td><td><b>假设</b>：你不确定的那件事，例如“今天下雨”。</td></tr>
+<tr><td>E</td><td><b>证据</b>：你观察到的消息，例如“早上阴天”。</td></tr>
+<tr><td>P(H)</td><td><b>先验</b>：你在看到证据<i>之前</i>的概率（拉丁语 <i>prior</i>，“较早的”）。通常是基础概率，比如“这个月有 20% 的日子下雨”。</td></tr>
+<tr><td>P(E | H)</td><td><b>似然</b>：<i>如果 H 为真</i>，你看到这个证据的频率。竖线“|”读作“在……条件下”。例：下雨的日子里，70% 的早上是阴天。</td></tr>
+<tr><td>P(E | 非 H)</td><td>如果 H 为假，你看到同样证据的频率。例：不下雨的日子里，20% 的早上是阴天。</td></tr>
+<tr><td>P(H | E)</td><td><b>后验</b>：你在看到证据<i>之后</i>的概率（拉丁语 <i>posterior</i>，“随后的”）。这才是你真正想要的。有新消息时，今天的后验就成了明天的先验。</td></tr>
+<tr><td>赔率 = p ÷ (1 − p)</td><td>支持的概率比上反对的概率。20% → 0.2 ÷ 0.8 = 0.25，读作“1 比 4”。</td></tr>
+<tr><td>LR</td><td><b>似然比</b> = P(E | H) ÷ P(E | 非 H)。H 为真时证据常见多少倍：0.7 ÷ 0.2 = 3.5。这就是消息的强度。</td></tr>
+</tbody></table></div>
+<h4>赔率形式从何而来</h4>
+<p>贝叶斯定理是 <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>。对“非 H”写出同样的式子，再把两者相除。麻烦的 P(E) 项被约掉，得到 <span class="mono">后验赔率 = 先验赔率 × LR</span>。下雨的例子：0.25 × 3.5 = 0.875，而 0.875 ÷ 1.875 = 46.7%。</p>
+<h4>把它看成 1,000 个案例</h4>
+<p>理解后验最清楚的方式是数数。下面每个点代表一天。一旦看到证据，你就站在某个实心点上，所以把淡色的点都丢掉。后验就是实心点里绿色点的比例。</p>
+<h4>经典陷阱</h4>
+<p>P(E | H) 不等于 P(H | E)。假设一个系统能抓到 90% 的欺诈交易，同时误报 5% 的正常交易，而欺诈交易占 1%。被标记的交易感觉有 90% 是欺诈，但：先验赔率 1:99，LR = 0.90 ÷ 0.05 = 18，后验赔率 = 18/99 ≈ 0.18，所以 p ≈ <b>15%</b>。很低的基础概率会淹没哪怕很强的证据。把滑块设为 1%、90%、5% 看看。</p>
+</div></details>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>转换、相乘、再转回来。</b>20% → 1:4 → ×3 → 3:4 → 3/7 ≈ 43%。</li>
+<li><b>LR = 1 表示消息毫无信息。</b>LR 小于 1 会让概率下降。</li>
+<li><b>两条独立线索 → 两个 LR 相乘。</b></li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/ev.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Valor esperado · Edge Lab</title>
+<meta content="Valor esperado: Valora cualquier apuesta y observa la varianza." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/ev.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/ev.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/ev.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/ev.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/ev.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/ev.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Valor esperado · Edge Lab" property="og:title"/>
+<meta content="Valor esperado: Valora cualquier apuesta y observa la varianza." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/ev.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="ev" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de estudio · 1/6</small><b>Valor esperado</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="ev">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · construye una tabla de pagos <span><button id="evDie">Ejemplo: un dado</button> <button id="evBet">Ejemplo: ganar $10 con un 6</button> <button id="evAdd">Añadir fila</button></span></div>
+<div class="tbl"><table id="evTable"><thead><tr><th>Pago x</th><th>Probabilidad p</th><th>p·x</th><th></th></tr></thead><tbody></tbody></table></div>
+<div class="stats" id="evStats" style="margin-top:10px"></div>
+<div class="out" id="evOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Mesa · varianza, columna a columna (usa la tabla de pagos de arriba)</div>
+<div class="tbl"><table id="varTable"></table></div>
+<div class="out" id="varOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="p-sites.html">← Dónde practicar</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="linear.html">Linealidad y dispersión →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de estudio</small><h2 id="tutTitle">Valor esperado</h2><div class="tags"><span class="tag">Se usa en: todos los juegos</span></div></div>
+<div class="tut-b"><p>El valor esperado es la media a largo plazo de un pago aleatorio. Enumera cada resultado, multiplica cada uno por su probabilidad y suma.</p>
+<div class="formula">VE = Σ pᵢ · xᵢ</div>
+<p>La varianza mide cuánto se dispersan los resultados alrededor de esa media, y la desviación típica (σ) es su raíz cuadrada. El VE te dice <i>si</i> operar; σ te dice qué amplitud cotizar y cuánto apostar.</p>
+<div class="formula">Var = Σ pᵢ · (xᵢ − VE)² = E[X²] − VE²</div>
+<details class="deep"><summary>Por dentro: cada símbolo del VE y la varianza</summary><div class="deep-body">
+<h4>Cómo leer VE = Σ pᵢ · xᵢ</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>X</td><td>La cantidad aleatoria: un número que no conocerás hasta que ocurra el evento, como la tirada de un dado.</td></tr>
+<tr><td>i</td><td>Una etiqueta para cada resultado posible: 1, 2, 3… En un dado, i va de 1 a 6.</td></tr>
+<tr><td>xᵢ</td><td>El pago del resultado i. En un dado, x₁ = 1, x₂ = 2 … x₆ = 6.</td></tr>
+<tr><td>pᵢ</td><td>La probabilidad del resultado i, entre 0 y 1. Todas las pᵢ juntas suman exactamente 1.</td></tr>
+<tr><td>pᵢ · xᵢ</td><td>La aportación de ese resultado a la media.</td></tr>
+<tr><td>Σ</td><td>Sigma mayúscula griega, que significa «sumar para cada i»: haz lo mismo con cada resultado y suma.</td></tr>
+<tr><td>VE, E[X], μ</td><td>Tres nombres para la misma respuesta. μ (mu) es el símbolo habitual al usarlo dentro de otras fórmulas.</td></tr>
+</tbody></table></div>
+<p><b>¿Por qué multiplicar por p?</b> Imagina tirar un dado 600 veces. Sale cada cara unas 100 veces, así que el total es aproximadamente 100·1 + 100·2 + … + 100·6 = 2.100, y la media es 2.100 ÷ 600 = 3,5. Divide cada recuento entre 600 y los recuentos se convierten en probabilidades: (1/6)·1 + (1/6)·2 + … + (1/6)·6. El VE es una media corriente en la que cada resultado cuenta según la frecuencia con que ocurre.</p>
+<h4>Cómo leer Var(X) = Σ pᵢ · (xᵢ − μ)²</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>μ</td><td>El VE de arriba: el centro de los resultados.</td></tr>
+<tr><td>xᵢ − μ</td><td>La <b>desviación</b>: a qué distancia del centro cae el resultado i. Negativa significa por debajo del centro.</td></tr>
+<tr><td>( … )²</td><td>La <b>desviación al cuadrado</b>. Elevar al cuadrado hace positiva cada distancia y castiga mucho más los fallos grandes que los pequeños (un fallo de 3 cuenta 9; uno de 1 cuenta 1).</td></tr>
+<tr><td>pᵢ · ( … )²</td><td>Cada fallo al cuadrado, ponderado por su frecuencia.</td></tr>
+<tr><td>Σ</td><td>Súmalos. La varianza es la <b>distancia media al cuadrado respecto al centro</b>.</td></tr>
+<tr><td>σ = √Var</td><td>Desviación típica (sigma minúscula). La raíz cuadrada deshace el cuadrado, así que el resultado vuelve a las unidades del pago (puntos, dólares) y puedes compararlo con el VE.</td></tr>
+</tbody></table></div>
+<p><b>¿Por qué elevar al cuadrado en vez de promediar las desviaciones?</b> Porque la desviación media simple es <i>siempre exactamente cero</i>. El centro se define como el punto de equilibrio, así que los fallos por arriba y por abajo se cancelan. La tabla de abajo lo demuestra: la columna p·(x − μ) siempre suma 0. Podrías usar la distancia absoluta |x − μ|, pero los cuadrados tienen una propiedad que hace que todo lo demás funcione: las varianzas de cantidades independientes se suman. De ahí sale la regla de √n.</p>
+<p><b>Por qué funciona el atajo E[X²] − μ².</b> E[X²] significa «la media de los pagos al cuadrado», Σ pᵢxᵢ². Desarrolla (x − μ)² = x² − 2μx + μ² y promedia cada término: E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ². Para un dado: 91/6 − 3,5² = 15,17 − 12,25 = 2,92.</p>
+</div></details>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Uniforme 1…n → (n+1)/2.</b> Dado 3,5; carta (A=1…K=13) 7.</li>
+<li><b>Varianza de un dado = 35/12 ≈ 2,92</b>, σ ≈ 1,71. Varianza de una carta = 14, σ ≈ 3,74.</li>
+<li><b>Las probabilidades deben sumar 1.</b> Compruébalo primero, siempre.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/g-board.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Tablero de apuestas · Edge Lab</title>
+<meta content="Tablero de apuestas: Detecta cuotas mal valoradas y asegura el arbitraje." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-board.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-board.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-board.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-board.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-board.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-board.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Tablero de apuestas · Edge Lab" property="og:title"/>
+<meta content="Tablero de apuestas: Detecta cuotas mal valoradas y asegura el arbitraje." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/g-board.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-board" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de trading · 8/8</small><b>Tablero de apuestas</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="g-board">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · apuesta a los precios erróneos <span class="stat" id="bbTot">Esperado 0.000 · realizado 0.00</span></div>
+<div class="screen"><div class="dim lbl">Tablero de cuotas · dos dados · apuesta 1 a cada línea que elijas</div><div class="tbl"><table class="term" id="bbTable"></table></div></div>
+<div class="scene" id="bbScene" style="margin-top:12px"><div class="lbl">La tirada</div><div class="items" id="bbDice"></div><div class="settle" id="bbMsg"></div></div>
+<div class="row"><button class="go" id="bbSubmit">Confirmar y tirar</button><button id="bbNew">Nuevo tablero</button></div>
+<div class="out" id="bbOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Mesa · arbitraje entre dos casas</div>
+<div class="row"><label for="arA">Cuota de la casa A a X</label><input id="arA" step="0.01" type="number" value="2.10"/><label for="arB">Cuota de la casa B a no-X</label><input id="arB" step="0.01" type="number" value="2.05"/><label for="arS">Apuesta total</label><input id="arS" type="number" value="100"/></div>
+<div class="out" id="arOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="g-hilo.html">← Mayor o menor</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="p-odds.html">Pot odds →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de trading</small><h2 id="tutTitle">Tablero de apuestas</h2><div class="tags"><span class="tag">Habilidad: probabilidad implícita, margen de la casa, arbitraje</span><span class="tag">Empresa afín: ronda de apuestas de Optiver</span></div></div>
+<div class="tut-b"><p>Un tablero ofrece cuotas decimales sobre resultados de dos dados. Una cuota decimal d paga d por cada 1 apostado (apuesta incluida), así que la probabilidad implícita es 1/d. Apuesta a una línea solo cuando tu probabilidad real la supera.</p>
+<div class="formula">VE por 1 apostado = p · d − 1 p implícita = 1/d margen = Σ 1/d − 1</div>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Sumas de dos dados: formas = 6 − |7 − s|.</b> El 7 tiene 6 de 36; el 2 y el 12 tienen 1.</li>
+<li><b>Σ 1/d &lt; 1 en todos los resultados → arbitraje.</b> Apuesta a cada uno en proporción a 1/d.</li>
+<li><b>Apuesta si d &gt; 1/p.</b> Un evento de 1 entre 6 necesita una cuota superior a 6,0.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="index.html" data-root="../ja/" data-site="../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Edge Lab · トレーディング面接ゲーム</title>
+<meta content="トレーディング面接対策のための3Dカジノ。マーケットメイク、ETFアービトラージ、ベイズ、ケリー基準、ポーカーの数学に加え、リーダーボード付きのデイリー・ガントレット。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/index.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/index.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/index.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/index.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/index.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/index.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Edge Lab · トレーディング面接ゲーム" property="og:title"/>
+<meta content="トレーディング面接対策のための3Dカジノ。マーケットメイク、ETFアービトラージ、ベイズ、ケリー基準、ポーカーの数学に加え、リーダーボード付きのデイリー・ガントレット。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/index.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="lobby-page">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-lobby"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a class="brand" href="index.html"><i aria-hidden="true"></i>Edge Lab</a>
+<div class="tb-r"><span class="tb-prog" id="progTxt"></span><button class="tb-btn gold" hidden="" id="installBtn">アプリをインストール</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button></div>
+</header>
+<main class="lobby" data-scene="fan">
+<div class="lobby-l">
+<div class="kicker">トレーディング面接対策 · アフターアワーズ</div>
+<h1>ハウスはオッズを知っている。<b>今度はあなたも。</b></h1>
+<p class="lede">テーブルを選ぼう。どのゲームも全画面で開き、初回だけブリーフィングが表示されます。</p>
+<div class="daily-row"><a class="daily-cta" data-nav="" href="play/daily.html"><span class="k">デイリー・ガントレット <b id="dailyNo"></b></span><span class="t">10問。全員が同じ問題。ランキング挑戦は1日1回。</span><span aria-hidden="true" class="go">今日の挑戦 →</span></a>
+<a class="lb-link" data-nav="" href="play/leaderboard.html"><span class="k">リーダーボード</span><span class="t">今日と累計</span></a></div>
+<div aria-label="ルーム" class="tabs" role="tablist"><button aria-controls="floor-trade" class="tab" data-tab="trade" id="tab-trade" role="tab">トレーディングフロア <span>8</span></button><button aria-controls="floor-poker" class="tab" data-tab="poker" id="tab-poker" role="tab">ポーカールーム <span>5</span></button><button aria-controls="floor-study" class="tab" data-tab="study" id="tab-study" role="tab">スタディホール <span>6</span></button></div>
+<ul aria-labelledby="tab-trade" class="floor" hidden="" id="floor-trade" role="tabpanel"><li><a data-preview="deal" href="play/g-card.html"><span class="no">01</span><span class="nm">カードゲーム</span><span class="tick" data-for="g-card"></span><span class="ds">ランダムな契約に値付け。買うか、売るか、見送るか。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="dice" href="play/g-dice.html"><span class="no">02</span><span class="nm">サイコロのマーケットメイク</span><span class="tick" data-for="g-dice"></span><span class="ds">3つのサイコロに気配を出し、情報を持つ相手を乗り切る。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="trade" href="play/g-trade.html"><span class="no">03</span><span class="nm">トレーディングゲーム</span><span class="tick" data-for="g-trade"></span><span class="ds">伏せられた5枚。1枚めくるたびに値付けし直す。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="chips" href="play/g-etf.html"><span class="no">04</span><span class="nm">ETFアービトラージ</span><span class="tick" data-for="g-etf"></span><span class="ds">NAVと価格を比較、制限時間15秒。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="bell" href="play/g-fermi.html"><span class="no">05</span><span class="nm">フェルミ推定</span><span class="tick" data-for="g-fermi"></span><span class="ds">調べられない問いに90%区間で答える。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="chips" href="play/g-event.html"><span class="no">06</span><span class="nm">イベント契約</span><span class="tick" data-for="g-event"></span><span class="ds">ベイズで更新し、Yes/No契約の気配を出す。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="hilo" href="play/g-hilo.html"><span class="no">07</span><span class="nm">ハイ・オア・ロー</span><span class="tick" data-for="g-hilo"></span><span class="ds">デッキを数え、ケリー基準で賭け金を決める。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="dice" href="play/g-board.html"><span class="no">08</span><span class="nm">ベッティングボード</span><span class="tick" data-for="g-board"></span><span class="ds">ズレたオッズを見抜き、裁定で利益を確定。</span><span aria-hidden="true" class="go">プレイ →</span></a></li></ul><ul aria-labelledby="tab-poker" class="floor" hidden="" id="floor-poker" role="tabpanel"><li><a data-preview="poker" href="play/p-odds.html"><span class="no">01</span><span class="nm">ポットオッズ</span><span class="tick" data-for="p-odds"></span><span class="ds">コールかフォールドか：エクイティと価格を比べる。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="poker" href="play/p-equity.html"><span class="no">02</span><span class="nm">エクイティ計算機</span><span class="tick" data-for="p-equity"></span><span class="ds">任意のハンド同士を2万回シミュレーション。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="poker" href="play/p-bluff.html"><span class="no">03</span><span class="nm">ブラフの数学</span><span class="tick" data-for="p-bluff"></span><span class="ds">ブラフはどれだけ成功すべきか、どれだけ守るべきか。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="poker" href="play/p-rules.html"><span class="no">04</span><span class="nm">ルールと役の強さ</span><span class="tick" data-for="p-rules"></span><span class="ds">参考：テキサスホールデムの遊び方。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="deck" href="play/p-sites.html"><span class="no">05</span><span class="nm">練習できる場所</span><span class="tick" data-for="p-sites"></span><span class="ds">参考：ソルバー、シミュレーター、プレイマネーのテーブル。</span><span aria-hidden="true" class="go">プレイ →</span></a></li></ul><ul aria-labelledby="tab-study" class="floor" hidden="" id="floor-study" role="tabpanel"><li><a data-preview="dice" href="play/ev.html"><span class="no">01</span><span class="nm">期待値</span><span class="tick" data-for="ev"></span><span class="ds">どんな賭けにも値を付け、分散を観察する。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="bell" href="play/linear.html"><span class="no">02</span><span class="nm">線形性とばらつき</span><span class="tick" data-for="linear"></span><span class="ds">リスクがnの平方根で増える理由。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="dice" href="play/stopping.html"><span class="no">03</span><span class="nm">止めるか、続けるか</span><span class="tick" data-for="stopping"></span><span class="ds">サイコロで学ぶ最適停止。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="chips" href="play/bayes.html"><span class="no">04</span><span class="nm">オッズ形式のベイズ</span><span class="tick" data-for="bayes"></span><span class="ds">事前オッズ × 尤度比 = 事後。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="chips" href="play/kelly.html"><span class="no">05</span><span class="nm">ケリー基準のベットサイズ</span><span class="tick" data-for="kelly"></span><span class="ds">エッジがあるとき、いくら賭けるべきか。</span><span aria-hidden="true" class="go">プレイ →</span></a></li><li><a data-preview="bell" href="play/bridge.html"><span class="no">06</span><span class="nm">金融と計量経済学</span><span class="tick" data-for="bridge"></span><span class="ds">t統計量：腕前を証明するには何ハンド必要か。</span><span aria-hidden="true" class="go">プレイ →</span></a></li></ul>
+<p class="foot"><a href="https://www.tradermath.org/market-games" rel="noopener" target="_blank">Tradermathのマーケットゲーム</a>をもとに設計。明記した確率は厳密値、エクイティはシミュレーションによる値です。<a href="https://github.com/geraldchen56-droid/edge-lab" rel="noopener" target="_blank">GitHubのソースコード</a>。</p>
+</div>
+<div aria-live="polite" class="stagehud" data-hud=""></div>
+</main>
+<dialog aria-labelledby="ihTitle" class="tut sm" id="installHelp"><div class="tut-in">
+<div class="tut-h"><small>インストール</small><h2 id="ihTitle">Edge Labをアプリとして使う</h2></div>
+<div class="tut-b"><p><b>iPhone・iPad（Safari）：</b>共有をタップし、<b>ホーム画面に追加</b>を選びます。</p><p><b>Android（Chrome）：</b>⋮メニューから<b>アプリをインストール</b>を選びます。</p><p><b>パソコン（ChromeまたはEdge）：</b>アドレスバー右側のインストールアイコンをクリックします。</p><p>専用アイコンから全画面で開き、オフラインでもゲームを遊べます。</p></div>
+<div class="tut-f"><span></span><button class="chip-btn" data-close="">OK</button></div>
+</div></dialog>
+<script src="../i18n/ja.js"></script>
+<script src="../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../auth.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

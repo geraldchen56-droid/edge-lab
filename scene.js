@@ -9,6 +9,7 @@ try{renderer=new THREE.WebGLRenderer({canvas:stage,antialias:true,powerPreferenc
 if(!renderer.getContext()){fail();return}
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isSmall=()=>innerWidth<760;
+const T=window.T||(s=>s);
 const sfx=t=>{try{window.ELsfx&&window.ELsfx(t)}catch(e){}};
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,isSmall()?1.5:2));
 renderer.setSize(innerWidth,innerHeight,false);
@@ -153,7 +154,7 @@ const S={
   fan(){camTo(0,3.9,12.6,0,2.5,0,-2.5);const used=new Set();
     for(let i=0;i<FAN;i++){used.add(i);const t=fanSlot(i);move(cards[i],t.p,t.r,{dur:1.15,delay:.25+i*.045})}
     hero.drawn=-1;restCards(used);restChips();restDice();
-    say("Pick any card from the fan. I'll tell you the odds that the <b>next</b> card is higher.")},
+    say(T("Pick any card from the fan. I'll tell you the odds that the <b>next</b> card is higher."))},
   dice(){camTo(0,6.3,8.4,0,.2,.6);restCards();restChips();roll()},
   deal(){camTo(0,7,7.9,0,0,.9);restChips();restDice();dealRow(false)},
   trade(){camTo(0,7,7.9,0,0,.9);restChips();restDice();dealRow(true)},
@@ -164,14 +165,14 @@ const S={
   deck(){camTo(0,7.6,10.6,0,0,0);restCards();restChips();restDice()}
 };
 function heroDraw(i){
-  if(hero.drawn===i){const t=fanSlot(i);move(cards[i],t.p,t.r,{dur:.8});hero.drawn=-1;say("Card returned. Pick another.");return}
+  if(hero.drawn===i){const t=fanSlot(i);move(cards[i],t.p,t.r,{dur:.8});hero.drawn=-1;say(T("Card returned. Pick another."));return}
   if(hero.drawn>=0){const j=hero.drawn,t=fanSlot(j);move(cards[j],t.p,t.r,{dur:.8})}
   if(hero.deck.length<8)hero.deck=shuffled();
   const [r,s]=hero.deck.pop(),c=cards[i];setFace(c,r,s);hero.drawn=i;
   move(c,[.1,2.6,5.6],[-.1,0,0],{dur:1.05,scale:1.55});sfx("deal");
   const n=hero.deck.length,hi=hero.deck.filter(x=>x[0]>r).length,lo=hero.deck.filter(x=>x[0]<r).length,eq=n-hi-lo;
   const p=Math.max(hi,lo)/n,side=hi>=lo?"higher":"lower",k=Math.max(0,2*p-1);
-  later(()=>say(`You drew ${nm(r,s)}. Of the ${n} cards left, ${hi} are higher, ${lo} lower and ${eq} tie.<br>P(${side}) = ${Math.max(hi,lo)}/${n} = <b>${(p*100).toFixed(1)}%</b>. At even money, Kelly stakes 2p − 1 = <b>${(k*100).toFixed(0)}%</b> on ${side}.${k===0?" No edge: don't bet.":""}`),500)}
+  later(()=>say(T("You drew {0}. Of the {1} cards left, {2} are higher, {3} lower and {4} tie.",nm(r,s),n,hi,lo,eq)+"<br>"+T(hi>=lo?"P(higher) = {0}/{1} = {2}. At even money, Kelly stakes 2p − 1 = {3} on higher.":"P(lower) = {0}/{1} = {2}. At even money, Kelly stakes 2p − 1 = {3} on lower.",Math.max(hi,lo),n,`<b>${(p*100).toFixed(1)}%</b>`,`<b>${(k*100).toFixed(0)}%</b>`)+(k===0?" "+T("No edge: don't bet."):"")),500)}
 function roll(){const out=[];sfx("roll");
   dice.forEach((d,k)=>{const v=1+Math.floor(Math.random()*6),yaw=Math.random()*PI*2;d.v=v;out.push(v);
     const P=d.g.position,R=d.g.rotation,tx=k?.75:-.55,tz=k?.55:1.25;kill(P);kill(R);

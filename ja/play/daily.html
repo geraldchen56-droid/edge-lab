@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/daily.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>デイリー・ガントレット · Edge Lab</title>
+<meta content="トレーディング面接の10問。毎日全員が同じ問題：フェアバリュー、ポットオッズ、ETFアービトラージ、ベイズ、ケリー。スコア、連続記録、リーダーボード付き。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/daily.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/daily.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/daily.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/daily.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/daily.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/daily.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="デイリー・ガントレット · Edge Lab" property="og:title"/>
+<meta content="トレーディング面接の10問。毎日全員が同じ問題：フェアバリュー、ポットオッズ、ETFアービトラージ、ベイズ、ケリー。スコア、連続記録、リーダーボード付き。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/daily.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page daily-page" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>Edge Lab · <span id="gxNoTop">デイリー</span></small><b>デイリー・ガントレット</b></div>
+<div class="tb-r"><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game gx" id="game">
+<section class="desk gx-card" id="gxIntro">
+<div class="desk-h">デイリー・ガントレット <span class="hud"><span class="pill" id="gxNo"></span><span class="pill" id="gxDate"></span></span></div>
+<h2 class="gx-title">10問。<b>全員が同じ問題。</b></h2>
+<ul class="gx-rules">
+<li>フェアバリュー、ポットオッズ、ETFアービトラージ、ベイズ、ケリー、ブラフなどから1問ずつ。</li>
+<li>1問30秒。キーボードの1〜4でも回答できます。</li>
+<li>正解1問につき80点、さらにスピードで最大200点。満点は1,000点。</li>
+<li>ランキング挑戦は1日1回。ガントレットはUTC 00:00にリセットされます。</li>
+</ul>
+<p class="gx-status" id="gxStatus"></p>
+<p class="gx-streak" id="gxStreak"></p>
+<div class="row"><button class="chip-btn" id="gxStart">スタート</button><a class="tb-btn" data-nav="" href="leaderboard.html">リーダーボード</a></div>
+</section>
+<section class="desk gx-card" hidden="" id="gxPlay">
+<div class="gx-top"><span id="gxIdx"></span><span class="gx-dots" id="gxDots"></span><span class="gx-clock" id="gxClock">0.0s</span></div>
+<div class="timer gx-timer"><i id="gxBar"></i></div>
+<span class="gx-tag" id="gxTag"></span>
+<p aria-live="polite" class="gx-q" id="gxQ"></p>
+<div class="gx-vis" id="gxVis"></div>
+<div class="gx-opts" id="gxOpts"></div>
+</section>
+<section class="desk gx-card" hidden="" id="gxDone">
+<div class="desk-h">結果 <span class="hud"><span class="pill" id="gxNext"></span></span></div>
+<div class="gx-res"><div><div class="gx-score" id="gxScore"></div><div class="gx-of" id="gxOf"></div></div><div class="gx-grid" id="gxGrid"></div></div>
+<p class="gx-note" id="gxNote"></p>
+<p class="gx-streak" id="gxStreakEnd"></p>
+<div class="gx-share"><button class="li" id="gxLinkedIn"><svg aria-hidden="true" height="16" viewbox="0 0 24 24" width="16"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" fill="currentColor"></path></svg><span>LinkedInでシェア</span></button><button id="gxImg">結果画像を保存</button><button id="gxCopy">テキストをコピー</button><span aria-live="polite" class="dim small" id="gxShareMsg"></span></div>
+<div class="gx-cols">
+<div><h3>今日のトップ10</h3><div id="gxTop"></div><a class="more" data-nav="" href="leaderboard.html">リーダーボード全体 →</a></div>
+<div id="gxReviewWrap"><h3>振り返り</h3><ol class="gx-review" id="gxReview"></ol></div>
+</div>
+<div class="row"><button id="gxAgain">練習としてもう一度</button><a class="tb-btn" data-nav="" href="../index.html">すべてのテーブル</a></div>
+</section>
+</div>
+</main>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+<script src="../../gauntlet.js"></script>
+</body>
+</html>

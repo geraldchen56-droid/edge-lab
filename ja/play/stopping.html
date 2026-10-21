@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/stopping.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>止めるか、続けるか · Edge Lab</title>
+<meta content="止めるか、続けるか：サイコロで学ぶ最適停止。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/stopping.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/stopping.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/stopping.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/stopping.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="止めるか、続けるか · Edge Lab" property="og:title"/>
+<meta content="止めるか、続けるか：サイコロで学ぶ最適停止。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/stopping.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="stopping" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 3/6</small><b>止めるか、続けるか</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="stopping">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 振り直しゲームのソルバー</div>
+<div class="row"><label for="stS">サイコロの面数</label><select id="stS"><option>4</option><option selected="">6</option><option>8</option><option>10</option><option>12</option><option>20</option></select>
+<label for="stK">振り直せる回数</label><input id="stK" max="8" min="0" type="range" value="1"/><span class="stat" id="stKv">1</span></div>
+<div class="tbl"><table id="stTable"></table></div>
+<div class="out" id="stOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="linear.html">← 線形性とばらつき</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="bayes.html">オッズ形式のベイズ →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">止めるか、続けるか</h2><div class="tags"><span class="tag">使う場面：面接の期待値パズル、ハイ・オア・ロー</span></div></div>
+<div class="tut-b"><p>ゲーム中に選択できるときは、最後の判断から逆向きに解きます。各段階で、手元の値が続けた場合の期待値を上回るならそれを残します。</p>
+<div class="formula">V₀ = (s+1)/2 Vₖ = E[ max(X, Vₖ₋₁) ]</div>
+<p>Vₖ は、s面のサイコロで振り直しがk回残っているときのゲームの価値です。しきい値ルールは、Vₖ₋₁ より厳密に大きい目なら残す、です。</p>
+<details class="deep"><summary>仕組み：Vₖ = E[ max(X, Vₖ₋₁) ] の読み方</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>s</td><td>サイコロの面の数。</td></tr>
+<tr><td>Vₖ</td><td>振り直しがk回残っていて、最適にプレイしたときのゲームの価値。</td></tr>
+<tr><td>V₀ = (s+1)/2</td><td>振り直しが残っていなければ次の目を受け入れるしかないので、ゲームの価値は1回振ったときのふつうの期待値です。</td></tr>
+<tr><td>X</td><td>これから見る目。</td></tr>
+<tr><td>Vₖ₋₁</td><td>この目を捨てた場合の価値：振り直しが1回少ない同じゲーム。</td></tr>
+<tr><td>max(X, Vₖ₋₁)</td><td>Xを見たあとの利得：Xを残すか、残りのゲームと交換するか。大きいほうを取ります。</td></tr>
+<tr><td>E[ … ]</td><td>出うるすべての目について、その利得を平均します。</td></tr>
+</tbody></table></div>
+<h4>計算例：6面サイコロ、振り直し1回</h4>
+<p>V₀ = 3.5。1、2、3なら振り直し（価値3.5）のほうが良いので max = 3.5。4、5、6なら残す。よって V₁ = (3.5 + 3.5 + 3.5 + 4 + 5 + 6) ÷ 6 = 25.5 ÷ 6 = <b>4.25</b>。</p>
+<p>振り直し2回ならしきい値は4.25に上がり、残すのは5と6だけ：V₂ = (4 × 4.25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4.67</b>。</p>
+<p><b>なぜ逆向きに解くのか？</b>続けた場合の価値が分からなければ、最初の判断を評価できません。続きが分かっているのは最後の判断（ふつうの期待値）だけなので、そこから1歩ずつ戻ります。この方法は後ろ向き帰納法と呼ばれ、アメリカンオプションを二項ツリーで評価する方法そのものです。各ノードで、今すぐ行使するか保有を続けるかの大きいほうを取ります。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>6面サイコロ、振り直し1回 = 4.25。</b>2回 = 4.67。この2つは暗記しよう。</li>
+<li><b>目 &gt; 続けた場合の価値なら残す。</b>全体の平均と比べてはいけません。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

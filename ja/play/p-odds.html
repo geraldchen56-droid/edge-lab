@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/p-odds.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ポットオッズ · Edge Lab</title>
+<meta content="ポットオッズ：コールかフォールドか：エクイティと価格を比べる。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-odds.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-odds.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-odds.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-odds.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="ポットオッズ · Edge Lab" property="og:title"/>
+<meta content="ポットオッズ：コールかフォールドか：エクイティと価格を比べる。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/p-odds.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="p-odds" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>ポーカールーム · 1/5</small><b>ポットオッズ</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="p-odds">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · コールかフォールドか <span class="hud"><span class="pill" id="poScore">正解 0/0</span><span class="pill" id="poChips">チップ +0</span></span></div>
+<div class="ptable" id="poTable">
+<div class="seat-lbl">相手</div>
+<div class="items" id="poVill"></div>
+<div class="chipline" id="poBet"></div>
+<div class="items" id="poBoard"></div>
+<div class="chipline" id="poPot"></div>
+<div class="items" id="poHero"></div>
+<div class="seat-lbl">あなた</div>
+<div class="pstamp" id="poStamp"></div>
+</div>
+<div id="poQ" style="font-size:17px;margin-top:10px"></div>
+<div class="row"><button class="buy" id="poCall">コール</button><button class="sell" id="poFold">フォールド</button><button class="go" id="poNext">次の局面</button></div>
+<div class="out" id="poOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="g-board.html">← ベッティングボード</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="p-equity.html">エクイティ計算機 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · ポーカールーム</small><h2 id="tutTitle">ポットオッズ</h2></div>
+<div class="tut-b"><p>ベットを受けたとき、勝つ確率（エクイティ）が最終ポットのうち自分が出す割合を上回るなら、コールはプラス期待値です。</p>
+<div class="formula">必要エクイティ = コール額 ÷（コール後のポット）= B ÷ (P + 2B)</div>
+<p>アウツとは、自分のハンドを勝ちに変える未知のカードです。残り1枚ならエクイティ ≈ アウツ × 2%。残り2枚（フロップでオールイン）ならエクイティ ≈ アウツ × 4%。ターンでの1枚の厳密なエクイティはアウツ ÷ 46。</p>
+<div class="tbl"><table><thead><tr><th>ドロー</th><th class="n">アウツ</th><th class="n">1枚</th><th class="n">2枚</th></tr></thead><tbody>
+<tr><td>ガットショット</td><td class="n">4</td><td class="n">~9%</td><td class="n">~17%</td></tr>
+<tr><td>オーバーカード2枚</td><td class="n">6</td><td class="n">~13%</td><td class="n">~24%</td></tr>
+<tr><td>オープンエンド</td><td class="n">8</td><td class="n">~17%</td><td class="n">~32%</td></tr>
+<tr><td>フラッシュドロー</td><td class="n">9</td><td class="n">~20%</td><td class="n">~35%</td></tr>
+<tr><td>フラッシュ + オープンエンド</td><td class="n">15</td><td class="n">~33%</td><td class="n">~54%</td></tr>
+</tbody></table></div>
+<details class="deep"><summary>仕組み：B ÷ (P + 2B) の読み方</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>P</td><td>相手がベットする前のポット。</td></tr>
+<tr><td>B</td><td>相手のベット額。コールするのに必要な額でもあります。</td></tr>
+<tr><td>P + 2B</td><td>コールしたときの最終ポット：元のポット、相手のベット、あなたのコール。</td></tr>
+<tr><td>B ÷ (P + 2B)</td><td>最終ポットのうち自分のお金の割合。最低でもその頻度で勝たないと損益分岐に届きません。</td></tr>
+<tr><td>エクイティ</td><td>この局面からポットを獲得する確率。</td></tr>
+</tbody></table></div>
+<p><b>理由。</b>コールの期待値 = エクイティ × (P + B) − (1 − エクイティ) × B。中央にある (P + B) を勝ち取るか、コールした B を失うかです。これを0と置いて解くと、エクイティ = B ÷ (P + 2B)。例：ポット100、ベット50 → 50 ÷ 200 = 25%。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>ハーフポットベット → 25%必要。</b>ポットベット → 33%。3分の2ポット → 28.6%。</li>
+<li><b>フロップのフラッシュドロー対ハーフポットベット：</b>次の1枚で完成するのは約20%なので、純粋なポットオッズではフォールド。インプライドオッズ（完成後に得られる額）次第でコールになり得ます。</li>
+<li><b>4倍ルールは2枚とも見られるとき</b>、つまりオールインのときだけ使えます。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

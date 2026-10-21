@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-fermi.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>费米估算 · Edge Lab</title>
+<meta content="费米估算：为查不到答案的问题给出 90% 区间。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-fermi.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-fermi.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-fermi.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-fermi.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="费米估算 · Edge Lab" property="og:title"/>
+<meta content="费米估算：为查不到答案的问题给出 90% 区间。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-fermi.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-fermi" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 5/8</small><b>费米估算</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-fermi">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 90% 区间 <span class="stat" id="fmTot">命中 0/0 · 得分 0</span></div>
+<div id="fmQ" style="font-size:18px;font-weight:600"></div>
+<div class="row"><label for="fmLo">下限</label><input id="fmLo" placeholder="e.g. 2e6" type="text"/><label for="fmHi">上限</label><input id="fmHi" placeholder="e.g. 4e7" type="text"/><button class="go" id="fmSub">提交</button><button id="fmNext">下一题</button></div>
+<div class="scene" style="padding:8px 10px"><canvas aria-label="对数刻度数轴" class="felt" height="120" id="fmCanvas" width="760"></canvas></div>
+<div class="row small mono"><span style="color:var(--muted)">校准度（目标 10 题中 9 题）：</span><span id="fmDots"></span></div>
+<div class="out" id="fmOut">支持科学计数法：3e5 = 300,000。也可以用 25m、8bn 这样的简写。</div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-etf.html">← ETF 套利</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="g-event.html">事件合约 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">费米估算</h2><div class="tags"><span class="tag">技能：拆解问题、校准区间</span><span class="tag">对应公司：大多数自营交易公司</span></div></div>
+<div class="tut-b"><p>给出一个你有 <b>90% 把握</b>包含真实答案的区间。答对且区间窄就得分。题目多了以后，大约 10 题中应有 9 题落在区间内。如果只有 5 题落在里面，说明你过度自信，放在交易里就是报价太窄。</p>
+<ul class="steps"><li>把数量拆成你能猜的因子（人数 × 频率 × 时间）。</li><li>用 10 的幂来估算；指数相加即相乘。</li><li>根据每个因子的不确定性设定区间，再检验：你愿意以 9 赔 1 押注它吗？</li></ul>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>一年的秒数 ≈ π × 10⁷。</b>一生的天数 ≈ 30,000。</li>
+<li><b>区间宽度 = log₁₀(上限/下限)。</b>一个数量级是合理的默认值。</li>
+<li><b>命中率低于 90% → 下次放宽。</b>校准比精确更重要。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

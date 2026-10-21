@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/p-rules.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>规则与牌型 · Edge Lab</title>
+<meta content="规则与牌型：参考：德州扑克怎么玩。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-rules.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-rules.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-rules.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-rules.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="规则与牌型 · Edge Lab" property="og:title"/>
+<meta content="规则与牌型：参考：德州扑克怎么玩。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/p-rules.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page ref-page" data-game="p-rules" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>扑克室 · 4/5</small><b>规则与牌型</b></div>
+<div class="tb-r"><button aria-pressed="false" class="tb-btn" data-done="p-rules">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<article class="desk ref"><ul class="steps">
+<li><b>盲注：</b>庄家按钮左边的两位玩家下小盲和大盲（例如 1 和 2）。按钮每手轮转。</li>
+<li><b>翻牌前：</b>每人发两张底牌。从大盲左边开始行动：弃牌、跟注或加注。</li>
+<li><b>翻牌、转牌、河牌：</b>先发三张，再一张，再一张公共牌。每次之后都有一轮下注。</li>
+<li><b>摊牌：</b>用你的两张底牌加五张公共牌组成的最佳五张牌赢下底池。</li>
+<li><b>无限注：</b>你随时可以下任意金额，最多到全部筹码。</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>牌型</th><th>例子</th><th class="n">7 张牌中出现的概率</th></tr></thead>
+<tbody>
+<tr><td>同花顺</td><td class="mono">9♥ 8♥ 7♥ 6♥ 5♥</td><td class="n">0.03%</td></tr>
+<tr><td>四条</td><td class="mono">Q Q Q Q 4</td><td class="n">0.17%</td></tr>
+<tr><td>葫芦</td><td class="mono">8 8 8 K K</td><td class="n">2.60%</td></tr>
+<tr><td>同花</td><td class="mono">A♠ J♠ 9♠ 6♠ 2♠</td><td class="n">3.03%</td></tr>
+<tr><td>顺子</td><td class="mono">T 9 8 7 6</td><td class="n">4.62%</td></tr>
+<tr><td>三条</td><td class="mono">7 7 7 K 3</td><td class="n">4.83%</td></tr>
+<tr><td>两对</td><td class="mono">J J 5 5 A</td><td class="n">23.5%</td></tr>
+<tr><td>一对</td><td class="mono">A A 9 6 3</td><td class="n">43.8%</td></tr>
+<tr><td>高牌</td><td class="mono">K J 8 5 2</td><td class="n">17.4%</td></tr>
+</tbody></table></div>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>越稀有越大。</b>同花比顺子大，因为它更稀有。</li>
+<li><b>大多数摊牌靠一对或两对获胜。</b>价值来自下注，而不是怪物牌。</li>
+</ul></div></article>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="p-bluff.html">← 诈唬数学</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="p-sites.html">练习平台 →</a></nav>
+</div>
+</main>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

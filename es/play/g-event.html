@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/g-event.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Contratos de eventos · Edge Lab</title>
+<meta content="Contratos de eventos: Actualiza con Bayes y luego cotiza un mercado sí/no." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-event.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-event.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-event.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-event.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-event.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-event.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Contratos de eventos · Edge Lab" property="og:title"/>
+<meta content="Contratos de eventos: Actualiza con Bayes y luego cotiza un mercado sí/no." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/g-event.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-event" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de trading · 6/8</small><b>Contratos de eventos</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="g-event">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · valora el evento <span class="stat" id="evcTot">P&amp;L 0 · calibración 0/0</span></div>
+<div id="evcQ" style="font-size:17px"></div>
+<div class="row"><label for="evcP">Tu probabilidad (%)</label><input id="evcP" max="99" min="1" type="number" value="50"/><button id="evcCheck">Comprobar estimación</button></div>
+<div class="row"><label for="evcBid">Bid (¢)</label><input id="evcBid" type="number" value="40"/><label for="evcAsk">Ask (¢)</label><input id="evcAsk" type="number" value="60"/>
+<label for="evcInf">Proporción de informados</label><input id="evcInf" max="50" min="0" type="range" value="20"/><span class="stat" id="evcInfv">20%</span><button class="go" id="evcRun">Abrir mercado (40 traders)</button><button id="evcNext">Siguiente evento</button></div>
+<div class="duo">
+<div class="screen"><div class="dim lbl">Cinta de órdenes</div><div aria-live="off" class="tape" data-lenis-prevent="" id="evcTape"></div></div>
+<div class="scene" id="evcScene"><div class="lbl">Tu cotización en una escala de 0–100¢</div><canvas class="felt" height="130" id="evcGauge" width="400"></canvas><div class="settle" id="evcStamp"></div></div>
+</div>
+<div class="out" id="evcOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="g-fermi.html">← Estimación de Fermi</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="g-hilo.html">Mayor o menor →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de trading</small><h2 id="tutTitle">Contratos de eventos</h2><div class="tags"><span class="tag">Habilidad: actualización bayesiana, cotizar en probabilidad</span><span class="tag">Mesas de mercados de predicción</span></div></div>
+<div class="tut-b"><p>Un contrato SÍ paga 100 si el evento ocurre y 0 si no, así que su precio justo en céntimos es igual a la probabilidad. Partes de una tasa base, actualizas con la noticia usando odds × razón de verosimilitud y cotizas un mercado de doble sentido. Algunos traders ya saben la respuesta.</p>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Precio en céntimos = probabilidad.</b> Ventaja al comprar SÍ = p − ask.</li>
+<li><b>Los informados solo te ejecutan cuando te equivocas.</b> La amplitud debe cubrirlos.</li>
+<li><b>Cerca del 0 % o del 100 %, cotiza más estrecho en céntimos</b> porque hay menos margen de error.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

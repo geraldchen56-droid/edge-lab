@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/daily.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>每日挑战 · Edge Lab</title>
+<meta content="十道交易面试题，每天所有人相同：公允价值、底池赔率、ETF 套利、贝叶斯和凯利。有得分、连续天数和排行榜。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/daily.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/daily.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/daily.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/daily.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/daily.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/daily.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="每日挑战 · Edge Lab" property="og:title"/>
+<meta content="十道交易面试题，每天所有人相同：公允价值、底池赔率、ETF 套利、贝叶斯和凯利。有得分、连续天数和排行榜。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/daily.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page daily-page" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>Edge Lab · <span id="gxNoTop">每日</span></small><b>每日挑战</b></div>
+<div class="tb-r"><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game gx" id="game">
+<section class="desk gx-card" id="gxIntro">
+<div class="desk-h">每日挑战 <span class="hud"><span class="pill" id="gxNo"></span><span class="pill" id="gxDate"></span></span></div>
+<h2 class="gx-title">十道题。<b>所有人相同。</b></h2>
+<ul class="gx-rules">
+<li>公允价值、底池赔率、ETF 套利、贝叶斯、凯利、诈唬等，每类一题。</li>
+<li>每题 30 秒。可以按键盘 1–4 作答。</li>
+<li>每答对一题 80 分，速度另加最多 200 分。满分 1,000。</li>
+<li>每天一次排名机会。挑战在 UTC 00:00 重置。</li>
+</ul>
+<p class="gx-status" id="gxStatus"></p>
+<p class="gx-streak" id="gxStreak"></p>
+<div class="row"><button class="chip-btn" id="gxStart">开始</button><a class="tb-btn" data-nav="" href="leaderboard.html">排行榜</a></div>
+</section>
+<section class="desk gx-card" hidden="" id="gxPlay">
+<div class="gx-top"><span id="gxIdx"></span><span class="gx-dots" id="gxDots"></span><span class="gx-clock" id="gxClock">0.0s</span></div>
+<div class="timer gx-timer"><i id="gxBar"></i></div>
+<span class="gx-tag" id="gxTag"></span>
+<p aria-live="polite" class="gx-q" id="gxQ"></p>
+<div class="gx-vis" id="gxVis"></div>
+<div class="gx-opts" id="gxOpts"></div>
+</section>
+<section class="desk gx-card" hidden="" id="gxDone">
+<div class="desk-h">结果 <span class="hud"><span class="pill" id="gxNext"></span></span></div>
+<div class="gx-res"><div><div class="gx-score" id="gxScore"></div><div class="gx-of" id="gxOf"></div></div><div class="gx-grid" id="gxGrid"></div></div>
+<p class="gx-note" id="gxNote"></p>
+<p class="gx-streak" id="gxStreakEnd"></p>
+<div class="gx-share"><button class="li" id="gxLinkedIn"><svg aria-hidden="true" height="16" viewbox="0 0 24 24" width="16"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" fill="currentColor"></path></svg><span>分享到 LinkedIn</span></button><button id="gxImg">保存成绩图片</button><button id="gxCopy">复制文字</button><span aria-live="polite" class="dim small" id="gxShareMsg"></span></div>
+<div class="gx-cols">
+<div><h3>今日前 10 名</h3><div id="gxTop"></div><a class="more" data-nav="" href="leaderboard.html">完整排行榜 →</a></div>
+<div id="gxReviewWrap"><h3>复盘</h3><ol class="gx-review" id="gxReview"></ol></div>
+</div>
+<div class="row"><button id="gxAgain">重玩练习</button><a class="tb-btn" data-nav="" href="../index.html">全部牌桌</a></div>
+</section>
+</div>
+</main>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+<script src="../../gauntlet.js"></script>
+</body>
+</html>

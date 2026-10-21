@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/g-dice.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>サイコロのマーケットメイク · Edge Lab</title>
+<meta content="サイコロのマーケットメイク：3つのサイコロに気配を出し、情報を持つ相手を乗り切る。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-dice.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-dice.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-dice.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-dice.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-dice.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-dice.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="サイコロのマーケットメイク · Edge Lab" property="og:title"/>
+<meta content="サイコロのマーケットメイク：3つのサイコロに気配を出し、情報を持つ相手を乗り切る。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/g-dice.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-dice" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>トレーディングフロア · 2/8</small><b>サイコロのマーケットメイク</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="g-dice">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · あなたがマーケットメイカー <span class="stat" id="mdTot">合計損益 0.00 · 0ラウンド</span></div>
+<div class="row"><label for="mdInf">情報を持つ相手の割合</label><input id="mdInf" max="60" min="0" type="range" value="25"/><span class="stat" id="mdInfv">25%</span></div>
+<div class="mm">
+<div class="scene" id="mdScene">
+<div class="lbl">サイコロ3個の合計で決済</div>
+<div class="items" id="mdDice"></div>
+<div class="lbl" style="margin-top:10px">トレーダー（N ノイズ · I 情報あり · ↑ アスクを買われた · ↓ ビッドに売られた）</div>
+<div class="queue" id="mdQueue"></div>
+<div class="settle" id="mdMsg"></div>
+</div>
+<div><div aria-label="価格ラダー" class="ladder" id="mdLadder"></div><div class="small mono" style="color:var(--muted);margin-top:4px">左のセルでビッド、右のセルでアスクを設定します。</div></div>
+</div>
+<div class="row"><label for="mdBid">あなたのビッド</label><input id="mdBid" step="0.5" type="number" value="9.5"/><label for="mdAsk">あなたのアスク</label><input id="mdAsk" step="0.5" type="number" value="11.5"/>
+<button class="go" id="mdNext">次のトレーダー</button><button id="mdNew">新しいラウンド</button></div>
+<div class="stats" id="mdStats"></div>
+<div class="out" id="mdOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="g-card.html">← カードゲーム</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="g-trade.html">トレーディングゲーム →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · トレーディングフロア</small><h2 id="tutTitle">サイコロのマーケットメイク</h2><div class="tags"><span class="tag">スキル：両建て値付け、スプレッド幅、在庫、イベントリスク</span><span class="tag">関連企業：Optiver、Flow Traders</span></div></div>
+<div class="tut-b"><p>今度はあなたが気配を出す番です。契約は<b>サイコロ3個の合計</b>で決済されます。5人のトレーダーが1人ずつ現れ、気配が気に入れば1枚取引します。大半はノイズトレーダーですが、サイコロを1個見ている人もいます。途中で1個のサイコロが全員に公開されます。</p>
+<ul class="steps">
+<li>気配をフェアバリューに<b>合わせる</b>（最初は10.5）。</li>
+<li><b>スプレッド幅</b>はリスクの対価。狭すぎれば情報を持つ相手に狙われ、広すぎれば誰も取引しません。</li>
+<li>約定したら気配を<b>傾ける</b>。売ったならショートなので、両方の価格を上げて次は買い戻しやすくします。</li>
+<li>サイコロが公開されたらすぐに<b>中心を合わせ直す</b>。フェア = 公開された目 + 7。</li>
+</ul>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>初期の幅 ≈ 未知部分の1σ。</b>サイコロ3個のσ ≈ 3.0なので±1〜±1.5。</li>
+<li><b>買われたら上げ、売られたら下げる。</b>両側を幅の4分の1ほど動かします。</li>
+<li><b>情報フローが多いほど幅を広く。</b>ノイズから稼ぐスプレッドで、情報を持つ相手への損失を賄う必要があります。</li>
+<li><b>目が分かればリスクは縮む：</b>未知のサイコロ2個のσ ≈ 2.4なので幅を狭めます。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

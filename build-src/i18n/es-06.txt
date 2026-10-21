@@ -1,0 +1,165 @@
+963c71d6|||En el flop tienes {0} ({1} outs). El bote es {2}. El rival apuesta {3} y va all-in (verás turn y river). Supón que solo ganas si ligas y que no ganas nada extra después.
+141df562|||En el flop tienes {0} ({1} outs). El bote es {2}. El rival apuesta {3}. Supón que solo ganas si ligas y que no ganas nada extra después.
+2c67b100|||Bayes
+8184d183|||Probabilidad previa {0}. La noticia que acabas de ver es {1} veces más probable si el evento es cierto que si es falso. ¿Probabilidad posterior?
+b2fc27d2|||Odds previas {0} × LR {1} = {2}. Posterior = {2} ÷ (1 + {2}) = {3}.
+7ea66d03|||Ganas con probabilidad {0}. Si ganas te pagan {1} a 1; si pierdes, pierdes lo apostado. ¿Qué parte del bankroll apuesta Kelly?
+705d82cb|||Mayor o menor
+926a5079|||Baraja nueva. Se muestra la primera carta. ¿Probabilidad de que la siguiente sea estrictamente mayor?
+ac84cd34|||{0} cartas son mayores que {1}, de las 51 restantes: {0} ÷ 51 = {2}.
+75ae955e|||Ganas {0} con probabilidad {1}/{2}; si no, pierdes {3}. ¿Valor esperado de la apuesta?
+3e28126f|||VE = {0} × {1} − {2} × {3} = {4}.
+ed4c335e|||Tablero de apuestas
+a43566a2|||Se tiran dos dados. «{0}» se ofrece a cuota decimal {1}. ¿Apuestas o pasas?
+454995eb|||Apostar
+3da47453|||Pasar
+67043264|||p = {0}/36 = {1}. p × cuota = {2}, {3}
+308b5829|||mayor que 1: VE positivo, apuesta.
+1b10228a|||menor que 1: VE negativo, pasa.
+324818eb|||Matemáticas del farol
+fac805a4|||Faroleas {0} a un bote de {1}. ¿Con qué frecuencia debe retirarse tu rival para que el farol no pierda dinero?
+c22c6a79|||Riesgo ÷ (riesgo + recompensa) = {0} ÷ ({0} + {1}) = {2}.
+fe971249|||Cálculo rápido
+e22e68c3|||Respuesta: {0}.
+858e9c1c|||Juegas como invitado.
+1f440419|||Tu puntuación no se guardará.
+4a0b7281|||Inicia sesión con Google
+6280fd88|||antes de empezar para entrar en la clasificación.
+aeca5e33|||Sesión iniciada.
+570bf474|||Tu primer intento de hoy cuenta para la clasificación. El reloj empieza al pulsar Empezar.
+030f8c3b|||Las clasificaciones están disponibles en la web publicada.
+6c957797|||Racha {0} · mejor {1} · {2} días jugados
+d1843ac7|||Ver el resultado de hoy
+558f4e17|||Hecho por hoy.
+45eed3d6|||Has sacado {0}. Vuelve mañana o repite para practicar.
+70eaf68e|||Tu reloj ya está corriendo.
+5c2aec68|||Empezaste a las {0}. Termina ahora para guardar tu puntuación.
+576766d3|||Jugar otra vez
+732d86be|||Pregunta {0} de {1}
+fba4315c|||{0}/10 aciertos
+7062a63d|||No guardado: {0}
+485d25e2|||Guardado. Hoy vas <b>n.º {0}</b>.
+38602882|||Puntuación guardada de hoy.
+88951082|||Partida de práctica: no se guarda.
+007a70ad|||Puntuación de invitado: no se guarda. Inicia sesión antes del desafío de mañana para entrar en la clasificación.
+c9ba7d24|||Se acabó el tiempo.
+968f158e|||Elegiste {0}.
+105a4d13|||Racha {0} 🔥
+033b3961|||Aún no hay puntuaciones hoy. Sé el primero.
+a3c6efa2|||Próximo desafío en {0}
+8aa0c6ef|||Desafío diario de Edge Lab n.º {0}: {1}/1000
+4b7f2128|||n.º {0} hoy
+f7f85965|||Diez preguntas de entrevista de trading al día: valor justo, pot odds, arbitraje de ETF, Bayes y Kelly.
+e02a512e|||EDGE LAB · DESAFÍO DIARIO N.º {0}
+8222f10d|||Copiado. Pégalo donde quieras.
+42a6c4ae|||Texto de la publicación copiado, por si LinkedIn no lo rellena.
+33ce4174|||Cargando…
+489f4877|||Puntos
+b12fcedc|||Respuestas
+6c82e6dd|||Tiempo
+b25928c6|||Total
+f6bb0f46|||Días
+77003d07|||Mejor
+ac4792cf|||Racha
+7e4f466c|||Aún no hay puntuaciones. Juega el desafío de hoy para ser el primero.
+8a2d7417|||Tú: {0} puntos en {1} días · mejor {2} · racha {3}
+50226017|||Aún no has terminado ningún desafío.
+792d65cb|||para aparecer en la clasificación.
+796703c9|||Una carta de una baraja de 52. A=1 … K=13. El contrato paga su valor.
+a9d6e0c9|||Suma de dos dados.
+f7a49dd0|||Máximo de dos dados.
+41ea790e|||Mínimo de dos dados.
+a40ce45f|||Número de caras en 10 lanzamientos de una moneda justa.
+299e1d31|||Suma de tres cartas repartidas sin reposición (A=1 … K=13).
+3d658666|||Producto de dos dados.
+9155d0b3|||El cuadrado de una tirada de dado.
+b3fd1cf0|||Número de tiradas hasta el primer 6 (incluido el 6).
+a0141b7e|||Número de lanzamientos de moneda hasta la primera cara.
+f7f88243|||Número de ases en una mano de 5 cartas.
+dea5d7cf|||Suma de un dado y una carta (A=1 … K=13).
+969c3339|||Número de caras distintas vistas en 3 tiradas de dado.
+e0187190|||Número de seises en 12 tiradas de dado.
+96f59288|||Uniforme 1–13: (1+13)/2 = 7.
+979aeb5f|||Linealidad: 3,5 + 3,5 = 7.
+695a7ded|||P(max ≤ k) = k²/36, así que P(max = k) = (2k−1)/36. VE = Σ k(2k−1)/36 = 161/36 ≈ 4,47.
+e123853d|||mín + máx = suma de ambos dados, así que mín = 7 − 4,47 = 91/36 ≈ 2,53.
+716a9713|||Linealidad: 10 × 0,5 = 5.
+7e2b4d2d|||La linealidad funciona sin independencia: 3 × 7 = 21.
+4cc75a5c|||Independientes, así que E[XY] = E[X]E[Y] = 3,5 × 3,5 = 12,25.
+c3cdfcf6|||(1+4+9+16+25+36)/6 = 91/6 ≈ 15,17. Ojo: E[X²] ≠ E[X]² = 12,25.
+8c9a572e|||Geométrica con p = 1/6: VE = 1/p = 6.
+9c2138a8|||Geométrica, p = 1/2: VE = 2.
+d74dd2db|||Cada carta es un as con prob. 4/52 = 1/13. Linealidad: 5/13 ≈ 0,385.
+46b4d6f7|||Cada cara aparece con prob. 1 − (5/6)³ = 91/216. Seis caras: 6 × 91/216 = 91/36 ≈ 2,53.
+d2b35a20|||un proyecto de escalera interna
+be9ffe34|||dos overcards
+a3e15019|||un proyecto de escalera abierta
+486cce7c|||un proyecto de color
+a642e4d0|||un proyecto de color más escalera abierta
+f650d48c|||un proyecto de color más una overcard
+d407b721|||una pareja, buscando doble pareja o trío
+b82fbf47|||Distancia de la Tierra a la Luna, en km.
+5c775e6e|||La luz tarda unos 1,3 s; 1,3 × 300.000 km/s ≈ 390.000.
+89381eb0|||Altura del Everest, en metros.
+e8212917|||Los aviones de crucero vuelan a ~10 km; el Everest es algo más bajo.
+8c3eccbb|||Población de Australia (2025).
+c7e28b71|||Unas 5 ciudades de 1–5 millones más las zonas regionales.
+c8d56470|||Población de Shanghái (censo de 2020).
+6d899724|||Una de las mayores ciudades del mundo, con unos 25 millones.
+1ffadd1e|||Población mundial (2025).
+b02e41df|||Dos gigantes de ~1.400 millones cada uno suman un tercio.
+974e6c02|||Segundos en un año.
+fd4c9f5f|||Huesos del cuerpo humano adulto.
+b9631e7e|||Estados miembros de las Naciones Unidas.
+97b19bca|||Velocidad del sonido en el aire a 20 °C, en m/s.
+ab7287f9|||Truenos: unos 3 segundos por kilómetro.
+67099d7c|||Teclas de un piano estándar.
+2f6a0af9|||Siete octavas y algo: 7 × 12 + 4.
+e4e34c76|||Altura de la Torre Eiffel con antenas, en metros.
+e27e5ccd|||Unas 100 plantas de ~3 m cada una.
+1e72dee3|||Latidos de un adulto en un día.
+c8f3589a|||70 por minuto × 1.440 minutos ≈ 100.000.
+90a338d1|||Distancia ortodrómica de Sídney a Shanghái, en km.
+e4f58ad1|||Unas 10 horas de vuelo a 800 km/h.
+d72724ca|||Longitud total de la Gran Muralla con todos sus ramales (estudio de 2012), en km.
+d690e1c1|||Granos de arroz en un tablero de ajedrez si la casilla 1 tiene 1 grano y cada casilla duplica: total de granos.
+62d87bcc|||2⁶⁴ − 1 ≈ 1,8 × 10¹⁹. Usa 2¹⁰ ≈ 10³.
+af8a26b4|||Palabras de una novela típica de 300 páginas (en inglés).
+4be4b9f7|||~300 palabras por página × 300 páginas.
+80891bf5|||Una startup de este sector es adquirida en 3 años aproximadamente el 10 % de las veces. Noticia: acaba de fichar a un conocido responsable de desarrollo corporativo. Estos fichajes son 3 veces más frecuentes en empresas que luego son adquiridas.
+65f26b08|||Un equipo gana el 40 % de sus partidos fuera. Noticia: su máximo goleador está lesionado. Los equipos sin su máximo goleador ganan fuera solo 0,6 veces tanto, en términos de odds.
+cfece785|||Un banco central baja tipos en aproximadamente el 25 % de sus reuniones. Noticia: el discurso del gobernador usó un lenguaje dovish que aparece 4 veces más antes de las bajadas.
+4343adc0|||El 30 % de los lanzamientos de producto como este salen a tiempo. Noticia: la beta se retrasó una semana. Los retrasos son 0,5 veces tan probables en los lanzamientos que acaban saliendo a tiempo.
+6394bdd0|||Un candidato con esta ventaja en las encuestas gana el 70 % de las veces. Noticia: una nueva encuesta amplía la ventaja; este tipo de encuestas es 2 veces más probable si va a ganar.
+f341e901|||Llueve el 20 % de los días este mes. Noticia: la mañana está nublada, algo que ocurre 3,5 veces más a menudo los días de lluvia.
+dea0812c|||La suma es 2, 3 o 4
+6a090097|||La suma es 5 o 6
+29c6d54f|||La suma es exactamente 7
+f75cd780|||La suma es 8 o 9
+2ee83bd9|||La suma es 10, 11 o 12
+ec9b7a41|||Dobles
+a938c0ef|||La suma es impar
+174164fd|||Ambos dados ≥ 4
+b0b322dc|||Suma de dos dados
+a8427010|||Máximo de dos dados
+172b58d5|||Mínimo de dos dados
+800f6432|||Caras en 10 lanzamientos de moneda justa
+627e5690|||Suma de tres cartas, A=1 … K=13, sin reposición
+7aefaa41|||Producto de dos dados
+d46d5e66|||Cuadrado de una tirada de dado
+f2b1a2ab|||Tiradas hasta el primer 6
+f754c3cf|||Seises en 12 tiradas de dado
+2449083a|||Una carta, A=1 … K=13
+2b15ce40|||Un dado más una carta (A=1 … K=13)
+eca04783|||Máximo esperado de dos dados
+a5b9bd78|||Mínimo esperado de dos dados
+481030a4|||Número esperado de tiradas hasta el primer 6
+f5e0a18b|||Lanzamientos esperados hasta dos caras seguidas
+50de494f|||Varianza de un dado justo
+c9fb7056|||Número esperado de caras distintas en 3 tiradas de dado
+774f6695|||Valor esperado del cuadrado de una tirada de dado
+f1071b6e|||Valor de un juego de dado en el que puedes volver a tirar una vez
+7baa8cd0|||Ambos dados son 4 o más
+9d4e1e23|||pasar
+bc8d8647|||pagar
+c5b2b01d|||tirar

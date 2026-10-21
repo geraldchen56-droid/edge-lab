@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/g-card.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>カードゲーム · Edge Lab</title>
+<meta content="カードゲーム：ランダムな契約に値付け。買うか、売るか、見送るか。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-card.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-card.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-card.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-card.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="カードゲーム · Edge Lab" property="og:title"/>
+<meta content="カードゲーム：ランダムな契約に値付け。買うか、売るか、見送るか。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/g-card.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-card" data-scene3d="deal">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>トレーディングフロア · 1/8</small><b>カードゲーム</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="g-card">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 取るか見送るか <span class="hud"><span class="pill" id="cgStreak">連続正解 0 · 最高 0</span><label class="pill"><input id="cgClock" type="checkbox"/> 8秒タイマー</label></span></div>
+<div class="duo">
+<div class="scene" id="cgScene"><div class="lbl">契約</div><div class="scene-q" id="cgQ"></div><div class="items" id="cgItems"></div><div class="settle" id="cgSettle"></div></div>
+<div class="screen" id="cgScreen"><div class="dim lbl">相手の気配</div><div class="bigq"><span class="bidc" id="cgBidTxt"></span><span class="dim">/</span><span class="askc" id="cgAskTxt"></span></div><div class="dim small">ビッド / アスク · アスクで買い、ビッドで売る</div><div class="timer" hidden="" id="cgTimer"><i></i></div></div>
+</div>
+<div class="row"><button class="buy" id="cgBuy">アスクで買う</button><button class="sell" id="cgSell">ビッドで売る</button><button id="cgPass">見送る</button><button class="go" id="cgNext">次の契約</button></div>
+<div class="stats" id="cgStats"></div>
+<div class="out" id="cgOut">クリックする前にフェアバリューを計算しよう。</div>
+<p class="small" style="color:var(--muted)">判断のあと、契約は実際に決済されます。期待エッジは判断の質を、実現損益は運を含んだ結果を示します。取引を重ねるほど両者は近づきます。</p>
+</div>
+<nav aria-label="他のテーブル" class="pager"><span></span><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="g-dice.html">サイコロのマーケットメイク →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · トレーディングフロア</small><h2 id="tutTitle">カードゲーム</h2><div class="tags"><span class="tag">スキル：期待値、エッジの発見</span><span class="tag">関連企業：SIG</span></div></div>
+<div class="tut-b"><p>ランダムな数量に対して、相手が両方向の気配を出します。あなたは<b>相手のアスクで買う</b>、<b>相手のビッドで売る</b>、または見送ることができます。やることはただ一つ、フェアバリューを素早く計算して比べることです。</p>
+<ul class="steps"><li>フェアバリューがアスクより上 → 買い。エッジ = フェア − アスク。</li><li>フェアバリューがビッドより下 → 売り。エッジ = ビッド − フェア。</li><li>フェアバリューが気配の内側 → 見送り。そこで取引すると平均で損をします。</li></ul>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>サイコロ2個の最大値 = 161/36 ≈ 4.47、最小値 = 91/36 ≈ 2.53。</b>合計すると7。</li>
+<li><b>確率pの事象の待ち時間 → 1/p。</b>6が出るまでの回数 = 6。</li>
+<li><b>独立な変数の積 → 期待値を掛ける。</b>サイコロ2個：3.5² = 12.25。</li>
+<li><b>E[X²] = 分散 + 期待値²。</b>サイコロ1個の2乗：35/12 + 12.25 = 15.17。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>
