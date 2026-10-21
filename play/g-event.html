@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Event Contracts: Update with Bayes, then make a yes/no market. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Event Contracts · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="chips" data-game="g-event">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 6/8</small><b>Event Contracts</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-event" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · price the event <span class="stat" id="evcTot">P&amp;L 0 · calibration 0/0</span></div>
+<div id="evcQ" style="font-size:17px"></div>
+<div class="row"><label for="evcP">Your probability (%)</label><input id="evcP" max="99" min="1" type="number" value="50"/><button id="evcCheck">Check estimate</button></div>
+<div class="row"><label for="evcBid">Bid (¢)</label><input id="evcBid" type="number" value="40"/><label for="evcAsk">Ask (¢)</label><input id="evcAsk" type="number" value="60"/>
+<label for="evcInf">Informed share</label><input id="evcInf" max="50" min="0" type="range" value="20"/><span class="stat" id="evcInfv">20%</span><button class="go" id="evcRun">Open market (40 traders)</button><button id="evcNext">Next event</button></div>
+<div class="duo">
+<div class="screen"><div class="dim lbl">Order tape</div><div aria-live="off" class="tape" data-lenis-prevent="" id="evcTape"></div></div>
+<div class="scene" id="evcScene"><div class="lbl">Your quote on a 0–100¢ scale</div><canvas class="felt" height="130" id="evcGauge" width="400"></canvas><div class="settle" id="evcStamp"></div></div>
+</div>
+<div class="out" id="evcOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-fermi.html" data-nav>← Fermi Estimation</a><a href="../index.html" data-nav class="lob">All tables</a><a href="g-hilo.html" data-nav>Higher or Lower →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Event Contracts</h2><div class="tags"><span class="tag">Skill: Bayesian updating, quoting in probability</span><span class="tag">Prediction-market desks</span></div></div>
+    <div class="tut-b"><p>A YES contract pays 100 if the event happens and 0 if not, so its fair price in cents equals the probability. You start from a base rate, update with the news using odds × LR, then quote a two-sided market. Some traders already know the answer.</p>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Price in cents = probability.</b> Edge buying YES = p − ask.</li>
+<li><b>Informed traders only hit you when you're wrong.</b> Width must cover them.</li>
+<li><b>Near 0% or 100%, quote tighter in cents</b> because there is less room to be wrong.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

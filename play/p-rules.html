@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Rules &amp; Hand Ranks: Reference: how Hold&#x27;em works. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Rules &amp; Hand Ranks · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page ref-page" data-scene3d="poker" data-game="p-rules">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Poker room · 4/5</small><b>Rules &amp; Hand Ranks</b></div>
+  <div class="tb-r"><button class="tb-btn" data-done="p-rules" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<article class="desk ref"><ul class="steps">
+<li><b>Blinds:</b> the two players left of the dealer button post a small and big blind (e.g. 1 and 2). The button rotates each hand.</li>
+<li><b>Preflop:</b> everyone gets two private cards. Action starts left of the big blind: fold, call, or raise.</li>
+<li><b>Flop, turn, river:</b> three, then one, then one shared card. A betting round follows each.</li>
+<li><b>Showdown:</b> the best five-card hand from your two cards plus the five shared cards wins the pot.</li>
+<li><b>No-limit:</b> you may bet any amount up to your whole stack at any time.</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>Hand</th><th>Example</th><th class="n">Chance in 7 cards</th></tr></thead>
+<tbody>
+<tr><td>Straight flush</td><td class="mono">9♥ 8♥ 7♥ 6♥ 5♥</td><td class="n">0.03%</td></tr>
+<tr><td>Four of a kind</td><td class="mono">Q Q Q Q 4</td><td class="n">0.17%</td></tr>
+<tr><td>Full house</td><td class="mono">8 8 8 K K</td><td class="n">2.60%</td></tr>
+<tr><td>Flush</td><td class="mono">A♠ J♠ 9♠ 6♠ 2♠</td><td class="n">3.03%</td></tr>
+<tr><td>Straight</td><td class="mono">T 9 8 7 6</td><td class="n">4.62%</td></tr>
+<tr><td>Three of a kind</td><td class="mono">7 7 7 K 3</td><td class="n">4.83%</td></tr>
+<tr><td>Two pair</td><td class="mono">J J 5 5 A</td><td class="n">23.5%</td></tr>
+<tr><td>One pair</td><td class="mono">A A 9 6 3</td><td class="n">43.8%</td></tr>
+<tr><td>High card</td><td class="mono">K J 8 5 2</td><td class="n">17.4%</td></tr>
+</tbody></table></div>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Rarer beats commoner.</b> Flush beats straight because it is rarer.</li>
+<li><b>Most showdowns are won with one or two pair.</b> Value comes from betting, not from monster hands.</li>
+</ul></div></article>
+<nav class="pager" aria-label="More tables"><a href="p-bluff.html" data-nav>← Bluff Maths</a><a href="../index.html" data-nav class="lob">All tables</a><a href="p-sites.html" data-nav>Where to Practise →</a></nav>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

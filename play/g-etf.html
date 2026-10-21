@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ETF Arbitrage: NAV against price, on a 15-second clock. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>ETF Arbitrage · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="chips" data-game="g-etf">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 4/8</small><b>ETF Arbitrage</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-etf" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · find the mispricing <span class="hud"><span class="pill" id="etStreak">Streak 0</span><span class="pill" id="etTot">P&amp;L 0.00 · 0 decisions</span></span></div>
+<div class="screen" id="etScreen">
+<div class="dim lbl">Basket</div>
+<div class="tbl"><table class="term" id="etTable"></table></div>
+<div class="bigq" id="etQuote"></div>
+<div class="timer" id="etBar"><i></i></div>
+<div class="dim small">15 seconds per decision · <span id="etTimer"></span></div>
+</div>
+<div class="row"><button class="buy" id="etBuy">Buy ETF / sell basket</button><button class="sell" id="etSell">Sell ETF / buy basket</button><button id="etNone">No trade</button><button class="go" id="etNext">Next</button></div>
+<div class="out" id="etOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-trade.html" data-nav>← Trading Game</a><a href="../index.html" data-nav class="lob">All tables</a><a href="g-fermi.html" data-nav>Fermi Estimation →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">ETF Arbitrage</h2><div class="tags"><span class="tag">Skill: cross-asset pricing, speed</span><span class="tag">Firm echo: IMC, Jane Street</span></div></div>
+    <div class="tut-b"><p>An ETF is a basket. Its fair value, the net asset value (NAV), is what the shares inside it are worth. If the ETF trades away from NAV by more than your costs, you trade one against the other and lock in the gap.</p>
+<ul class="steps">
+<li>NAV = Σ (shares per unit × stock price).</li>
+<li>ETF <b>ask</b> below NAV − cost → buy ETF, sell the stocks. Profit = NAV − ask − cost.</li>
+<li>ETF <b>bid</b> above NAV + cost → sell ETF, buy the stocks. Profit = bid − NAV − cost.</li>
+<li>Otherwise no trade.</li>
+</ul>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Price the basket first, then look at the ETF.</b> Never the other way round.</li>
+<li><b>Compare NAV with the price you can actually trade:</b> buy at the ask, sell at the bid.</li>
+<li><b>Round to save time:</b> 2 × 49.8 is 100 − 0.4 = 99.6.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

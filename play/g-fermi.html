@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Fermi Estimation: 90% ranges for questions you can&#x27;t look up. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Fermi Estimation · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="bell" data-game="g-fermi">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 5/8</small><b>Fermi Estimation</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-fermi" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · 90% interval <span class="stat" id="fmTot">Hit 0/0 · score 0</span></div>
+<div id="fmQ" style="font-size:18px;font-weight:600"></div>
+<div class="row"><label for="fmLo">Low</label><input id="fmLo" placeholder="e.g. 2e6" type="text"/><label for="fmHi">High</label><input id="fmHi" placeholder="e.g. 4e7" type="text"/><button class="go" id="fmSub">Submit</button><button id="fmNext">Next question</button></div>
+<div class="scene" style="padding:8px 10px"><canvas aria-label="Log-scale number line" class="felt" height="120" id="fmCanvas" width="760"></canvas></div>
+<div class="row small mono"><span style="color:var(--muted)">Calibration (target 9 in 10):</span><span id="fmDots"></span></div>
+<div class="out" id="fmOut">Scientific notation works: 3e5 = 300,000. Shorthands like 25m or 8bn work too.</div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-etf.html" data-nav>← ETF Arbitrage</a><a href="../index.html" data-nav class="lob">All tables</a><a href="g-event.html" data-nav>Event Contracts →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Fermi Estimation</h2><div class="tags"><span class="tag">Skill: decomposition, calibrated intervals</span><span class="tag">Firm echo: most prop firms</span></div></div>
+    <div class="tut-b"><p>Give a range you are <b>90% sure</b> contains the true answer. You score for being right and for being narrow. Over many questions, about 9 in 10 should land inside. If 5 in 10 land, you are overconfident, which in trading means quoting too tight.</p>
+<ul class="steps"><li>Break the quantity into factors you can guess (people × rate × time).</li><li>Estimate in powers of ten; multiply exponents.</li><li>Set the range by your uncertainty in each factor, then check: would you bet 9-to-1 on it?</li></ul>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Seconds in a year ≈ π × 10⁷.</b> Days in a lifetime ≈ 30,000.</li>
+<li><b>Range width = log₁₀(high/low).</b> One order of magnitude is a fair default.</li>
+<li><b>Hit rate below 90% → widen next time.</b> Calibration beats precision.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

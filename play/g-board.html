@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Betting Board: Spot mispriced odds and lock in arbitrage. An Edge Lab trading-interview game.">
+<meta name="theme-color" content="#050a08">
+<title>Betting Board · Edge Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page" data-scene3d="dice" data-game="g-board">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Trading floor · 8/8</small><b>Betting Board</b></div>
+  <div class="tb-r"><button class="tb-btn gold" id="tutBtn" aria-haspopup="dialog">How to play</button><button class="tb-btn" data-done="g-board" aria-pressed="false">Mark done</button><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button></div>
+</header>
+<main class="gstage">
+  <div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Desk · back the wrong prices <span class="stat" id="bbTot">Expected 0.000 · realised 0.00</span></div>
+<div class="screen"><div class="dim lbl">Odds board · two dice · stake 1 on each line you back</div><div class="tbl"><table class="term" id="bbTable"></table></div></div>
+<div class="scene" id="bbScene" style="margin-top:12px"><div class="lbl">The roll</div><div class="items" id="bbDice"></div><div class="settle" id="bbMsg"></div></div>
+<div class="row"><button class="go" id="bbSubmit">Lock in and roll</button><button id="bbNew">New board</button></div>
+<div class="out" id="bbOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Desk · two-bookmaker arbitrage</div>
+<div class="row"><label for="arA">Book A odds on X</label><input id="arA" step="0.01" type="number" value="2.10"/><label for="arB">Book B odds on not-X</label><input id="arB" step="0.01" type="number" value="2.05"/><label for="arS">Total stake</label><input id="arS" type="number" value="100"/></div>
+<div class="out" id="arOut"></div>
+</div>
+<nav class="pager" aria-label="More tables"><a href="g-hilo.html" data-nav>← Higher or Lower</a><a href="../index.html" data-nav class="lob">All tables</a><a href="p-odds.html" data-nav>Pot Odds →</a></nav>
+  </div>
+</main>
+<dialog class="tut" id="tut" aria-labelledby="tutTitle">
+  <div class="tut-in">
+    <div class="tut-h"><small>Briefing · Trading floor</small><h2 id="tutTitle">Betting Board</h2><div class="tags"><span class="tag">Skill: implied probability, overround, arbitrage</span><span class="tag">Firm echo: Optiver betting round</span></div></div>
+    <div class="tut-b"><p>A board quotes decimal odds on outcomes of a two-dice roll. Decimal odds d pay d per 1 staked (stake included), so the implied probability is 1/d. Back a line only when your true probability beats it.</p>
+<div class="formula">EV per 1 staked = p · d − 1      implied p = 1/d      overround = Σ 1/d − 1</div>
+<div class="tip"><b class="lbl">Shorthand</b><ul>
+<li><b>Two dice sums: ways = 6 − |7 − s|.</b> 7 has 6 ways of 36; 2 and 12 have 1.</li>
+<li><b>Σ 1/d &lt; 1 across all outcomes → arbitrage.</b> Stake on each in proportion to 1/d.</li>
+<li><b>Back if d &gt; 1/p.</b> A 1-in-6 event needs odds above 6.0.</li>
+</ul></div></div>
+    <div class="tut-f"><span class="hint">Reopen any time with <b>How to play</b>.</span><button class="chip-btn" id="tutGo" autofocus>Deal me in</button></div>
+  </div>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>
