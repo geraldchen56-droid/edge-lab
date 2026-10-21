@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/g-hilo.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ハイ・オア・ロー · Edge Lab</title>
+<meta content="ハイ・オア・ロー：デッキを数え、ケリー基準で賭け金を決める。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-hilo.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-hilo.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-hilo.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-hilo.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-hilo.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-hilo.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="ハイ・オア・ロー · Edge Lab" property="og:title"/>
+<meta content="ハイ・オア・ロー：デッキを数え、ケリー基準で賭け金を決める。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/g-hilo.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-hilo" data-scene3d="hilo">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>トレーディングフロア · 7/8</small><b>ハイ・オア・ロー</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="g-hilo">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 資金 <span class="hud"><span class="pill" id="hlStreak">連続正解 0</span><span class="pill stat" id="hlBank">1,000</span></span></div>
+<div class="duo">
+<div class="scene" id="hlScene"><div class="lbl">現在のカード · <span id="hlLeft"></span></div><div class="items" id="hlCard"></div><div class="lbl" style="margin-top:8px">賭け金： <span id="hlStakeTxt"></span></div><div id="hlChips"></div></div>
+<div class="scene"><div class="lbl">残りのカード（ランク別）</div><canvas aria-label="ランク別の残りデッキ" class="felt" height="170" id="hlHist" width="400"></canvas></div>
+</div>
+<canvas aria-label="資金の推移" height="90" id="hlSpark" width="760"></canvas>
+<div class="row"><label for="hlF">資金に対する賭け金の%</label><input id="hlF" max="100" min="0" type="range" value="20"/><span class="stat" id="hlFv">20%</span>
+<button class="buy" id="hlHi">ハイ</button><button class="sell" id="hlLo">ロー</button><button id="hlReset">新しいデッキ</button></div>
+<div class="out" id="hlOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="g-event.html">← イベント契約</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="g-board.html">ベッティングボード →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · トレーディングフロア</small><h2 id="tutTitle">ハイ・オア・ロー</h2><div class="tags"><span class="tag">スキル：条件付き確率、ケリー基準、破産リスク</span></div></div>
+<div class="tut-b"><p>カードが1枚表示されます。同じデッキの次のカードが高いか低いかを予想し、資金の何割を1対1で賭けるか選びます。同じ数字は負け。デッキはシャッフルし直さないので、出たカードを数えましょう。</p>
+<div class="formula">p(ハイ) = それより高い残りカード ÷ 残り枚数 賭け f* = 2p − 1</div>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>7なら両側とも約46%。</b>同数で負けるので不利な賭けです。賭け金は0。</li>
+<li><b>デッキを数える。</b>小さいカードが多く出た後なら、6からでも「ハイ」が有利になります。</li>
+<li><b>賭け金 = 2p − 1。</b>2が出ているなら p ≈ 0.92、ケリー ≈ 84%、ハーフケリー ≈ 42%。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

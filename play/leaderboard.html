@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-site="../" data-root="../" data-page="play/leaderboard.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leaderboard · Edge Lab</title>
+<meta name="description" content="Daily Gauntlet leaderboard: today&#x27;s top scores and all-time totals with streaks.">
+<meta name="theme-color" content="#050a08">
+<link rel="canonical" href="https://edgelab-games.vercel.app/play/leaderboard.html">
+<link rel="alternate" hreflang="en" href="https://edgelab-games.vercel.app/play/leaderboard.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://edgelab-games.vercel.app/zh/play/leaderboard.html">
+<link rel="alternate" hreflang="ja" href="https://edgelab-games.vercel.app/ja/play/leaderboard.html">
+<link rel="alternate" hreflang="es" href="https://edgelab-games.vercel.app/es/play/leaderboard.html">
+<link rel="alternate" hreflang="x-default" href="https://edgelab-games.vercel.app/play/leaderboard.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Edge Lab">
+<meta property="og:title" content="Leaderboard · Edge Lab">
+<meta property="og:description" content="Daily Gauntlet leaderboard: today&#x27;s top scores and all-time totals with streaks.">
+<meta property="og:url" content="https://edgelab-games.vercel.app/play/leaderboard.html">
+<meta property="og:image" content="https://edgelab-games.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Edge Lab">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page board-page" data-scene3d="chips">
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-game" aria-hidden="true"></div>
+<div class="curtain in" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="back tb-btn" href="../index.html" data-nav aria-label="Back to all tables">← Tables</a>
+  <div class="gtitle"><small>Edge Lab · Daily Gauntlet</small><b>Leaderboard</b></div>
+  <div class="tb-r"><button id="sndBtn" class="tb-btn" aria-pressed="false">Sound off</button><button class="tb-btn" id="fsBtn" hidden>Full screen</button><label class="langsel"><span class="sr">Language</span><select id="langSel" aria-label="Language"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+  <div class="game">
+  <section class="desk lbx">
+    <div class="desk-h">Leaderboard <span class="hud"><a class="pill" href="daily.html" data-nav>Play today's gauntlet →</a></span></div>
+    <div class="tabs" role="tablist" aria-label="Period"><button class="tab" role="tab" data-lb="day" aria-selected="true">Today</button><button class="tab" role="tab" data-lb="all" aria-selected="false">All time</button></div>
+    <p id="lbYou" class="lb-you"></p>
+    <div class="tbl"><table class="lbt"><thead id="lbHead"></thead><tbody id="lbBody"></tbody></table></div>
+    <p class="small dim">Scores come from the Daily Gauntlet. Sign in with Google to appear here; guests can play but aren't ranked.</p>
+  </section>
+  </div>
+</main>
+<script src="../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../auth.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+<script src="../board.js"></script>
+</body>
+</html>

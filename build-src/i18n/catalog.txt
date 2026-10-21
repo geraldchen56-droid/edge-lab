@@ -1,0 +1,1025 @@
+# PAGE strings (HTML allowed, keep tags)
+6c42669a|||<i aria-hidden="true"></i>Edge Lab
+e5f79aa1|||Install app
+89b86ab0|||Language
+ac7a0712|||Sound off
+15ced74a|||Trading-interview prep · after hours
+7aca61ba|||The house knows the odds. <b>Now you do.</b>
+193e49b4|||Pick a table. Every game opens full-screen, with a one-time briefing.
+ba017b8f|||Daily Gauntlet
+7d4d3a74|||Ten questions. Same for everyone. One ranked try a day.
+2e1aad10|||Play today →
+0381247a|||Leaderboard
+76deec39|||Today and all time
+93a334b1|||Trading floor <span>8</span>
+09cfb59e|||Poker room <span>5</span>
+fdc16b6a|||Study hall <span>6</span>
+3ceab3c0|||Card Game
+5b705d67|||Price a random contract. Buy, sell or pass.
+8b7a7139|||Play →
+963ef6f8|||Market Making Dice
+41dc85ab|||Quote three dice and survive informed flow.
+7ba4c2b2|||Trading Game
+6505c372|||Five hidden cards. Re-price as each one turns.
+280778d7|||ETF Arbitrage
+a7cc3d71|||NAV against price, on a 15-second clock.
+1fb0f773|||Fermi Estimation
+bb5e563c|||90% ranges for questions you can't look up.
+84dd885b|||Event Contracts
+4db5a2d6|||Update with Bayes, then make a yes/no market.
+7e3e5eaf|||Higher or Lower
+e9433589|||Count the deck and size each bet with Kelly.
+b01793bd|||Betting Board
+8799b90d|||Spot mispriced odds and lock in arbitrage.
+6e5b2682|||Pot Odds
+9be3ce7d|||Call or fold: your equity against the price.
+6997a45a|||Equity Calculator
+ffb98947|||Any hand against any hand, 20,000 runouts.
+4eab18f2|||Bluff Maths
+4e873c43|||How often a bluff must work, and how often to defend.
+9c39f6aa|||Rules &amp; Hand Ranks
+bafdb19a|||Reference: how Hold'em works.
+ae83d74f|||Where to Practise
+05f5012f|||Reference: solvers, sims and play-money tables.
+0cd67921|||Expected Value
+82b4ab12|||Price any bet and watch the variance.
+8a87109f|||Linearity &amp; Spread
+e002827b|||Why risk grows with the square root of n.
+eba4d02b|||Stop or Continue
+f399ca53|||Optimal stopping with a die.
+36c7780b|||Bayes in Odds Form
+c7555278|||Prior odds × likelihood ratio = posterior.
+b17c9adb|||Kelly Sizing
+755002ec|||How much to bet when you have an edge.
+2602f302|||Finance &amp; Econometrics
+a401d941|||t-stats: how many hands prove you have skill.
+14f31212|||Modelled on the <a href="https://www.tradermath.org/market-games" rel="noopener" target="_blank">Tradermath market games</a>. Probabilities exact where stated; equity by simulation. <a href="https://github.com/geraldchen56-droid/edge-lab" rel="noopener" target="_blank">Source on GitHub</a>.
+fd6c3ebf|||Install
+9dfebd3a|||Edge Lab as an app
+a0ffd2ab|||<b>iPhone or iPad (Safari):</b> tap Share, then <b>Add to Home Screen</b>.
+c02075be|||<b>Android (Chrome):</b> tap the ⋮ menu, then <b>Install app</b>.
+d1a9ea1a|||<b>Computer (Chrome or Edge):</b> click the install icon at the right of the address bar.
+bb194426|||It opens full-screen with its own icon, and the games keep working offline.
+5b8027fa|||Got it
+3a28d6f0|||Rooms
+4a5cacbc|||Edge Lab · Trading-interview games
+325c572e|||A 3D casino for trading-interview prep. Market making, ETF arbitrage, Bayes, Kelly sizing and poker maths, plus a Daily Gauntlet with a leaderboard.
+b5ac08fd|||← Tables
+64516065|||Trading floor · 1/8
+4ec00394|||How to play
+0911cce7|||Mark done
+d15f886d|||Full screen
+8ecc0869|||Desk · take or pass
+d25db06a|||Streak 0 · best 0
+a42faf56|||8s clock
+c82ea674|||The contract
+54c19b4e|||Their market
+741df9c0|||bid / ask · you buy at the ask, sell at the bid
+e45a7982|||Buy at ask
+6dc38fb5|||Sell at bid
+d7cd56f2|||Pass
+bbfcbaaf|||Next contract
+7f5fb204|||Work out the fair value before you click.
+87abc9c6|||Every contract settles for real after you decide. Expected edge measures the quality of your decision; realised P&amp;L adds luck. Over many trades the two converge.
+8ebf23b7|||All tables
+0ef4a62b|||Briefing · Trading floor
+b91a2db9|||Skill: EV, edge detection
+4b93319e|||Firm echo: SIG
+21e1846c|||Someone quotes you a two-way price on a random quantity. You may <b>buy at their ask</b>, <b>sell at their bid</b>, or pass. Your only job is to compute fair value fast and compare.
+8d6c7a13|||Fair value above the ask → buy. Edge = fair − ask.
+0bf0b66c|||Fair value below the bid → sell. Edge = bid − fair.
+52d0f9c3|||Fair value inside the quote → pass. Trading there loses money on average.
+5433cd73|||Shorthand
+d07b3952|||<b>Max of two dice = 161/36 ≈ 4.47. Min = 91/36 ≈ 2.53.</b> They sum to 7.
+3b7c44ab|||<b>Waiting time for probability p → 1/p.</b> Rolls until a 6 = 6.
+80da7776|||<b>Product of independents → multiply EVs.</b> Two dice: 3.5² = 12.25.
+7bfec0ad|||<b>E[X²] = Var + EV².</b> One die squared: 35/12 + 12.25 = 15.17.
+95423f42|||Reopen any time with <b>How to play</b>.
+677bb40b|||Deal me in
+5ef2647a|||Back to all tables
+926f80e9|||More tables
+05cf1da5|||Trading floor · 2/8
+aa8a60a9|||Desk · you are the market maker
+e864cd06|||Total P&amp;L 0.00 · rounds 0
+4989b5a0|||Informed share
+33ae01b6|||Settles at the sum of three dice
+bb6c79ec|||Traders (N noise · I informed · ↑ lifted your ask · ↓ hit your bid)
+6910e2a0|||Click a left cell to set your bid, a right cell for your ask.
+8fd5f6c4|||Your bid
+650f11d5|||Your ask
+7b0bf541|||Next trader
+9634e445|||New round
+01291898|||Skill: two-way pricing, width, inventory, event risk
+938fab78|||Firm echo: Optiver, Flow Traders
+a9013dc8|||Now you are the one quoting. The contract settles at the <b>sum of three dice</b>. Five traders arrive one at a time and trade 1 lot against your quote if they like it. Most are noise traders. Some have seen one die. Midway, one die is revealed to everyone.
+fdd7c403|||<b>Centre</b> your quote on fair value (10.5 to start).
+271133e0|||<b>Width</b> pays for risk. Too tight and informed traders pick you off; too wide and nobody trades.
+d054c017|||<b>Skew</b> after a fill. If you sold, you are short: raise both prices so the next fill is more likely to be a sale to you.
+5c3de9e4|||<b>Re-centre</b> instantly when the die is revealed. Fair = revealed die + 7.
+176d262c|||<b>Start width ≈ 1σ of what you don't know.</b> Three dice σ ≈ 3.0, so ±1 to ±1.5.
+4e196148|||<b>Lifted? Move up. Hit? Move down.</b> Shift both sides by about a quarter of your width.
+b5e28f76|||<b>More informed flow → wider.</b> Spread earned on noise must cover losses to the informed.
+8f3e08fe|||<b>Known die collapses risk:</b> two unknown dice σ ≈ 2.4, so tighten.
+13d77486|||Price ladder
+59ccc062|||Trading floor · 3/8
+769bc9fe|||Desk · five-card sum
+e5b033ec|||Total P&amp;L 0.00
+780c7958|||Show my fair value (learning mode)
+b1e5d1bf|||Settles at the sum of five cards · A=1 … K=13
+136dc213|||Bot market
+f1312310|||Your position (−10 to +10)
+79029175|||Lots
+ea415408|||Reveal next card
+602b26d9|||New game
+1f4d9034|||Skill: conditional EV, position management
+6e84233c|||The contract settles at the <b>sum of five cards</b> dealt without replacement from a 52-card deck (A=1, J=11, Q=12, K=13). Cards are revealed one by one. Before each reveal a bot quotes a market. You may buy or sell up to 2 lots per step, building a position.
+6fbf567c|||Fair value at any moment is the revealed total plus the number of hidden cards times the average of the cards still left in the deck.
+3b7d73e6|||fair = Σ revealed + (hidden cards) × (deck total left ÷ cards left)
+43423f04|||<b>Five cards start at 35.</b> Every reveal: fair moves by (card − deck average) roughly.
+1ca02ee3|||<b>A low card seen makes the rest of the deck slightly richer.</b> Use the remaining average.
+4eacf8e9|||<b>Position = risk.</b> If you are long 4 and fair falls 3, you lost 12. Size to edge.
+120639d7|||Price history chart
+9fb505ac|||Trading floor · 4/8
+26b3dfd3|||Desk · find the mispricing
+f7ecb317|||Streak 0
+4ef94296|||P&amp;L 0.00 · 0 decisions
+020b4183|||Basket
+27ed56c8|||15 seconds per decision ·
+773d1927|||Buy ETF / sell basket
+609c9baa|||Sell ETF / buy basket
+72154e11|||No trade
+bc981983|||Next
+8bfbb97d|||Skill: cross-asset pricing, speed
+f8800028|||Firm echo: IMC, Jane Street
+c5b37381|||An ETF is a basket. Its fair value, the net asset value (NAV), is what the shares inside it are worth. If the ETF trades away from NAV by more than your costs, you trade one against the other and lock in the gap.
+7fbab5fe|||NAV = Σ (shares per unit × stock price).
+82031d5f|||ETF <b>ask</b> below NAV − cost → buy ETF, sell the stocks. Profit = NAV − ask − cost.
+fd4416cc|||ETF <b>bid</b> above NAV + cost → sell ETF, buy the stocks. Profit = bid − NAV − cost.
+caefe271|||Otherwise no trade.
+2b8974b7|||<b>Price the basket first, then look at the ETF.</b> Never the other way round.
+4a3e3239|||<b>Compare NAV with the price you can actually trade:</b> buy at the ask, sell at the bid.
+01cce37e|||<b>Round to save time:</b> 2 × 49.8 is 100 − 0.4 = 99.6.
+3419e7c7|||Trading floor · 5/8
+a4198a2f|||Desk · 90% interval
+023c3267|||Hit 0/0 · score 0
+a124947c|||Low
+b1a5954a|||High
+2dacf659|||Submit
+2cc42c6e|||Next question
+db1adbbc|||Calibration (target 9 in 10):
+d1c94b56|||Scientific notation works: 3e5 = 300,000. Shorthands like 25m or 8bn work too.
+5edf8223|||Skill: decomposition, calibrated intervals
+a31a4b52|||Firm echo: most prop firms
+5e9f95aa|||Give a range you are <b>90% sure</b> contains the true answer. You score for being right and for being narrow. Over many questions, about 9 in 10 should land inside. If 5 in 10 land, you are overconfident, which in trading means quoting too tight.
+bb584d58|||Break the quantity into factors you can guess (people × rate × time).
+5f3eb6d4|||Estimate in powers of ten; multiply exponents.
+9203f12e|||Set the range by your uncertainty in each factor, then check: would you bet 9-to-1 on it?
+bb4b339f|||<b>Seconds in a year ≈ π × 10⁷.</b> Days in a lifetime ≈ 30,000.
+f9d5a4b2|||<b>Range width = log₁₀(high/low).</b> One order of magnitude is a fair default.
+0fc5afb5|||<b>Hit rate below 90% → widen next time.</b> Calibration beats precision.
+41b35088|||Log-scale number line
+6ea4ec3a|||Trading floor · 6/8
+3421b11f|||Desk · price the event
+7cfcdcb6|||P&amp;L 0 · calibration 0/0
+d6a7c4ef|||Your probability (%)
+feb25555|||Check estimate
+4f1e010a|||Bid (¢)
+be6800da|||Ask (¢)
+60e19359|||Open market (40 traders)
+85547663|||Next event
+6bb8b39c|||Order tape
+5466d8d8|||Your quote on a 0–100¢ scale
+915cb481|||Skill: Bayesian updating, quoting in probability
+b13967c6|||Prediction-market desks
+766bfcc1|||A YES contract pays 100 if the event happens and 0 if not, so its fair price in cents equals the probability. You start from a base rate, update with the news using odds × LR, then quote a two-sided market. Some traders already know the answer.
+0d74b5f8|||<b>Price in cents = probability.</b> Edge buying YES = p − ask.
+a4efa996|||<b>Informed traders only hit you when you're wrong.</b> Width must cover them.
+4d2c761c|||<b>Near 0% or 100%, quote tighter in cents</b> because there is less room to be wrong.
+c06f5790|||Trading floor · 7/8
+317944bb|||Desk · bankroll
+f4eea9be|||Current card ·
+967c91c3|||Your stake:
+cafe5263|||Cards left, by rank
+f4089065|||Stake % of bankroll
+062787aa|||Higher
+b91eed4b|||Lower
+c4660cc4|||New deck
+f1314d65|||Skill: conditional probability, Kelly sizing, ruin
+24873413|||A card is shown. Call whether the next card from the same deck is higher or lower, and choose what share of your bankroll to bet at even money. Ties lose. The deck is not reshuffled, so count what has gone.
+0345ff86|||p(higher) = cards left strictly above ÷ cards left bet f* = 2p − 1
+1e0d4889|||<b>On a 7, both sides are ~46%.</b> Ties make it a losing bet. Stake 0.
+4a333fe8|||<b>Count the deck.</b> After many low cards, "higher" gets better even from a 6.
+15eb72ad|||<b>Stake = 2p − 1.</b> A 2 showing: p ≈ 0.92, Kelly ≈ 84%. Half-Kelly ≈ 42%.
+41f88e5c|||Remaining deck by rank
+fd50ee0e|||Bankroll history
+2dd9e853|||Trading floor · 8/8
+8f971817|||Desk · back the wrong prices
+2c8c159f|||Expected 0.000 · realised 0.00
+04e2ce3c|||Odds board · two dice · stake 1 on each line you back
+54e2a105|||The roll
+eeab12e5|||Lock in and roll
+65060b5f|||New board
+5d8e14f4|||Desk · two-bookmaker arbitrage
+e74310af|||Book A odds on X
+24b3dfa6|||Book B odds on not-X
+5cd6978d|||Total stake
+25b7e338|||Skill: implied probability, overround, arbitrage
+cef0bdfb|||Firm echo: Optiver betting round
+9be05886|||A board quotes decimal odds on outcomes of a two-dice roll. Decimal odds d pay d per 1 staked (stake included), so the implied probability is 1/d. Back a line only when your true probability beats it.
+681a1074|||EV per 1 staked = p · d − 1 implied p = 1/d overround = Σ 1/d − 1
+13c0aa1f|||<b>Two dice sums: ways = 6 − |7 − s|.</b> 7 has 6 ways of 36; 2 and 12 have 1.
+74b75878|||<b>Σ 1/d &lt; 1 across all outcomes → arbitrage.</b> Stake on each in proportion to 1/d.
+17c77e7e|||<b>Back if d &gt; 1/p.</b> A 1-in-6 event needs odds above 6.0.
+baf86ee7|||Poker room · 1/5
+09025678|||Desk · call or fold
+a3667964|||0/0 correct
+73621b7a|||Chips +0
+45482cd9|||Opponent
+905cb326|||You
+291a0a58|||Call
+b6ba0db1|||Fold
+a1aa928f|||Next spot
+dbab0fcf|||Briefing · Poker room
+e6e7227c|||Facing a bet, calling is +EV when your chance of winning (equity) is higher than the share of the final pot you must put in.
+16fb2a9d|||required equity = call ÷ (pot after the call) = B ÷ (P + 2B)
+a360035d|||Outs are the unseen cards that turn your hand into the winner. With one card to come, equity ≈ outs × 2%. With two cards to come (you're all-in on the flop), equity ≈ outs × 4%. Exact one-card equity on the turn is outs ÷ 46.
+bfa50c7a|||Draw
+98fa5fbd|||Outs
+41ce3c6e|||1 card
+3d42976c|||2 cards
+5ecb26dc|||Gutshot straight
+477bc679|||Two overcards
+7ac55e3c|||Open-ended straight
+88766268|||Flush draw
+f9fbdea9|||Flush + open-ended
+b3387d13|||Under the hood: reading B ÷ (P + 2B)
+f1670978|||The pot before the opponent bets.
+6205193e|||The opponent's bet, which is also what you must put in to call.
+4b5c8d36|||The final pot if you call: the old pot, their bet, and your matching call.
+a082d497|||The share of the final pot that is your money. You need to win at least that often to break even.
+6caa1923|||equity
+b8b0ec45|||Your probability of winning the pot from here.
+fa4b996e|||<b>Why.</b> Calling has EV = equity × (P + B) − (1 − equity) × B. You win what is already in the middle (P + B), or you lose your call (B). Set that to zero and solve: equity = B ÷ (P + 2B). Example: a pot of 100 and a bet of 50 → 50 ÷ 200 = 25%.
+06a51c27|||<b>Half-pot bet → need 25%.</b> Pot-size bet → 33%. Two-thirds pot → 28.6%.
+96b4bea3|||<b>Flush draw on the flop vs a half-pot bet:</b> ~20% to hit next card, so pure pot odds say fold; implied odds (money you win later when you hit) can make it a call.
+c3f7f10b|||<b>Rule of 4 only applies if you see both cards</b>, i.e. when all-in.
+555fd87e|||Poker room · 2/5
+995ce1f5|||Desk · hand vs hand
+2eb97859|||Your hand
+0bcd824e|||Board (0, 3, 4 or 5 cards)
+9dc16bb0|||Run 20,000 deals
+38f5313d|||Cards like As Td 9h 2c. Opponent "random" for any two cards.
+cc37cf4b|||This calculator deals out the unknown cards thousands of times and counts how often each hand wins. It is the same Monte Carlo technique used to price options: simulate the uncertain future many times and average the payoff.
+a677977d|||<b>Pair vs two higher cards ≈ coin flip</b> (QQ vs AK ≈ 54/46).
+ce3cbde3|||<b>Pair vs smaller pair ≈ 80/20.</b> Dominated hand (AK vs AQ) ≈ 70/30.
+5e6f4a21|||<b>Any two cards vs AA ≈ 15%.</b> Preflop edges are smaller than they feel.
+afb2f580|||Poker room · 3/5
+0154eecc|||Desk · bet sizing calculator
+492dc400|||Pot
+40880286|||Bet
+ec19c3f6|||A pure bluff of size B into pot P risks B to win P. It breaks even if the opponent folds often enough. Turn it around and you get the defender's rule: fold more than that and any two cards can bluff you profitably.
+c9aeefab|||bluff needs folds ≥ B ÷ (P + B) minimum defence frequency = P ÷ (P + B)
+1e4f51f1|||<b>Position:</b> acting last is a structural edge, because you see what others do first. Play more hands on the button, fewer under the gun.
+9c7668a1|||<b>Ranges, not hands:</b> put the opponent on every hand they would play this way, weighted by likelihood. This is Bayes again: each action is evidence with a likelihood ratio.
+1ecf84c1|||<b>Balance:</b> bet your strong hands and some bluffs with the same size, in a ratio that makes the opponent indifferent. A pot-size river bet wants about 1 bluff for every 2 value bets.
+ebcf3431|||<b>Exploit:</b> once you know a player folds too much, bluff them more. Game theory optimal (GTO) play is the unexploitable baseline; profit comes from deviating against mistakes.
+7895ceac|||<b>Variance and tilt:</b> a winning player can lose for weeks. Track results in big blinds per 100 hands (bb/100) over tens of thousands of hands, and never chase losses.
+e694aac8|||<b>Pot-size bet:</b> bluff needs 50% folds; defend 50%; value:bluff = 2:1.
+81a34ab4|||<b>Half-pot bet:</b> bluff needs 33% folds; defend 67%; value:bluff = 3:1.
+3552cab1|||<b>Same maths as quoting:</b> an informed counterparty is a player who only bets the nuts.
+60f2a032|||Poker room · 4/5
+2a0c7ab9|||<b>Blinds:</b> the two players left of the dealer button post a small and big blind (e.g. 1 and 2). The button rotates each hand.
+f1950a95|||<b>Preflop:</b> everyone gets two private cards. Action starts left of the big blind: fold, call, or raise.
+a4236b35|||<b>Flop, turn, river:</b> three, then one, then one shared card. A betting round follows each.
+65bc28c6|||<b>Showdown:</b> the best five-card hand from your two cards plus the five shared cards wins the pot.
+acd9dc19|||<b>No-limit:</b> you may bet any amount up to your whole stack at any time.
+c65d489c|||Hand
+0f01ed56|||Example
+d899467b|||Chance in 7 cards
+cf83e721|||Straight flush
+d27ba03b|||Four of a kind
+dbe8641c|||Full house
+7c936d7c|||Flush
+2501c652|||Straight
+ca1a0d48|||Three of a kind
+6876b406|||Two pair
+36b562ae|||One pair
+b4b323e3|||High card
+a5d00550|||<b>Rarer beats commoner.</b> Flush beats straight because it is rarer.
+0ffdf4e1|||<b>Most showdowns are won with one or two pair.</b> Value comes from betting, not from monster hands.
+5db8b2f9|||Poker room · 5/5
+2a2e0c27|||Use play-money tables and trainers only. Real-money online poker is illegal in mainland China and age-restricted almost everywhere, and for interview prep the decisions matter, not the stakes.
+05b48081|||Solver trainer
+072f88e6|||GTO Wizard
+3544496b|||The leading solver-based trainer and the official WSOP training partner. Play hands against a GTO bot and see the EV you lost on each decision. Start here once you know the rules.
+3ef75238|||GTO trainer
+f472f2a7|||Fearless River GTO Trainer
+1514bec4|||Formerly the WPT GTO Trainer. Play solved spots with instant feedback on EV loss per action; has a free tier.
+923c4b1d|||Free play money
+575463ee|||Replay Poker
+bd4ccd97|||Free play-money cash games and tournaments around the clock. Good for practising reads against humans.
+a16536d7|||Courses
+ba9692f5|||Upswing Poker
+633ea863|||Rated the most complete structured curriculum. Free articles cover preflop charts and basics well.
+f2538ed8|||Video library
+a3dc902f|||Run It Once
+86eb3a7b|||Phil Galfond's site with the deepest library of elite players thinking aloud through hands.
+a5fe5713|||Trading card game
+9aa4db50|||Figgie by Jane Street
+814a2fc8|||Invented at Jane Street to simulate open-outcry trading. You deduce a hidden goal suit while trading cards. Closer to a trading desk than poker is. Also on iOS and Android.
+1ca2a030|||Market games
+5bd6e0e5|||Tradermath Market Games
+91bb6f59|||The eight games from Part II, timed and scored. Easy mode is free with no login.
+51fb183f|||Code a bot
+631b6ee1|||MIT Pokerbots
+a6a5ec3a|||Annual competition where you program a poker bot; past course materials teach game theory through code. Pairs well with your Python projects.
+129766bb|||Suggested order
+c5d3a7f5|||Week 1–2: rules, hand ranks, pot odds drill above until 90% correct.
+84c6e66e|||Week 3–4: preflop ranges by position (Upswing free charts), play-money sessions on Replay Poker.
+9b524706|||Then: GTO Wizard or Fearless River for 20 minutes a day, review your worst EV-loss spots.
+9078ddf9|||In parallel: Figgie and Tradermath for the market side.
+cd5fc19d|||Study hall · 1/6
+9d8f1a80|||Desk · build a payoff table
+b0feda80|||Preset: one die
+6109576c|||Preset: win $10 on a 6
+f648af13|||Add row
+c1514b7e|||Payoff x
+2207c4e2|||Probability p
+7c8f2d4a|||Desk · variance, column by column (uses the payoff table above)
+45377c4f|||Briefing · Study hall
+a0a0c486|||Used in: every game
+bba93b2a|||Expected value is the long-run average of a random payoff. List every outcome, multiply each by its probability, and add.
+dbdb1a13|||EV = Σ pᵢ · xᵢ
+33b74d69|||Variance measures how far results spread around that average, and the standard deviation (σ) is its square root. EV tells you <i>whether</i> to trade; σ tells you how wide to quote and how much to bet.
+4015905d|||Var = Σ pᵢ · (xᵢ − EV)² = E[X²] − EV²
+39e5e579|||Under the hood: every symbol in EV and variance
+f6b77e7c|||Reading EV = Σ pᵢ · xᵢ
+b3707d33|||The random quantity: a number you won't know until the event happens, such as the die roll.
+c0468225|||A label for each possible outcome, counting 1, 2, 3 … For a die, i runs from 1 to 6.
+eb1f1e1b|||The payoff of outcome i. For a die, x₁ = 1, x₂ = 2 … x₆ = 6.
+d77e27f6|||The probability of outcome i, between 0 and 1. All the pᵢ together add to exactly 1.
+0b5e0ed0|||That one outcome's contribution to the average.
+45081ff2|||Greek capital sigma, meaning "sum over every i": do the thing for each outcome and add the results.
+80afc135|||EV, E[X], μ
+9267e9c8|||Three names for the same answer. μ (mu) is the usual symbol once you use it inside other formulas.
+076312d5|||<b>Why multiply by p?</b> Picture rolling a die 600 times. You get about 100 of each face, so the total is about 100·1 + 100·2 + … + 100·6 = 2,100, and the average is 2,100 ÷ 600 = 3.5. Divide each count by 600 and the counts become probabilities: (1/6)·1 + (1/6)·2 + … + (1/6)·6. EV is an ordinary average where each outcome counts in proportion to how often it happens.
+add27726|||Reading Var(X) = Σ pᵢ · (xᵢ − μ)²
+6833052c|||The EV from above: the centre of the outcomes.
+1773d9b1|||The <b>deviation</b>: how far outcome i lands from the centre. Negative means below the centre.
+6f199e76|||The <b>squared deviation</b>. Squaring makes every distance positive, and it punishes big misses far more than small ones (a miss of 3 counts 9, a miss of 1 counts 1).
+b48db79d|||Each squared miss, weighted by how often it happens.
+0f29d748|||Add them up. Variance is the <b>average squared distance from the centre</b>.
+1275c17b|||σ = √Var
+ff235f09|||Standard deviation (lower-case sigma). Taking the square root undoes the squaring, so the answer is back in the payoff's own units (pips, dollars) and you can compare it with the EV.
+4d7614ab|||<b>Why square instead of just averaging the deviations?</b> Because the plain average deviation is <i>always exactly zero</i>. The centre is defined as the balance point, so misses above and below cancel. The table below proves it: the p·(x − μ) column always sums to 0. You could use absolute distance |x − μ| instead, but squares have one property that makes everything later work: variances of independent quantities add. That is where the √n rule comes from.
+02ed320f|||<b>Why the shortcut E[X²] − μ² works.</b> E[X²] means "the average of the squared payoffs", Σ pᵢxᵢ². Expand (x − μ)² = x² − 2μx + μ², then average each piece: E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ². For a die: 91/6 − 3.5² = 15.17 − 12.25 = 2.92.
+c372156c|||<b>Uniform 1…n → (n+1)/2.</b> Die 3.5, card (A=1…K=13) 7.
+315fa2a9|||<b>Die variance = 35/12 ≈ 2.92</b>, σ ≈ 1.71. Card variance = 14, σ ≈ 3.74.
+934b534a|||<b>Probabilities must sum to 1.</b> Check this first, every time.
+7254151b|||Study hall · 2/6
+57cd748c|||Desk · roll n dice 4,000 times
+7a432533|||Dice n
+03d4b056|||Roll
+f762d45f|||Used in: Dice, Trading Game, Card Game
+bd37a06e|||The expected value of a sum equals the sum of the expected values. This holds even when the parts are dependent, which is why you never list 36 outcomes to price two dice.
+05b16f34|||Variances add only when the parts are independent. So σ grows with the <i>square root</i> of the number of parts: ten dice have ten times the EV of one, but only about 3.2 times the spread. This is why sums look like a bell curve and why your quote width should grow slower than your fair value.
+55882ee9|||σ(sum of n independent) = σ₁ · √n
+ed7f6958|||Under the hood: why EVs always add but spread doesn't
+a68f9c71|||Reading E[X + Y] = E[X] + E[Y]
+830c2e3b|||"The expected value of" whatever is inside the brackets.
+d9244ea1|||Two random quantities, such as die 1 and die 2.
+190ea367|||A new random quantity: their total on each roll.
+97d897e1|||<b>Why it always holds.</b> An average is "add everything, then divide", and the order you add things in doesn't matter. Over 600 rolls of two dice, the grand total of all the sums equals the total of die 1's column plus the total of die 2's column. Dependence changes <i>which</i> values appear together on the same row, but not what each column adds up to.
+220c06c4|||Reading Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)
+3511cd09|||Cov(X, Y)
+52819016|||<b>Covariance</b>: do X and Y tend to be high together (positive), move in opposite directions (negative), or ignore each other (zero)? It is the average of (X − μₓ)(Y − μᵧ).
+7601834e|||independent
+e9fb50ea|||Knowing one tells you nothing about the other. Then Cov = 0 and the variances simply add.
+cdd7bb28|||Setup
+9b4a86cb|||Relationship
+eb39bbf6|||Variance
+d5377b38|||Two separate dice, X + Y
+7619e7c4|||Independent, Cov = 0
+e1e20977|||One die counted twice, X + X
+ac0526f9|||Perfectly together
+b70b5bdf|||Perfectly opposite
+b8e44c85|||The last row is a <b>hedge</b>: two risky positions whose errors cancel exactly. All three setups have EV 7, so only the spread differs.
+09fe96ed|||Where √n comes from
+d693db01|||Add n independent copies, each with variance σ₁². The variances add to n·σ₁², so σ = √(n·σ₁²) = σ₁·√n. Ten dice: 1.71 × √10 ≈ 5.40, against an EV of 35. In finance, this is why diversification works: holding many assets that aren't perfectly correlated grows expected return faster than it grows risk.
+3f85b5dd|||<b>Sum → add EVs.</b> n dice = 3.5n. n cards without replacement = 7n.
+60726c5e|||<b>Spread → √n.</b> n dice σ ≈ 1.71√n. Roughly 95% of outcomes fall within 2σ.
+0b7d68e4|||<b>Known part → plug it in.</b> One die shows 5: fair for two dice is 5 + 3.5 = 8.5.
+fce02aa6|||<b>Without replacement:</b> unknown cards average the <i>remaining</i> deck, not 7.
+9fb0cfa8|||Study hall · 3/6
+22907783|||Desk · re-roll game solver
+74afea7a|||Die sides
+e9c6cbfe|||Re-rolls allowed
+34435540|||Used in: interview EV puzzles, Higher or Lower
+2ee477f5|||When you get to choose during a game, solve from the last decision backwards. At each step, keep what you have if it beats the EV of continuing.
+606f0368|||V₀ = (s+1)/2 Vₖ = E[ max(X, Vₖ₋₁) ]
+c86d54ae|||Vₖ is the game's value when you have k re-rolls left on an s-sided die. The threshold rule is: keep any roll strictly above Vₖ₋₁.
+23dcccc9|||Under the hood: reading Vₖ = E[ max(X, Vₖ₋₁) ]
+53ae570c|||Number of sides on the die.
+4770a833|||What the game is worth when you still have k re-rolls left and you play perfectly.
+a931da65|||With no re-rolls left you must keep the next roll, so the game is worth the plain EV of one roll.
+714a98bc|||The roll you are about to see.
+8a511201|||What you'd be worth if you threw this roll away: the same game with one fewer re-roll.
+9394d984|||max(X, Vₖ₋₁)
+f9a2b3b8|||Your payoff after seeing X: keep X, or swap it for the rest of the game. You take whichever is bigger.
+0b90d1bf|||Average that payoff over every roll you might see.
+fe26d15a|||Worked: six-sided die, one re-roll
+35187266|||V₀ = 3.5. On a 1, 2 or 3, re-rolling (worth 3.5) beats keeping, so max = 3.5. On a 4, 5 or 6, keep it. So V₁ = (3.5 + 3.5 + 3.5 + 4 + 5 + 6) ÷ 6 = 25.5 ÷ 6 = <b>4.25</b>.
+38be9b7a|||With two re-rolls the bar rises to 4.25, so only 5 and 6 are kept: V₂ = (4 × 4.25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4.67</b>.
+a4a07838|||<b>Why work backwards?</b> You can't value the first decision without knowing what continuing is worth. Only the last decision has a known continuation (the plain EV), so you start there and move back one step at a time. This method is called backward induction, and it is exactly how American options are priced on a binomial tree: at each node, take the max of exercising now or holding.
+eea418c0|||<b>Six-sided die, one re-roll = 4.25.</b> Two re-rolls = 4.67. Memorise these two.
+495937a8|||<b>Keep if roll &gt; value of continuing.</b> Never compare to the overall average.
+81b3414e|||Study hall · 4/6
+7dc468f8|||Desk · update a belief
+73c405e4|||Prior probability
+814d7465|||Likelihood ratio of the news
+47481e5c|||Desk · natural frequencies
+90fe3698|||Prior P(H)
+ff37aab5|||P(E | H): evidence rate when true
+3e98eb0f|||P(E | not H): evidence rate when false
+37283b5f|||<i style="background:var(--felt)"></i>H and evidence
+153c7c55|||<i style="background:var(--felt);opacity:.25"></i>H, no evidence
+d738b8e3|||<i style="background:var(--ask)"></i>not H, evidence
+0a2c62f6|||<i style="background:var(--muted);opacity:.25"></i>not H, no evidence
+11422aa6|||Used in: Event Contracts, Fermi, Trading Game, poker reads
+679ea1aa|||Traders update probabilities in <b>odds</b>, because the arithmetic becomes one multiplication. Odds are p / (1 − p). A likelihood ratio (LR) says how many times more likely the news is if the event is true than if it is false.
+40329d36|||posterior odds = prior odds × LR p = odds / (1 + odds)
+b6080133|||Under the hood: prior, likelihood, posterior
+b944e86f|||The <b>hypothesis</b>: the thing you're unsure about, e.g. "it rains today".
+fe755c52|||The <b>evidence</b>: the news you observe, e.g. "the morning is overcast".
+1092d161|||The <b>prior</b>: your probability <i>before</i> seeing the evidence (Latin <i>prior</i>, "earlier"). Usually a base rate, such as "it rains on 20% of days this month".
+8f869f29|||A <b>likelihood</b>: how often you'd see this evidence <i>if H were true</i>. The bar "|" is read "given". Example: on rainy days, mornings are overcast 70% of the time.
+e5d16923|||P(E | not H)
+4a7a65a3|||How often you'd see the same evidence if H were false. Example: on dry days, 20% of mornings are overcast.
+8214ac23|||The <b>posterior</b>: your probability <i>after</i> the evidence (Latin <i>posterior</i>, "coming after"). This is what you actually want. Today's posterior becomes tomorrow's prior when new news arrives.
+b2ff75ef|||odds = p ÷ (1 − p)
+23518255|||Chance for against chance against. 20% → 0.2 ÷ 0.8 = 0.25, said "1 to 4".
+777f2196|||LR
+0155d68d|||<b>Likelihood ratio</b> = P(E | H) ÷ P(E | not H). How many times more common the evidence is when H is true: 0.7 ÷ 0.2 = 3.5. This is the strength of the news.
+b668ab90|||Where the odds form comes from
+55df32ad|||Bayes' rule is <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>. Write the same rule for "not H", then divide one by the other. The awkward P(E) term cancels and you get <span class="mono">posterior odds = prior odds × LR</span>. Rain example: 0.25 × 3.5 = 0.875, and 0.875 ÷ 1.875 = 46.7%.
+1a9bb9a2|||See it as 1,000 cases
+19dee779|||The clearest way to understand a posterior is to count. Each dot below is one day. Once you see the evidence, you are standing on one of the solid dots, so throw away the faded ones. The posterior is the share of solid dots that are green.
+5e6259f0|||The classic trap
+d94ef1fe|||P(E | H) is not P(H | E). Suppose a system catches 90% of fraudulent trades and wrongly flags 5% of good ones, and 1% of trades are fraud. A flagged trade feels 90% likely to be fraud, but: prior odds 1:99, LR = 0.90 ÷ 0.05 = 18, posterior odds = 18/99 ≈ 0.18, so p ≈ <b>15%</b>. A low base rate swamps even strong evidence. Set the sliders to 1%, 90%, 5% to see it.
+72619480|||<b>Convert, multiply, convert back.</b> 20% → 1:4 → ×3 → 3:4 → 3/7 ≈ 43%.
+655a1ea5|||<b>LR = 1 means the news says nothing.</b> LR below 1 moves you down.
+3a7bd5a3|||<b>Two independent clues → multiply both LRs.</b>
+319bf166|||Study hall · 5/6
+f6be0822|||Desk · 300 bets, three sizing rules, same luck
+fbee1317|||Win prob p
+475993af|||Net odds b
+95c60456|||Simulate
+2a99e073|||Used in: Higher or Lower, Betting Board, poker bankroll, position sizing
+c1c11065|||Positive EV is not enough: bet too much and a losing run wipes you out. Kelly picks the fraction of bankroll that maximises long-run growth. With win probability p and net odds b (win b per 1 staked):
+9d82cc26|||f* = (b·p − (1 − p)) / b = edge / odds even money: f* = 2p − 1
+229d19d5|||Betting twice Kelly gives roughly zero long-run growth, and more than that shrinks the bankroll even though every bet is +EV. Most professionals bet half Kelly, because their p is only an estimate.
+e5cba2c0|||Under the hood: reading f* = (b·p − q) ÷ b
+f04409be|||The fraction of your current bankroll to stake. The star marks it as the optimal value.
+0f4acd61|||Probability you win the bet.
+09fe1627|||Probability you lose.
+d3b8d1bc|||Net odds: profit per 1 staked if you win. Even money is b = 1. From decimal odds d, b = d − 1.
+15dd25df|||EV per 1 staked: you win b with probability p and lose 1 with probability q. This is your <b>edge</b>.
+0eecbe1b|||Scale down for long-shot payoffs, which swing more. So the result is edge divided by odds.
+07d0980b|||Why not just maximise EV?
+cb188caf|||Maximising EV says stake everything on every +EV bet, and the first loss takes you to zero. Wealth compounds by multiplying, not adding: +50% followed by −50% leaves you at 1.5 × 0.5 = 0.75 of where you started. So Kelly maximises the average <i>growth rate</i>, which is the expected logarithm of the multiplier on each bet:
+e6e31229|||g(f) = p · ln(1 + f·b) + q · ln(1 − f)
+5729c6ff|||Here ln(1 + f·b) is the log of your wealth multiplier on a win, and ln(1 − f) is the log of the multiplier on a loss. Set the slope of g to zero, p·b ÷ (1 + f·b) = q ÷ (1 − f), and solving for f gives f* = (b·p − q) ÷ b.
+30ece9c2|||<b>Example:</b> p = 0.55, b = 1 → f* = 0.10. Growth per bet = 0.55 · ln 1.1 + 0.45 · ln 0.9 = 0.0524 − 0.0474 = 0.0050, about 0.5% per bet, compounding.
+c5382ff5|||<b>Even money: bet your edge.</b> 55% win → 10% of bankroll.
+00cd45f4|||<b>Negative EV → bet 0.</b> Kelly never says bet on a losing proposition.
+ad6d2de8|||<b>Half Kelly</b> keeps about 75% of the growth with far smaller drawdowns.
+0d59fdb0|||Study hall · 6/6
+66af00bb|||Desk · edge or luck?
+c6c4f210|||Edge per trade/hand
+1b7fbe37|||σ per trade/hand
+5a22c05b|||Number n
+8be2291b|||Nothing here is a detour. Each tool from the games reappears under a new name in financial economics and econometrics.
+ecbcb0e4|||Here
+f177733e|||In finance
+67cab674|||In econometrics
+7afd56ae|||Expected value
+65527de7|||Expected return, risk-neutral pricing (option price = discounted expected payoff)
+af428138|||Population mean, conditional expectation E[Y|X], the target of regression
+cb75e4d0|||Variance, σ√n
+3e078824|||Volatility, portfolio risk, diversification
+9153b414|||Standard errors shrink with √n; this is why sample size matters
+78fe5ef9|||Linearity
+8314df54|||Portfolio return = weighted sum of asset returns
+ef0d81b2|||OLS: Y = β₀ + β₁X + ε, linear in parameters
+8a32b4a6|||Conditional EV updates
+95f7eb3a|||Prices react to news; efficient-market hypothesis
+75081e98|||Conditioning on controls; omitted-variable bias when you don't
+8a994632|||Bayes in odds
+4f489f5c|||Updating forecasts, credit default models
+fa90ed2b|||Bayesian estimation, logistic regression (log-odds are linear)
+73cc7972|||Kelly sizing
+033bad0a|||Position sizing, leverage, the Sharpe ratio
+e3bd8228|||Maximising expected log utility; geometric vs arithmetic mean
+a09f9ed2|||Adverse selection
+0706f303|||Bid-ask spread theory (Glosten–Milgrom, Kyle)
+ff38cb2e|||Selection bias, endogeneity
+dda1ec2c|||Calibrated intervals
+9a7576fe|||Value at Risk, confidence in forecasts
+740e9322|||Confidence intervals and hypothesis tests
+ed2a8344|||Monte Carlo equity
+4811f7ac|||Monte Carlo option pricing
+4e0ee266|||Bootstrap, simulation-based inference
+9f589491|||The most important bridge is statistical significance. Is your strategy, or your poker win rate, real edge or luck? The answer is the t-statistic, the core test statistic of econometrics.
+99a35306|||t = (mean edge per trade) × √n ÷ σ P(profitable over n) ≈ Φ(t)
+5917e8b6|||Under the hood: reading t = m · √n ÷ σ
+5447d724|||Your average edge per trade or hand: the EV of one repetition.
+f8cd94d1|||The standard deviation of one trade's result: how noisy each repetition is.
+1144a0bf|||How many trades or hands you've played.
+aa518e61|||Expected total profit. It grows in proportion to n.
+b1b94380|||Spread of the total profit, from the √n rule. It grows more slowly.
+3612eccd|||Signal ÷ noise = (m·n) ÷ (σ·√n) = m·√n ÷ σ. It counts how many standard deviations your result sits away from zero.
+182f4519|||The normal distribution's cumulative probability: the chance that a bell-curve variable lands below t. Here, the chance of being ahead after n trades.
+ed8ecd9e|||The t at which only 5% of pure-luck results would look this good. Beyond it, econometricians call the edge "statistically significant".
+e8ad553e|||Reading path
+ca6d0e3a|||Stage
+021493f3|||Resource
+21e2caea|||Why
+e3b82040|||Now
+2ceeb2f7|||Blitzstein &amp; Hwang, <i>Introduction to Probability</i> (Harvard Stat 110, free lectures)
+003ebf6d|||The probability behind every game here, taught with intuition
+39354223|||Zhou, <i>A Practical Guide to Quantitative Finance Interviews</i>; Crack, <i>Heard on the Street</i>
+db7c9511|||The standard interview question banks
+6b7d7624|||Mosteller, <i>Fifty Challenging Problems in Probability</i>
+54db8bfc|||Short, classic EV puzzles
+59814329|||Year 1
+b3b9d0fd|||Wooldridge, <i>Introductory Econometrics</i>
+f93bcbd7|||Regression, standard errors, causality; the econometrics minor core
+955b6362|||Year 1–2
+745e4be0|||Hull, <i>Options, Futures and Other Derivatives</i>; Natenberg, <i>Option Volatility and Pricing</i>
+fce11e63|||How traders actually price and hedge
+5546f995|||Year 2+
+827878d4|||Harris, <i>Trading and Exchanges</i>
+238f746e|||Market microstructure: why spreads exist and who you trade against
+7538091c|||Edge Lab ·
+728298d3|||Daily
+151a9eeb|||Ten questions. <b>Same for everyone.</b>
+9c890642|||One question each on fair value, pot odds, ETF arbitrage, Bayes, Kelly, bluffing and more.
+48c89b8c|||30 seconds per question. Press 1–4 to answer from the keyboard.
+e232a40b|||80 points per correct answer, plus up to 200 for speed. The maximum is 1,000.
+603e7c27|||One ranked attempt a day. The gauntlet resets at 00:00 UTC.
+952f3754|||Start
+5faa59d4|||Result
+b75b4f37|||Share on LinkedIn
+2bbef68b|||Save result image
+06a76cc6|||Copy text
+beff2224|||Today's top 10
+7b702820|||Full leaderboard →
+e29a79fe|||Review
+afb78a23|||Replay for practice
+d6ae1497|||Ten trading-interview questions, the same for everyone each day: fair value, pot odds, ETF arbitrage, Bayes and Kelly. Score, streak and leaderboard.
+bdce1952|||Edge Lab · Daily Gauntlet
+c7b2d514|||Leaderboard <span class="hud"><a class="pill" data-nav="" href="daily.html">Play today's gauntlet →</a></span>
+24345a14|||Today
+dbad49d8|||All time
+3d592d7d|||Scores come from the Daily Gauntlet. Sign in with Google to appear here; guests can play but aren't ranked.
+170a28a9|||Period
+9440ab68|||Daily Gauntlet leaderboard: today's top scores and all-time totals with streaks.
+08469453|||Briefing
+# JS strings ({0} placeholders, keep them)
+a821d153|||Done ✓
+a9b04920|||{0}/{1} done
+7ab3e824|||payoff
+a88397b6|||probability
+3f7dfc17|||remove row
+596509d8|||Probabilities sum to {0}, not 1. Fix them before trusting the EV.
+1521b4c8|||EV > 0: take this bet.
+699294d1|||EV < 0: pass, or take the other side.
+e1482f4b|||EV = 0: no edge.
+2be2f5bf|||You can type probabilities as fractions, e.g. 1/6.
+44ac8b26|||Σ (add the column)
+45fc1481|||plain deviations always cancel to 0, so they can't measure spread.
+047a1ced|||this is the variance.
+ef04a332|||back in the payoff's own units.
+01e05a07|||Shortcut check:
+3ba720d0|||Theory EV
+e0cbcc0b|||Sample mean
+4fe379e6|||Theory σ
+d803c1c5|||Sample σ
+d81e54fb|||Re-rolls left
+5a3fd585|||Game value
+065d7e26|||Keep the roll if it is
+ea7041ab|||forced to keep
+1cd493a3|||above {0} → keep ≥ {1}
+58a1c5ab|||No choice: value = ({0}+1)/2 = {1}.
+e37a7abd|||With {0} re-rolls, the game is worth {1}.
+4dbd16b3|||With {0} re-roll, the game is worth {1}.
+9be034c3|||Each extra re-roll adds less: that is diminishing value of options, the same reason extra time on an option is worth less and less.
+4a47653d|||prior
+0fba9ce5|||posterior
+e8d82351|||prior odds
+7d9c1bb0|||posterior p
+6c9d91db|||Of 1,000 days, {0} have H (prior {1}%).
+085f96c7|||Evidence appears on {0} of those {1} ({2}%) and on {3} of the other {4} ({5}%).
+a0cd1d28|||You saw the evidence, so only the {0} solid dots are still possible. {1} of them are H.
+ac98309f|||Posterior P(H | E) = {0} ÷ {1} = {2}%
+dfb35cdb|||Odds route: prior odds {0} × LR ({1} ÷ {2} = {3}) = {4} → {5}%  (tiny gaps are dot rounding)
+4760b816|||Half Kelly
+8f4c67ba|||2× Kelly
+818c42c3|||EV per unit = {0} ≤ 0. Kelly says bet nothing.
+2d42c335|||Kelly fraction f* = ({0}×{1} − {2}) / {0} = {3}% of bankroll
+826482fb|||Expected log-growth per bet: half {0}, Kelly {1}, 2× {2}
+5881c57f|||The vertical axis is log scale. Run it a few times: 2× Kelly often ends below where it started.
+c5cf0d27|||hidden die
+14e7b5e5|||die showing {0}
+238fdc6e|||face-down card
+e617a22a|||coin {0}
+84a35734|||hidden coin
+967f1a26|||Sound on
+f6d0b01d|||Streak {0} · best {1}
+32767bc8|||Contracts
+a40ad5e2|||Expected edge (skill)
+5d446584|||Realised P&amp;L (luck)
+7abb61f9|||Too slow: the clock ran out, so you passed.
+1919e7be|||Correct.
+ae37aea0|||Not the best choice.
+372f03a0|||Fair value = {0}
+2a6f9c1d|||Buy edge = fair − ask = {0} · Sell edge = bid − fair = {1} → best: {2}. Expected edge earned: {3}.
+5972423f|||Settles at {0}
+8f8a0a77|||you passed
+a066f070|||buy
+c815b17c|||your buy realised {0}
+f62257bb|||your sell realised {0}
+12625ba3|||waiting
+63e1ce93|||BID
+187770cf|||fair
+51138d42|||ASK
+cf1c85ad|||Position
+758ec54e|||Cash
+e5ad6664|||Mark-to-fair
+1aee9f8e|||Fair is 10.5. Set your quote, then call the first trader.
+8e82ed95|||Round started. Fair = 10.5.
+5b9d06cb|||Your ask must be above your bid.
+5bed65b7|||Trader {0} (informed: knows dice 1 and 2) values it at {1}.
+898e7332|||Trader {0} (noise) values it at {1}.
+fe007d2b|||Lifts your ask: you SELL 1 at {0}.
+06e3dd7e|||Hits your bid: you BUY 1 at {0}.
+b3b2cf2c|||No trade.
+a0f2c69a|||edge
+00042ae4|||EVENT: die 1 shows {0}. New fair = {0} + 7 = {1}. Re-centre now.
+54f0ea36|||SETTLE at {0} = {1}. Position {2} × {1} + cash {3} = P&L {4}. Press Next trader for a new round.
+0cf0104a|||Total P&L {0} · rounds {1}
+0a4b47f9|||Hint: fair {0}, you are long {1}: skew down.
+51d3bc2a|||Hint: fair {0}, you are short {1}: skew up.
+f6d66a7e|||Hint: fair {0}
+1018340e|||Your bid must stay below your ask.
+f4dcaed8|||Your ask must stay above your bid.
+2b020927|||start
+f0e87eaa|||card {0}
+90c7b443|||settled {0}
+268c91a4|||dashed = bot mid
+cc7e73ca|||green = fair value
+dee2dd34|||sell
+b56ee1a1|||SETTLED {0}
+8e383432|||Fair value
+0bdeabb4|||Five face-down cards. Fair starts at 5 × 7 = 35.
+64af293a|||Trade against the bot's quote, then reveal a card.
+1fea1ff6|||Max 2 lots per step. Reveal the next card.
+6bb45f37|||BUY
+264137be|||SELL
+b00a7eb8|||Bought {0} at {1}.
+71bf9778|||Sold {0} at {1}.
+06a75212|||Fair is {0}, so edge = {1}.
+7db2fc14|||Card {0}: {1} ({2}). Fair {3} → {4}.
+231cb19d|||SETTLE at {0}. P&L = cash {1} + position {2} × {0} = {3}. Press Reveal for a new game.
+666e89d8|||Total P&L {0}
+a8f3e1db|||Sum = {0}
+dfe0bb9e|||Working: revealed {0} + {1} hidden × ({2} ÷ {3}) = {4}.
+638d1619|||Revealed total {0} · {1} cards still hidden
+5de1b341|||Revealed total {0} · {1} card still hidden
+5586cf3d|||Ticker
+f174090c|||Shares / unit
+d1c69a85|||Last
+e4984898|||Chg
+6bad02fe|||cost {0}/unit
+b27ef3d6|||Compute NAV, then compare with the price you can trade.
+8ace904b|||Too slow
+48e09e45|||Correct
+b564001a|||Missed
+666c906e|||in {0}s.
+a4ce3a2f|||Buy ETF: NAV − ask − cost = {0} · Sell ETF: bid − NAV − cost = {1} → best: {2}. You made {3}.
+4e42ee40|||no trade
+5b0e57ef|||buy the ETF
+ddc8be11|||sell the ETF
+5bad025e|||P&L {0} · {1} decisions
+3a1b0dfe|||Streak {0}
+ffe1077c|||Type a low and a high estimate to see your interval on a log scale.
+63149508|||your 90% range · {0} orders wide
+529e1a28|||true: {0}
+235f004c|||Enter two positive numbers.
+d7d390bd|||hit
+f749d76f|||miss
+8deed4ef|||Inside
+b7efb76a|||Outside
+b8bf6703|||True answer: {0}. Your width: {1} orders of magnitude → {2} pts.
+c43515f8|||Calibration so far: {0}/{1} = {2}% (target 90%).
+3cbaca66|||You are overconfident: widen your ranges.
+27cf2af0|||All hits: you may be too wide. Try narrowing.
+e85a3aff|||Hit {0}/{1} · score {2}
+52876b95|||your quote
+1b1bcb11|||Bayes p {0}
+1b7e4b7a|||Tape is empty. Quote, then open the market.
+3bc1ba6f|||Enter your probability, then check it. Then quote and open the market.
+b93f3d7d|||Within 3 points.
+77d53275|||Off by {0} points.
+72fa3149|||prior {0}% → odds {1} × LR {2} = {3} → p = {4}%
+10303d1d|||Now quote around {0}¢.
+6f168399|||P&L {0} · calibration {1}/{2}
+50f9dbed|||Ask must be above bid.
+b9646cf7|||INFORMED
+9424ac79|||noise
+7edc4eeb|||BUYS
+9e570cf4|||SELLS
+5b6e19e9|||your pos {0}
+8fff0398|||YES
+a0509b77|||NO
+eb44d110|||Outcome: {0}. Fills: {1} noise, {2} informed. Net position {3}.
+946595d2|||P&L = cash {0} + {1} × {2} = {3}¢
+520a65b9|||Each noise fill earns about half your width ({0}¢) on average; each informed fill loses about {1}¢. Raise the informed share and watch how wide you must go.
+b2b67ec5|||higher {0}/{1} = {2}%
+cb9caef8|||lower {0}/{1} = {2}%
+75a6021f|||bankroll · start 1,000
+31a2f7be|||{0} cards left
+aa708978|||New deck. Bankroll 1,000.
+662fae5f|||WIN
+8df6be46|||LOSE
+967673ec|||Before the draw: p(higher) = {0}/{1} = {2}%, p(lower) = {3}/{1} = {4}%.
+2083b008|||You picked {0} ({1}%) and staked {2}%. Kelly on the best side: {3}, 2p − 1 = {4}%.
+01efbb53|||higher
+346e3ee1|||lower
+cae6a924|||Bust. Oversizing does this even with an edge.
+d3f06106|||Outcome
+f1d8b477|||Odds
+b52b36b7|||Back
+c42084e4|||back {0}
+13c0d621|||Back the lines whose odds beat 1 ÷ true probability, then roll.
+db6cfb40|||Tick each line whose odds beat 1 ÷ true probability.
+b0cc834f|||implied
+587eac11|||BACK
+c7e16815|||skip
+8331c4d7|||you backed
+09f7502e|||missed
+4bc71cb3|||Your EV per 1 staked on each: {0} (best possible {1}).
+b2488aa5|||would win
+2e91e22b|||Rolled {0} + {1} = {2} · this board {3}
+9943adf4|||no bets
+9dab9b9c|||Expected {0} · realised {1}
+ac9b80d4|||Odds must be above 1.
+d05fbe6e|||arbitrage
+d9161221|||no arbitrage
+b3f55de5|||Stake {0} on A and {1} on B. Either way you get back {2} → locked profit {3} ({4}%).
+1580b53b|||Pot {0}
+9bf12252|||Bet {0}
+bb4ee405|||flop
+963c71d6|||On the flop, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3} and is all-in (you see both turn and river). Assume you win only if you hit and get nothing extra later.
+141df562|||On the flop, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3}. Assume you win only if you hit and get nothing extra later.
+51ca99d7|||On the turn, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3}. Assume you win only if you hit and get nothing extra later.
+1fe6cb17|||Compare equity with B ÷ (P + 2B).
+346a2f5c|||Wrong
+eed6bfb4|||Required
+0786ff3b|||Equity
+b55e22fe|||exact
+31ffe63e|||EV of calling
+b71bb26e|||{0}/{1} correct
+395ed46c|||HIT
+c3a5a328|||MISS
+cdc122d9|||You called and hit: {0} chips.
+36baf284|||You called and missed: {0} chips.
+18eec306|||You folded. The runout would have hit.
+a8fdeced|||You folded. The runout would have missed.
+a206d5b6|||One result is luck; the EV is the decision.
+4ea87c80|||Chips {0}
+e879b0be|||Board
+a9ba9ede|||Check the card format: two cards each, like AsKs, and 0/3/4/5 board cards.
+1454f2a8|||A card appears twice.
+0aa39879|||Win {0}%  Tie {1}%  Lose {2}%
+553bfe9c|||Equity = win + tie/2 = {0}%  (± {1}% at 95%, from √(p(1−p)/n))
+ee47c1c8|||Your final hand:
+628c1363|||Bet / pot
+21e4414b|||Bluff needs folds
+db9f9d43|||Defender must continue
+630e6d11|||Caller needs equity
+e2db35ec|||Bluffs in betting range
+bc1df41e|||Value : bluff
+94f798e4|||Expected total
+5d0c5a87|||σ of total
+8c400393|||t-statistic
+eb3b6b6d|||P(ahead after n)
+2b7b0342|||n for t = 1.96
+c00d449b|||Expected profit grows with n, but noise grows with √n, so t grows with √n.
+3e976e2c|||At t ≥ 1.96 you can reject "no edge" at the 5% level, which is a hypothesis test from econometrics.
+8aea6bea|||Poker example: a strong win rate of 5 bb/100 with σ ≈ 100 bb/100 needs about {0} hands to be statistically convincing.
+7e1728bc|||Pick any card from the fan. I'll tell you the odds that the <b>next</b> card is higher.
+7973996a|||Card returned. Pick another.
+22201757|||You drew {0}. Of the {1} cards left, {2} are higher, {3} lower and {4} tie.
+4f927271|||P(higher) = {0}/{1} = {2}. At even money, Kelly stakes 2p − 1 = {3} on higher.
+8480f261|||P(lower) = {0}/{1} = {2}. At even money, Kelly stakes 2p − 1 = {3} on lower.
+03d7a641|||No edge: don't bet.
+f80d6336|||No. {0}
+3d9afdaa|||Exit full screen
+85dfa32c|||Account
+e53407cf|||Player
+34aaa7bc|||Account: {0}
+aeb1e06b|||Scores are saved to the leaderboard.
+72d2c939|||Name on the leaderboard
+efc007a3|||Save
+dc1649a1|||Sign out
+9d4af690|||Saved.
+16dedbf4|||Use 2–24 characters.
+ada2e9e9|||Sign in
+c504fd31|||Keep your scores
+eaf102d4|||Sign in to save Daily Gauntlet scores, build a streak and appear on the leaderboard. Every game is free to play without an account.
+ccc5b0ed|||Continue with Google
+166b25cb|||Your leaderboard name is your first name and last initial. You can change it.
+791d4d57|||Market taking
+62a32dc0|||Contract: {0}. The market is {1} / {2}.
+32fc6791|||Buy at the ask
+7cc6f3d8|||Sell at the bid
+fe34c4ec|||Fair value = {0} ({1}). {2}
+0ce19876|||Fair is above the ask: buy.
+2df6ce30|||Fair is below the bid: sell.
+56c7f5cb|||Fair is inside the quote: pass.
+c7bec43f|||Pot odds
+b9dcaf12|||One card to come. You have {0} outs among 47 unseen cards. The pot is {1} and your opponent bets {2}.
+864147ce|||You need B ÷ (P + 2B) = {0}. You have {1} ÷ 47 = {2}. {3}
+afb73eea|||Equity beats the price: call.
+eea88c77|||Not enough equity: fold.
+d15dcb87|||Shares
+3e8248e3|||Price
+076c8935|||ETF arbitrage
+72941095|||One ETF unit holds these shares. The ETF trades {0} / {1}, and trading the basket costs 0.05 per unit.
+aa178af7|||Buy the ETF
+def8531a|||Sell the ETF
+f941ab6b|||NAV = {0}. Buy edge = NAV − ask − 0.05 = {1}. Sell edge = bid − NAV − 0.05 = {2}.
+2c67b100|||Bayes
+8184d183|||Prior probability {0}. The news you just saw is {1}× as likely if the event is true as if it is false. Posterior probability?
+b2fc27d2|||Prior odds {0} × LR {1} = {2}. Posterior = {2} ÷ (1 + {2}) = {3}.
+7ea66d03|||You win with probability {0}. A win pays {1} to 1; a loss costs your stake. What share of bankroll does Kelly bet?
+705d82cb|||Higher or lower
+926a5079|||A fresh deck. The first card is shown. What is the probability the next card is strictly higher?
+ac84cd34|||{0} cards rank above {1}, out of 51 left: {0} ÷ 51 = {2}.
+75ae955e|||You win {0} with probability {1}/{2}, otherwise you lose {3}. Expected value of the bet?
+3e28126f|||EV = {0} × {1} − {2} × {3} = {4}.
+ed4c335e|||Betting board
+a43566a2|||Two dice are rolled. "{0}" is offered at decimal odds {1}. Back it or skip?
+454995eb|||Back it
+3da47453|||Skip
+67043264|||p = {0}/36 = {1}. p × odds = {2}, {3}
+308b5829|||above 1: positive EV, back it.
+1b10228a|||below 1: negative EV, skip.
+324818eb|||Bluff maths
+fac805a4|||You bluff {0} into a pot of {1}. How often must your opponent fold for the bluff to break even?
+c22c6a79|||Risk ÷ (risk + reward) = {0} ÷ ({0} + {1}) = {2}.
+fe971249|||Quick maths
+e22e68c3|||Answer: {0}.
+858e9c1c|||Playing as a guest.
+1f440419|||Your score won't be saved.
+4a0b7281|||Sign in with Google
+6280fd88|||before you start to join the leaderboard.
+aeca5e33|||Signed in.
+570bf474|||Your first attempt today goes on the leaderboard. The clock starts when you press Start.
+030f8c3b|||Leaderboards are available on the live site.
+6c957797|||Streak {0} · best {1} · {2} days played
+d1843ac7|||See today's result
+558f4e17|||Done for today.
+45eed3d6|||You scored {0}. Come back tomorrow, or replay for practice.
+70eaf68e|||Your clock is already running.
+5c2aec68|||You started at {0}. Finish now to save your score.
+576766d3|||Play again
+732d86be|||Question {0} of {1}
+fba4315c|||{0}/10 correct
+7062a63d|||Not saved: {0}
+485d25e2|||Saved. You're <b>#{0}</b> today.
+38602882|||Today's saved score.
+88951082|||Practice run: not saved.
+007a70ad|||Guest score: not saved. Sign in before tomorrow's gauntlet to join the leaderboard.
+c9ba7d24|||Ran out of time.
+968f158e|||You chose {0}.
+105a4d13|||Streak {0} 🔥
+033b3961|||No scores yet today. Be the first.
+a3c6efa2|||Next gauntlet in {0}
+8aa0c6ef|||Edge Lab Daily Gauntlet No. {0}: {1}/1000
+4b7f2128|||#{0} today
+f7f85965|||Ten trading-interview questions a day: fair value, pot odds, ETF arbitrage, Bayes and Kelly.
+e02a512e|||EDGE LAB · DAILY GAUNTLET No. {0}
+8222f10d|||Copied. Paste it anywhere.
+42a6c4ae|||Post text copied, in case LinkedIn doesn't pre-fill it.
+33ce4174|||Loading…
+489f4877|||Score
+b12fcedc|||Answers
+6c82e6dd|||Time
+b25928c6|||Total
+f6bb0f46|||Days
+77003d07|||Best
+ac4792cf|||Streak
+7e4f466c|||No scores yet. Play today's gauntlet to be first.
+8a2d7417|||You: {0} points over {1} days · best {2} · streak {3}
+50226017|||You haven't finished a gauntlet yet.
+792d65cb|||to get on the board.
+796703c9|||One card from a 52-card deck. A=1 … K=13. Contract pays its value.
+a9d6e0c9|||Sum of two dice.
+f7a49dd0|||Maximum of two dice.
+41ea790e|||Minimum of two dice.
+a40ce45f|||Number of heads in 10 fair coin flips.
+299e1d31|||Sum of three cards dealt without replacement (A=1 … K=13).
+3d658666|||Product of two dice.
+9155d0b3|||The square of one die roll.
+b3fd1cf0|||Number of die rolls until the first 6 (including the 6).
+a0141b7e|||Number of coin flips until the first head.
+f7f88243|||Number of aces in a 5-card hand.
+dea5d7cf|||Sum of a die and a card (A=1 … K=13).
+969c3339|||Number of distinct faces seen in 3 die rolls.
+e0187190|||Number of sixes in 12 die rolls.
+96f59288|||Uniform 1–13: (1+13)/2 = 7.
+979aeb5f|||Linearity: 3.5 + 3.5 = 7.
+695a7ded|||P(max ≤ k) = k²/36, so P(max = k) = (2k−1)/36. EV = Σ k(2k−1)/36 = 161/36 ≈ 4.47.
+e123853d|||min + max = sum of both dice, so min = 7 − 4.47 = 91/36 ≈ 2.53.
+716a9713|||Linearity: 10 × 0.5 = 5.
+7e2b4d2d|||Linearity works without independence: 3 × 7 = 21.
+4cc75a5c|||Independent, so E[XY] = E[X]E[Y] = 3.5 × 3.5 = 12.25.
+c3cdfcf6|||(1+4+9+16+25+36)/6 = 91/6 ≈ 15.17. Note E[X²] ≠ E[X]² = 12.25.
+8c9a572e|||Geometric with p = 1/6: EV = 1/p = 6.
+9c2138a8|||Geometric, p = 1/2: EV = 2.
+d74dd2db|||Each card is an ace with prob 4/52 = 1/13. Linearity: 5/13 ≈ 0.385.
+46b4d6f7|||Each face appears with prob 1 − (5/6)³ = 91/216. Six faces: 6 × 91/216 = 91/36 ≈ 2.53.
+d2b35a20|||a gutshot straight draw
+be9ffe34|||two overcards
+a3e15019|||an open-ended straight draw
+486cce7c|||a flush draw
+a642e4d0|||a flush draw plus open-ended straight draw
+f650d48c|||a flush draw plus one overcard
+d407b721|||a pair, drawing to two pair or trips
+b82fbf47|||Distance from the Earth to the Moon, in km.
+5c775e6e|||Light takes about 1.3 s; 1.3 × 300,000 km/s ≈ 390,000.
+89381eb0|||Height of Mount Everest, in metres.
+e8212917|||Cruising jets fly ~10 km; Everest is a bit lower.
+8c3eccbb|||Population of Australia (2025), in people.
+c7e28b71|||Roughly 5 cities of 1–5 million plus regional areas.
+c8d56470|||Population of Shanghai (2020 census), in people.
+6d899724|||One of the world's largest cities at roughly 25 million.
+1ffadd1e|||World population (2025).
+b02e41df|||Two giants of ~1.4 billion each make up a third.
+974e6c02|||Seconds in a year.
+fd4c9f5f|||Bones in an adult human body.
+b9631e7e|||Member states of the United Nations.
+97b19bca|||Speed of sound in air at 20°C, in m/s.
+ab7287f9|||Thunder: about 3 seconds per kilometre.
+67099d7c|||Keys on a standard piano.
+2f6a0af9|||Seven octaves plus a few: 7 × 12 + 4.
+e4e34c76|||Height of the Eiffel Tower including antennas, in metres.
+e27e5ccd|||About 100 storeys at ~3 m each.
+1e72dee3|||Heartbeats of an adult in one day.
+c8f3589a|||70 per minute × 1,440 minutes ≈ 100,000.
+90a338d1|||Great-circle distance Sydney to Shanghai, in km.
+e4f58ad1|||About a 10-hour flight at 800 km/h.
+d72724ca|||Total length of the Great Wall including all branches (2012 survey), in km.
+d690e1c1|||Grains of rice on a chessboard if square 1 has 1 grain and each square doubles: total grains.
+62d87bcc|||2⁶⁴ − 1 ≈ 1.8 × 10¹⁹. Use 2¹⁰ ≈ 10³.
+af8a26b4|||Words in a typical 300-page novel.
+4be4b9f7|||~300 words per page × 300 pages.
+80891bf5|||A startup in this sector gets acquired within 3 years about 10% of the time. News: it just hired a well-known corporate-development lead. Such hires are 3× more common at firms that later get acquired.
+65f26b08|||A team wins 40% of its away games. News: their top scorer is out. Teams missing their top scorer win away games only 0.6× as often, in odds terms.
+cfece785|||A central bank cuts rates at about 25% of meetings. News: the governor's speech used dovish language seen 4× more often before cuts.
+4343adc0|||30% of product launches like this ship on time. News: the beta slipped a week. Slips are 0.5× as likely for launches that end up on time.
+6394bdd0|||A candidate with this polling lead wins 70% of the time. News: a fresh poll widens the lead; such polls are 2× more likely if they will win.
+f341e901|||It rains on 20% of days this month. News: the morning is overcast, which happens 3.5× as often on days it rains.
+dea0812c|||Sum is 2, 3 or 4
+6a090097|||Sum is 5 or 6
+29c6d54f|||Sum is exactly 7
+f75cd780|||Sum is 8 or 9
+2ee83bd9|||Sum is 10, 11 or 12
+ec9b7a41|||Doubles
+a938c0ef|||Sum is odd
+174164fd|||Both dice ≥ 4
+b0b322dc|||Sum of two dice
+a8427010|||Maximum of two dice
+172b58d5|||Minimum of two dice
+800f6432|||Heads in 10 fair coin flips
+627e5690|||Sum of three cards, A=1 … K=13, no replacement
+7aefaa41|||Product of two dice
+d46d5e66|||Square of one die roll
+f2b1a2ab|||Rolls until the first 6
+f754c3cf|||Sixes in 12 die rolls
+2449083a|||One card, A=1 … K=13
+2b15ce40|||A die plus a card (A=1 … K=13)
+eca04783|||Expected maximum of two dice
+a5b9bd78|||Expected minimum of two dice
+481030a4|||Expected number of rolls until the first 6
+f5e0a18b|||Expected flips until two heads in a row
+50de494f|||Variance of one fair die
+c9fb7056|||Expected number of distinct faces in 3 die rolls
+774f6695|||Expected value of the square of one die roll
+f1071b6e|||Value of a die game where you may re-roll once
+7baa8cd0|||Both dice are 4 or more
+9d4e1e23|||pass
+bc8d8647|||call
+c5b2b01d|||fold

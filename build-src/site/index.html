@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Edge Lab: a 3D casino for trading-interview prep. Expected value, market making, ETF arbitrage, Bayes, Kelly sizing and poker maths, with a playable simulator for every concept.">
+<meta property="og:title" content="Edge Lab">
+<meta property="og:description" content="The house knows the odds. Now you do. Interactive trading-interview games and poker maths.">
+<meta name="theme-color" content="#050a08">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Edge Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="veil veil-side" aria-hidden="true"></div><div class="veil veil-full" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="#top"><i aria-hidden="true"></i>Edge Lab</a>
+  <div class="tb-r"><span class="tb-prog mono" id="tbProg"></span><button id="sndBtn" class="tb-btn snd" aria-pressed="false">Sound off</button><button id="menuBtn" class="tb-btn" aria-expanded="false" aria-controls="indexNav">Index</button></div>
+</header>
+<div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Page progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="scrub-track" id="scrubTrack"><div class="scrub-fill" id="scrubFill"></div>
+    <div class="scrub-thumb" id="scrubThumb"><span class="scrub-label" id="scrubLabel"></span></div>
+    <span class="scrub-tip" id="scrubTip"></span>
+  </div>
+</div>
+<div class="wrap">
+<nav class="rail" id="indexNav" aria-label="Contents" data-lenis-prevent>
+  <div class="eyebrow">Index</div>
+  <div class="prog" id="progTxt">0 of 0 modules done</div>
+  <div class="bar"><i id="progBar"></i></div>
+  <h2>I · Foundations</h2>
+  <a href="#ev">Expected value <span class="tick" data-for="ev"></span></a>
+  <a href="#linear">Linearity &amp; variance <span class="tick" data-for="linear"></span></a>
+  <a href="#stopping">Stop or continue <span class="tick" data-for="stopping"></span></a>
+  <a href="#bayes">Bayes in odds form <span class="tick" data-for="bayes"></span></a>
+  <a href="#kelly">Bet sizing (Kelly) <span class="tick" data-for="kelly"></span></a>
+  <h2>II · The eight games</h2>
+  <a href="#g-card">1 Card Game <span class="tick" data-for="g-card"></span></a>
+  <a href="#g-dice">2 Market Making Dice <span class="tick" data-for="g-dice"></span></a>
+  <a href="#g-trade">3 Trading Game <span class="tick" data-for="g-trade"></span></a>
+  <a href="#g-etf">4 ETF Arbitrage <span class="tick" data-for="g-etf"></span></a>
+  <a href="#g-fermi">5 Fermi Estimation <span class="tick" data-for="g-fermi"></span></a>
+  <a href="#g-event">6 Event Contracts <span class="tick" data-for="g-event"></span></a>
+  <a href="#g-hilo">7 Higher or Lower <span class="tick" data-for="g-hilo"></span></a>
+  <a href="#g-board">8 Betting Board <span class="tick" data-for="g-board"></span></a>
+  <h2>III · Poker</h2>
+  <a href="#p-rules">Rules &amp; hand ranks <span class="tick" data-for="p-rules"></span></a>
+  <a href="#p-odds">Pot odds &amp; outs <span class="tick" data-for="p-odds"></span></a>
+  <a href="#p-equity">Equity calculator <span class="tick" data-for="p-equity"></span></a>
+  <a href="#p-bluff">Bluffs, MDF, position <span class="tick" data-for="p-bluff"></span></a>
+  <a href="#p-sites">Where to practise <span class="tick" data-for="p-sites"></span></a>
+  <h2>IV · Next</h2>
+  <a href="#bridge">To finance &amp; econometrics <span class="tick" data-for="bridge"></span></a>
+</nav>
+
+<main>
+<section class="slide hero" id="top" data-scene="fan">
+  <div class="kicker">Edge Lab · Trading-interview prep · After hours</div>
+  <h1>The house knows the odds. <b>Now you do.</b></h1>
+  <p class="lede">Every trading game, and every hand of poker, runs on the same five ideas: fair value, edge, spread, updating and sizing. Learn them here, then play every Tradermath game at the tables below.</p>
+  <div class="cta"><a class="chip-btn" href="#ev">Start with the maths</a><a class="chip-btn ghost" href="#g-card">Go to the tables</a></div>
+  <div class="stagehud" data-hud></div>
+  <div class="marquee" aria-hidden="true"><div>FAIR = Σ p·x ◆ EDGE = FAIR − PRICE ◆ WIDTH ∝ σ ◆ SIZE = EDGE ÷ ODDS ◆ UPDATE = ODDS × LR ◆ FAIR = Σ p·x ◆ EDGE = FAIR − PRICE ◆ WIDTH ∝ σ ◆ SIZE = EDGE ÷ ODDS ◆ UPDATE = ODDS × LR ◆&nbsp;</div></div>
+  <div class="scrollcue">Scroll · deal me in</div>
+</section>
+
+<!-- ================= PART I ================= -->
+<div class="part slide" data-scene="dice"><div class="part-head"><span>Part I</span><h2>Foundations</h2></div><p class="big">Every bet has <b>a price.</b></p><p class="lede">Before you trade anything, price it: expected value, how spread grows, when to stop, how to update and how much to stake. Click the felt to roll the dice.</p><div class="stagehud" data-hud></div></div>
+
+<section class="mod" id="ev" data-scene="dice">
+  <h3>Expected value</h3>
+  <div class="meta"><span class="tag">Used in: every game</span><button class="done-btn" data-done="ev" aria-pressed="false">Mark done</button></div>
+  <p>Expected value is the long-run average of a random payoff. List every outcome, multiply each by its probability, and add.</p>
+  <div class="formula">EV = Σ pᵢ · xᵢ</div>
+  <p>Variance measures how far results spread around that average, and the standard deviation (σ) is its square root. EV tells you <i>whether</i> to trade; σ tells you how wide to quote and how much to bet.</p>
+  <div class="formula">Var = Σ pᵢ · (xᵢ − EV)²  =  E[X²] − EV²</div>
+  <div class="desk">
+    <div class="desk-h">Desk · build a payoff table <span><button id="evDie">Preset: one die</button> <button id="evBet">Preset: win $10 on a 6</button> <button id="evAdd">Add row</button></span></div>
+    <div class="tbl"><table id="evTable"><thead><tr><th>Payoff x</th><th>Probability p</th><th>p·x</th><th></th></tr></thead><tbody></tbody></table></div>
+    <div class="stats" id="evStats" style="margin-top:10px"></div>
+    <div class="out" id="evOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: every symbol in EV and variance</summary><div class="deep-body">
+    <h4>Reading EV = Σ pᵢ · xᵢ</h4>
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>X</td><td>The random quantity: a number you won't know until the event happens, such as the die roll.</td></tr>
+      <tr><td>i</td><td>A label for each possible outcome, counting 1, 2, 3 … For a die, i runs from 1 to 6.</td></tr>
+      <tr><td>xᵢ</td><td>The payoff of outcome i. For a die, x₁ = 1, x₂ = 2 … x₆ = 6.</td></tr>
+      <tr><td>pᵢ</td><td>The probability of outcome i, between 0 and 1. All the pᵢ together add to exactly 1.</td></tr>
+      <tr><td>pᵢ · xᵢ</td><td>That one outcome's contribution to the average.</td></tr>
+      <tr><td>Σ</td><td>Greek capital sigma, meaning "sum over every i": do the thing for each outcome and add the results.</td></tr>
+      <tr><td>EV, E[X], μ</td><td>Three names for the same answer. μ (mu) is the usual symbol once you use it inside other formulas.</td></tr>
+    </tbody></table></div>
+    <p><b>Why multiply by p?</b> Picture rolling a die 600 times. You get about 100 of each face, so the total is about 100·1 + 100·2 + … + 100·6 = 2,100, and the average is 2,100 ÷ 600 = 3.5. Divide each count by 600 and the counts become probabilities: (1/6)·1 + (1/6)·2 + … + (1/6)·6. EV is an ordinary average where each outcome counts in proportion to how often it happens.</p>
+
+    <h4>Reading Var(X) = Σ pᵢ · (xᵢ − μ)²</h4>
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>μ</td><td>The EV from above: the centre of the outcomes.</td></tr>
+      <tr><td>xᵢ − μ</td><td>The <b>deviation</b>: how far outcome i lands from the centre. Negative means below the centre.</td></tr>
+      <tr><td>( … )²</td><td>The <b>squared deviation</b>. Squaring makes every distance positive, and it punishes big misses far more than small ones (a miss of 3 counts 9, a miss of 1 counts 1).</td></tr>
+      <tr><td>pᵢ · ( … )²</td><td>Each squared miss, weighted by how often it happens.</td></tr>
+      <tr><td>Σ</td><td>Add them up. Variance is the <b>average squared distance from the centre</b>.</td></tr>
+      <tr><td>σ = √Var</td><td>Standard deviation (lower-case sigma). Taking the square root undoes the squaring, so the answer is back in the payoff's own units (pips, dollars) and you can compare it with the EV.</td></tr>
+    </tbody></table></div>
+    <p><b>Why square instead of just averaging the deviations?</b> Because the plain average deviation is <i>always exactly zero</i>. The centre is defined as the balance point, so misses above and below cancel. The table below proves it: the p·(x − μ) column always sums to 0. You could use absolute distance |x − μ| instead, but squares have one property that makes everything later work: variances of independent quantities add. That is where the √n rule comes from.</p>
+    <p><b>Why the shortcut E[X²] − μ² works.</b> E[X²] means "the average of the squared payoffs", Σ pᵢxᵢ². Expand (x − μ)² = x² − 2μx + μ², then average each piece: E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ². For a die: 91/6 − 3.5² = 15.17 − 12.25 = 2.92.</p>
+
+    <div class="desk">
+      <div class="desk-h">Desk · variance, column by column (uses the payoff table above)</div>
+      <div class="tbl"><table id="varTable"></table></div>
+      <div class="out" id="varOut"></div>
+    </div>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Uniform 1…n → (n+1)/2.</b> Die 3.5, card (A=1…K=13) 7.</li>
+    <li><b>Die variance = 35/12 ≈ 2.92</b>, σ ≈ 1.71. Card variance = 14, σ ≈ 3.74.</li>
+    <li><b>Probabilities must sum to 1.</b> Check this first, every time.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="linear" data-scene="bell">
+  <h3>Linearity and how spread grows</h3>
+  <div class="meta"><span class="tag">Used in: Dice, Trading Game, Card Game</span><button class="done-btn" data-done="linear" aria-pressed="false">Mark done</button></div>
+  <p>The expected value of a sum equals the sum of the expected values. This holds even when the parts are dependent, which is why you never list 36 outcomes to price two dice.</p>
+  <div class="formula">E[X + Y] = E[X] + E[Y]</div>
+  <p>Variances add only when the parts are independent. So σ grows with the <i>square root</i> of the number of parts: ten dice have ten times the EV of one, but only about 3.2 times the spread. This is why sums look like a bell curve and why your quote width should grow slower than your fair value.</p>
+  <div class="formula">σ(sum of n independent) = σ₁ · √n</div>
+  <div class="desk">
+    <div class="desk-h">Desk · roll n dice 4,000 times</div>
+    <div class="row"><label for="ldN">Dice n</label><input type="range" id="ldN" min="1" max="12" value="2"><span class="stat" id="ldNv">2</span><button class="go" id="ldRoll">Roll</button></div>
+    <canvas id="ldCanvas" width="760" height="230"></canvas>
+    <div class="stats" id="ldStats" style="margin-top:10px"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: why EVs always add but spread doesn't</summary><div class="deep-body">
+    <h4>Reading E[X + Y] = E[X] + E[Y]</h4>
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>E[ · ]</td><td>"The expected value of" whatever is inside the brackets.</td></tr>
+      <tr><td>X, Y</td><td>Two random quantities, such as die 1 and die 2.</td></tr>
+      <tr><td>X + Y</td><td>A new random quantity: their total on each roll.</td></tr>
+    </tbody></table></div>
+    <p><b>Why it always holds.</b> An average is "add everything, then divide", and the order you add things in doesn't matter. Over 600 rolls of two dice, the grand total of all the sums equals the total of die 1's column plus the total of die 2's column. Dependence changes <i>which</i> values appear together on the same row, but not what each column adds up to.</p>
+    <h4>Reading Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)</h4>
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>Cov(X, Y)</td><td><b>Covariance</b>: do X and Y tend to be high together (positive), move in opposite directions (negative), or ignore each other (zero)? It is the average of (X − μₓ)(Y − μᵧ).</td></tr>
+      <tr><td>independent</td><td>Knowing one tells you nothing about the other. Then Cov = 0 and the variances simply add.</td></tr>
+    </tbody></table></div>
+    <div class="tbl"><table><thead><tr><th>Setup</th><th>Relationship</th><th class="n">Variance</th><th class="n">σ</th></tr></thead><tbody>
+      <tr><td>Two separate dice, X + Y</td><td>Independent, Cov = 0</td><td class="n">2.92 + 2.92 = 5.83</td><td class="n">2.42</td></tr>
+      <tr><td>One die counted twice, X + X</td><td>Perfectly together</td><td class="n">4 × 2.92 = 11.67</td><td class="n">3.42</td></tr>
+      <tr><td>X + (7 − X)</td><td>Perfectly opposite</td><td class="n">0</td><td class="n">0</td></tr>
+    </tbody></table></div>
+    <p>The last row is a <b>hedge</b>: two risky positions whose errors cancel exactly. All three setups have EV 7, so only the spread differs.</p>
+    <h4>Where √n comes from</h4>
+    <p>Add n independent copies, each with variance σ₁². The variances add to n·σ₁², so σ = √(n·σ₁²) = σ₁·√n. Ten dice: 1.71 × √10 ≈ 5.40, against an EV of 35. In finance, this is why diversification works: holding many assets that aren't perfectly correlated grows expected return faster than it grows risk.</p>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Sum → add EVs.</b> n dice = 3.5n. n cards without replacement = 7n.</li>
+    <li><b>Spread → √n.</b> n dice σ ≈ 1.71√n. Roughly 95% of outcomes fall within 2σ.</li>
+    <li><b>Known part → plug it in.</b> One die shows 5: fair for two dice is 5 + 3.5 = 8.5.</li>
+    <li><b>Without replacement:</b> unknown cards average the <i>remaining</i> deck, not 7.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="stopping" data-scene="dice">
+  <h3>Stop or continue</h3>
+  <div class="meta"><span class="tag">Used in: interview EV puzzles, Higher or Lower</span><button class="done-btn" data-done="stopping" aria-pressed="false">Mark done</button></div>
+  <p>When you get to choose during a game, solve from the last decision backwards. At each step, keep what you have if it beats the EV of continuing.</p>
+  <div class="formula">V₀ = (s+1)/2     Vₖ = E[ max(X, Vₖ₋₁) ]</div>
+  <p>Vₖ is the game's value when you have k re-rolls left on an s-sided die. The threshold rule is: keep any roll strictly above Vₖ₋₁.</p>
+  <div class="desk">
+    <div class="desk-h">Desk · re-roll game solver</div>
+    <div class="row"><label for="stS">Die sides</label><select id="stS"><option>4</option><option selected>6</option><option>8</option><option>10</option><option>12</option><option>20</option></select>
+    <label for="stK">Re-rolls allowed</label><input type="range" id="stK" min="0" max="8" value="1"><span class="stat" id="stKv">1</span></div>
+    <div class="tbl"><table id="stTable"></table></div>
+    <div class="out" id="stOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: reading Vₖ = E[ max(X, Vₖ₋₁) ]</summary><div class="deep-body">
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>s</td><td>Number of sides on the die.</td></tr>
+      <tr><td>Vₖ</td><td>What the game is worth when you still have k re-rolls left and you play perfectly.</td></tr>
+      <tr><td>V₀ = (s+1)/2</td><td>With no re-rolls left you must keep the next roll, so the game is worth the plain EV of one roll.</td></tr>
+      <tr><td>X</td><td>The roll you are about to see.</td></tr>
+      <tr><td>Vₖ₋₁</td><td>What you'd be worth if you threw this roll away: the same game with one fewer re-roll.</td></tr>
+      <tr><td>max(X, Vₖ₋₁)</td><td>Your payoff after seeing X: keep X, or swap it for the rest of the game. You take whichever is bigger.</td></tr>
+      <tr><td>E[ … ]</td><td>Average that payoff over every roll you might see.</td></tr>
+    </tbody></table></div>
+    <h4>Worked: six-sided die, one re-roll</h4>
+    <p>V₀ = 3.5. On a 1, 2 or 3, re-rolling (worth 3.5) beats keeping, so max = 3.5. On a 4, 5 or 6, keep it. So V₁ = (3.5 + 3.5 + 3.5 + 4 + 5 + 6) ÷ 6 = 25.5 ÷ 6 = <b>4.25</b>.</p>
+    <p>With two re-rolls the bar rises to 4.25, so only 5 and 6 are kept: V₂ = (4 × 4.25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4.67</b>.</p>
+    <p><b>Why work backwards?</b> You can't value the first decision without knowing what continuing is worth. Only the last decision has a known continuation (the plain EV), so you start there and move back one step at a time. This method is called backward induction, and it is exactly how American options are priced on a binomial tree: at each node, take the max of exercising now or holding.</p>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Six-sided die, one re-roll = 4.25.</b> Two re-rolls = 4.67. Memorise these two.</li>
+    <li><b>Keep if roll &gt; value of continuing.</b> Never compare to the overall average.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="bayes" data-scene="chips">
+  <h3>Bayes in odds form</h3>
+  <div class="meta"><span class="tag">Used in: Event Contracts, Fermi, Trading Game, poker reads</span><button class="done-btn" data-done="bayes" aria-pressed="false">Mark done</button></div>
+  <p>Traders update probabilities in <b>odds</b>, because the arithmetic becomes one multiplication. Odds are p / (1 − p). A likelihood ratio (LR) says how many times more likely the news is if the event is true than if it is false.</p>
+  <div class="formula">posterior odds = prior odds × LR      p = odds / (1 + odds)</div>
+  <div class="desk">
+    <div class="desk-h">Desk · update a belief</div>
+    <div class="grid2">
+      <div><label for="byP">Prior probability</label><div class="row"><input type="range" id="byP" min="1" max="99" value="20"><span class="stat" id="byPv">20%</span></div></div>
+      <div><label for="byL">Likelihood ratio of the news</label><div class="row"><input type="range" id="byL" min="-30" max="30" value="10"><span class="stat" id="byLv">3.0×</span></div></div>
+    </div>
+    <canvas id="byCanvas" width="760" height="90"></canvas>
+    <div class="out" id="byOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: prior, likelihood, posterior</summary><div class="deep-body">
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>H</td><td>The <b>hypothesis</b>: the thing you're unsure about, e.g. "it rains today".</td></tr>
+      <tr><td>E</td><td>The <b>evidence</b>: the news you observe, e.g. "the morning is overcast".</td></tr>
+      <tr><td>P(H)</td><td>The <b>prior</b>: your probability <i>before</i> seeing the evidence (Latin <i>prior</i>, "earlier"). Usually a base rate, such as "it rains on 20% of days this month".</td></tr>
+      <tr><td>P(E | H)</td><td>A <b>likelihood</b>: how often you'd see this evidence <i>if H were true</i>. The bar "|" is read "given". Example: on rainy days, mornings are overcast 70% of the time.</td></tr>
+      <tr><td>P(E | not H)</td><td>How often you'd see the same evidence if H were false. Example: on dry days, 20% of mornings are overcast.</td></tr>
+      <tr><td>P(H | E)</td><td>The <b>posterior</b>: your probability <i>after</i> the evidence (Latin <i>posterior</i>, "coming after"). This is what you actually want. Today's posterior becomes tomorrow's prior when new news arrives.</td></tr>
+      <tr><td>odds = p ÷ (1 − p)</td><td>Chance for against chance against. 20% → 0.2 ÷ 0.8 = 0.25, said "1 to 4".</td></tr>
+      <tr><td>LR</td><td><b>Likelihood ratio</b> = P(E | H) ÷ P(E | not H). How many times more common the evidence is when H is true: 0.7 ÷ 0.2 = 3.5. This is the strength of the news.</td></tr>
+    </tbody></table></div>
+    <h4>Where the odds form comes from</h4>
+    <p>Bayes' rule is <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>. Write the same rule for "not H", then divide one by the other. The awkward P(E) term cancels and you get <span class="mono">posterior odds = prior odds × LR</span>. Rain example: 0.25 × 3.5 = 0.875, and 0.875 ÷ 1.875 = 46.7%.</p>
+    <h4>See it as 1,000 cases</h4>
+    <p>The clearest way to understand a posterior is to count. Each dot below is one day. Once you see the evidence, you are standing on one of the solid dots, so throw away the faded ones. The posterior is the share of solid dots that are green.</p>
+    <div class="desk">
+      <div class="desk-h">Desk · natural frequencies</div>
+      <div class="grid2">
+        <div><label for="nfP">Prior P(H)</label><div class="row"><input type="range" id="nfP" min="1" max="90" value="20"><span class="stat" id="nfPv">20%</span></div></div>
+        <div><label for="nfA">P(E | H): evidence rate when true</label><div class="row"><input type="range" id="nfA" min="1" max="100" value="70"><span class="stat" id="nfAv">70%</span></div></div>
+        <div><label for="nfB">P(E | not H): evidence rate when false</label><div class="row"><input type="range" id="nfB" min="1" max="100" value="20"><span class="stat" id="nfBv">20%</span></div></div>
+      </div>
+      <div class="legend"><span><i style="background:var(--felt)"></i>H and evidence</span><span><i style="background:var(--felt);opacity:.25"></i>H, no evidence</span><span><i style="background:var(--ask)"></i>not H, evidence</span><span><i style="background:var(--muted);opacity:.25"></i>not H, no evidence</span></div>
+      <canvas id="nfCanvas" width="760" height="475"></canvas>
+      <div class="out" id="nfOut"></div>
+    </div>
+    <h4>The classic trap</h4>
+    <p>P(E | H) is not P(H | E). Suppose a system catches 90% of fraudulent trades and wrongly flags 5% of good ones, and 1% of trades are fraud. A flagged trade feels 90% likely to be fraud, but: prior odds 1:99, LR = 0.90 ÷ 0.05 = 18, posterior odds = 18/99 ≈ 0.18, so p ≈ <b>15%</b>. A low base rate swamps even strong evidence. Set the sliders to 1%, 90%, 5% to see it.</p>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Convert, multiply, convert back.</b> 20% → 1:4 → ×3 → 3:4 → 3/7 ≈ 43%.</li>
+    <li><b>LR = 1 means the news says nothing.</b> LR below 1 moves you down.</li>
+    <li><b>Two independent clues → multiply both LRs.</b></li>
+  </ul></div>
+</section>
+
+<section class="mod" id="kelly" data-scene="chips">
+  <h3>Bet sizing with the Kelly criterion</h3>
+  <div class="meta"><span class="tag">Used in: Higher or Lower, Betting Board, poker bankroll, position sizing</span><button class="done-btn" data-done="kelly" aria-pressed="false">Mark done</button></div>
+  <p>Positive EV is not enough: bet too much and a losing run wipes you out. Kelly picks the fraction of bankroll that maximises long-run growth. With win probability p and net odds b (win b per 1 staked):</p>
+  <div class="formula">f* = (b·p − (1 − p)) / b  =  edge / odds       even money: f* = 2p − 1</div>
+  <p>Betting twice Kelly gives roughly zero long-run growth, and more than that shrinks the bankroll even though every bet is +EV. Most professionals bet half Kelly, because their p is only an estimate.</p>
+  <div class="desk">
+    <div class="desk-h">Desk · 300 bets, three sizing rules, same luck</div>
+    <div class="row"><label for="kP">Win prob p</label><input type="range" id="kP" min="40" max="80" value="55"><span class="stat" id="kPv">55%</span>
+      <label for="kB">Net odds b</label><input type="number" id="kB" value="1" step="0.1" min="0.1"><button class="go" id="kRun">Simulate</button></div>
+    <canvas id="kCanvas" width="760" height="240"></canvas>
+    <div class="out" id="kOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: reading f* = (b·p − q) ÷ b</summary><div class="deep-body">
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>f*</td><td>The fraction of your current bankroll to stake. The star marks it as the optimal value.</td></tr>
+      <tr><td>p</td><td>Probability you win the bet.</td></tr>
+      <tr><td>q = 1 − p</td><td>Probability you lose.</td></tr>
+      <tr><td>b</td><td>Net odds: profit per 1 staked if you win. Even money is b = 1. From decimal odds d, b = d − 1.</td></tr>
+      <tr><td>b·p − q</td><td>EV per 1 staked: you win b with probability p and lose 1 with probability q. This is your <b>edge</b>.</td></tr>
+      <tr><td>÷ b</td><td>Scale down for long-shot payoffs, which swing more. So the result is edge divided by odds.</td></tr>
+    </tbody></table></div>
+    <h4>Why not just maximise EV?</h4>
+    <p>Maximising EV says stake everything on every +EV bet, and the first loss takes you to zero. Wealth compounds by multiplying, not adding: +50% followed by −50% leaves you at 1.5 × 0.5 = 0.75 of where you started. So Kelly maximises the average <i>growth rate</i>, which is the expected logarithm of the multiplier on each bet:</p>
+    <div class="formula">g(f) = p · ln(1 + f·b) + q · ln(1 − f)</div>
+    <p>Here ln(1 + f·b) is the log of your wealth multiplier on a win, and ln(1 − f) is the log of the multiplier on a loss. Set the slope of g to zero, p·b ÷ (1 + f·b) = q ÷ (1 − f), and solving for f gives f* = (b·p − q) ÷ b.</p>
+    <p><b>Example:</b> p = 0.55, b = 1 → f* = 0.10. Growth per bet = 0.55 · ln 1.1 + 0.45 · ln 0.9 = 0.0524 − 0.0474 = 0.0050, about 0.5% per bet, compounding.</p>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Even money: bet your edge.</b> 55% win → 10% of bankroll.</li>
+    <li><b>Negative EV → bet 0.</b> Kelly never says bet on a losing proposition.</li>
+    <li><b>Half Kelly</b> keeps about 75% of the growth with far smaller drawdowns.</li>
+  </ul></div>
+</section>
+
+<!-- ================= PART II ================= -->
+<div class="part slide" data-scene="deal"><div class="part-head"><span>Part II</span><h2>The eight games</h2></div><p class="big">Eight games. <b>One skill.</b></p><p class="lede">Each game below copies the core decision of its Tradermath counterpart, with the full working shown after every move. Play here until the calculation is automatic, then go and play the real one against the clock. Click the felt to deal.</p><div class="stagehud" data-hud></div></div>
+
+<!-- G1 -->
+<section class="mod" id="g-card" data-scene="deal">
+  <h3>1 · Card Game (market taking)</h3>
+  <div class="meta"><span class="tag">Skill: EV, edge detection</span><span class="tag">Firm echo: SIG</span><button class="done-btn" data-done="g-card" aria-pressed="false">Mark done</button></div>
+  <p>Someone quotes you a two-way price on a random quantity. You may <b>buy at their ask</b>, <b>sell at their bid</b>, or pass. Your only job is to compute fair value fast and compare.</p>
+  <ul class="steps"><li>Fair value above the ask → buy. Edge = fair − ask.</li><li>Fair value below the bid → sell. Edge = bid − fair.</li><li>Fair value inside the quote → pass. Trading there loses money on average.</li></ul>
+  <div class="desk">
+    <div class="desk-h">Desk · take or pass <span class="hud"><span class="pill" id="cgStreak">Streak 0 · best 0</span><label class="pill"><input type="checkbox" id="cgClock"> 8s clock</label></span></div>
+    <div class="duo">
+      <div class="scene" id="cgScene"><div class="lbl">The contract</div><div id="cgQ" class="scene-q"></div><div id="cgItems" class="items"></div><div id="cgSettle" class="settle"></div></div>
+      <div class="screen" id="cgScreen"><div class="dim lbl">Their market</div><div class="bigq"><span class="bidc" id="cgBidTxt"></span><span class="dim">/</span><span class="askc" id="cgAskTxt"></span></div><div class="dim small">bid / ask · you buy at the ask, sell at the bid</div><div class="timer" id="cgTimer" hidden><i></i></div></div>
+    </div>
+    <div class="row"><button class="buy" id="cgBuy">Buy at ask</button><button class="sell" id="cgSell">Sell at bid</button><button id="cgPass">Pass</button><button class="go" id="cgNext">Next contract</button></div>
+    <div class="stats" id="cgStats"></div>
+    <div class="out" id="cgOut">Work out the fair value before you click.</div>
+    <p class="small" style="color:var(--muted)">Every contract settles for real after you decide. Expected edge measures the quality of your decision; realised P&amp;L adds luck. Over many trades the two converge.</p>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Max of two dice = 161/36 ≈ 4.47. Min = 91/36 ≈ 2.53.</b> They sum to 7.</li>
+    <li><b>Waiting time for probability p → 1/p.</b> Rolls until a 6 = 6.</li>
+    <li><b>Product of independents → multiply EVs.</b> Two dice: 3.5² = 12.25.</li>
+    <li><b>E[X²] = Var + EV².</b> One die squared: 35/12 + 12.25 = 15.17.</li>
+  </ul></div>
+</section>
+
+<!-- G2 -->
+<section class="mod" id="g-dice" data-scene="dice">
+  <h3>2 · Market Making Dice Game</h3>
+  <div class="meta"><span class="tag">Skill: two-way pricing, width, inventory, event risk</span><span class="tag">Firm echo: Optiver, Flow Traders</span><button class="done-btn" data-done="g-dice" aria-pressed="false">Mark done</button></div>
+  <p>Now you are the one quoting. The contract settles at the <b>sum of three dice</b>. Five traders arrive one at a time and trade 1 lot against your quote if they like it. Most are noise traders. Some have seen one die. Midway, one die is revealed to everyone.</p>
+  <ul class="steps">
+    <li><b>Centre</b> your quote on fair value (10.5 to start).</li>
+    <li><b>Width</b> pays for risk. Too tight and informed traders pick you off; too wide and nobody trades.</li>
+    <li><b>Skew</b> after a fill. If you sold, you are short: raise both prices so the next fill is more likely to be a sale to you.</li>
+    <li><b>Re-centre</b> instantly when the die is revealed. Fair = revealed die + 7.</li>
+  </ul>
+  <div class="desk">
+    <div class="desk-h">Desk · you are the market maker <span class="stat" id="mdTot">Total P&amp;L 0.00 · rounds 0</span></div>
+    <div class="row"><label for="mdInf">Informed share</label><input type="range" id="mdInf" min="0" max="60" value="25"><span class="stat" id="mdInfv">25%</span></div>
+    <div class="mm">
+      <div class="scene" id="mdScene">
+        <div class="lbl">Settles at the sum of three dice</div>
+        <div id="mdDice" class="items"></div>
+        <div class="lbl" style="margin-top:10px">Traders (N noise · I informed · ↑ lifted your ask · ↓ hit your bid)</div>
+        <div class="queue" id="mdQueue"></div>
+        <div class="settle" id="mdMsg"></div>
+      </div>
+      <div><div class="ladder" id="mdLadder" aria-label="Price ladder"></div><div class="small mono" style="color:var(--muted);margin-top:4px">Click a left cell to set your bid, a right cell for your ask.</div></div>
+    </div>
+    <div class="row"><label for="mdBid">Your bid</label><input type="number" id="mdBid" step="0.5" value="9.5"><label for="mdAsk">Your ask</label><input type="number" id="mdAsk" step="0.5" value="11.5">
+      <button class="go" id="mdNext">Next trader</button><button id="mdNew">New round</button></div>
+    <div class="stats" id="mdStats"></div>
+    <div class="out" id="mdOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Start width ≈ 1σ of what you don't know.</b> Three dice σ ≈ 3.0, so ±1 to ±1.5.</li>
+    <li><b>Lifted? Move up. Hit? Move down.</b> Shift both sides by about a quarter of your width.</li>
+    <li><b>More informed flow → wider.</b> Spread earned on noise must cover losses to the informed.</li>
+    <li><b>Known die collapses risk:</b> two unknown dice σ ≈ 2.4, so tighten.</li>
+  </ul></div>
+</section>
+
+<!-- G3 -->
+<section class="mod" id="g-trade" data-scene="trade">
+  <h3>3 · Trading Game (making and taking with updates)</h3>
+  <div class="meta"><span class="tag">Skill: conditional EV, position management</span><span class="tag">Firm echo: Optiver, Flow Traders</span><button class="done-btn" data-done="g-trade" aria-pressed="false">Mark done</button></div>
+  <p>The contract settles at the <b>sum of five cards</b> dealt without replacement from a 52-card deck (A=1, J=11, Q=12, K=13). Cards are revealed one by one. Before each reveal a bot quotes a market. You may buy or sell up to 2 lots per step, building a position.</p>
+  <p>Fair value at any moment is the revealed total plus the number of hidden cards times the average of the cards still left in the deck.</p>
+  <div class="formula">fair = Σ revealed + (hidden cards) × (deck total left ÷ cards left)</div>
+  <div class="desk">
+    <div class="desk-h">Desk · five-card sum <span class="stat" id="tgTot">Total P&amp;L 0.00</span></div>
+    <div class="row"><label><input type="checkbox" id="tgShow"> Show my fair value (learning mode)</label></div>
+    <div class="duo">
+      <div class="scene" id="tgScene"><div class="lbl">Settles at the sum of five cards · A=1 … K=13</div><div id="tgCards" class="items"></div><div class="settle" id="tgMsg"></div></div>
+      <div class="screen" id="tgScreen"><div class="dim lbl">Bot market</div><div class="bigq" id="tgQuote"></div><div class="dim small">Your position (−10 to +10)</div><div class="meter" id="tgMeter"><i></i><b></b></div></div>
+    </div>
+    <canvas id="tgChart" width="760" height="200" aria-label="Price history chart"></canvas>
+    <div class="row"><label for="tgQty">Lots</label><select id="tgQty"><option>1</option><option>2</option></select>
+      <button class="buy" id="tgBuy">Buy at ask</button><button class="sell" id="tgSell">Sell at bid</button><button class="go" id="tgReveal">Reveal next card</button><button id="tgNew">New game</button></div>
+    <div class="stats" id="tgStats"></div>
+    <div class="out" id="tgOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Five cards start at 35.</b> Every reveal: fair moves by (card − deck average) roughly.</li>
+    <li><b>A low card seen makes the rest of the deck slightly richer.</b> Use the remaining average.</li>
+    <li><b>Position = risk.</b> If you are long 4 and fair falls 3, you lost 12. Size to edge.</li>
+  </ul></div>
+</section>
+
+<!-- G4 -->
+<section class="mod" id="g-etf" data-scene="chips">
+  <h3>4 · ETF Arbitrage</h3>
+  <div class="meta"><span class="tag">Skill: cross-asset pricing, speed</span><span class="tag">Firm echo: IMC, Jane Street</span><button class="done-btn" data-done="g-etf" aria-pressed="false">Mark done</button></div>
+  <p>An ETF is a basket. Its fair value, the net asset value (NAV), is what the shares inside it are worth. If the ETF trades away from NAV by more than your costs, you trade one against the other and lock in the gap.</p>
+  <ul class="steps">
+    <li>NAV = Σ (shares per unit × stock price).</li>
+    <li>ETF <b>ask</b> below NAV − cost → buy ETF, sell the stocks. Profit = NAV − ask − cost.</li>
+    <li>ETF <b>bid</b> above NAV + cost → sell ETF, buy the stocks. Profit = bid − NAV − cost.</li>
+    <li>Otherwise no trade.</li>
+  </ul>
+  <div class="desk">
+    <div class="desk-h">Desk · find the mispricing <span class="hud"><span class="pill" id="etStreak">Streak 0</span><span class="pill" id="etTot">P&amp;L 0.00 · 0 decisions</span></span></div>
+    <div class="screen" id="etScreen">
+      <div class="dim lbl">Basket</div>
+      <div class="tbl"><table id="etTable" class="term"></table></div>
+      <div class="bigq" id="etQuote"></div>
+      <div class="timer" id="etBar"><i></i></div>
+      <div class="dim small">15 seconds per decision · <span id="etTimer"></span></div>
+    </div>
+    <div class="row"><button class="buy" id="etBuy">Buy ETF / sell basket</button><button class="sell" id="etSell">Sell ETF / buy basket</button><button id="etNone">No trade</button><button class="go" id="etNext">Next</button></div>
+    <div class="out" id="etOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Price the basket first, then look at the ETF.</b> Never the other way round.</li>
+    <li><b>Compare NAV with the price you can actually trade:</b> buy at the ask, sell at the bid.</li>
+    <li><b>Round to save time:</b> 2 × 49.8 is 100 − 0.4 = 99.6.</li>
+  </ul></div>
+</section>
+
+<!-- G5 -->
+<section class="mod" id="g-fermi" data-scene="bell">
+  <h3>5 · Fermi Estimation</h3>
+  <div class="meta"><span class="tag">Skill: decomposition, calibrated intervals</span><span class="tag">Firm echo: most prop firms</span><button class="done-btn" data-done="g-fermi" aria-pressed="false">Mark done</button></div>
+  <p>Give a range you are <b>90% sure</b> contains the true answer. You score for being right and for being narrow. Over many questions, about 9 in 10 should land inside. If 5 in 10 land, you are overconfident, which in trading means quoting too tight.</p>
+  <ul class="steps"><li>Break the quantity into factors you can guess (people × rate × time).</li><li>Estimate in powers of ten; multiply exponents.</li><li>Set the range by your uncertainty in each factor, then check: would you bet 9-to-1 on it?</li></ul>
+  <div class="desk">
+    <div class="desk-h">Desk · 90% interval <span class="stat" id="fmTot">Hit 0/0 · score 0</span></div>
+    <div id="fmQ" style="font-size:18px;font-weight:600"></div>
+    <div class="row"><label for="fmLo">Low</label><input type="text" id="fmLo" placeholder="e.g. 2e6"><label for="fmHi">High</label><input type="text" id="fmHi" placeholder="e.g. 4e7"><button class="go" id="fmSub">Submit</button><button id="fmNext">Next question</button></div>
+    <div class="scene" style="padding:8px 10px"><canvas id="fmCanvas" class="felt" width="760" height="120" aria-label="Log-scale number line"></canvas></div>
+    <div class="row small mono"><span style="color:var(--muted)">Calibration (target 9 in 10):</span><span id="fmDots"></span></div>
+    <div class="out" id="fmOut">Scientific notation works: 3e5 = 300,000. Shorthands like 25m or 8bn work too.</div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Seconds in a year ≈ π × 10⁷.</b> Days in a lifetime ≈ 30,000.</li>
+    <li><b>Range width = log₁₀(high/low).</b> One order of magnitude is a fair default.</li>
+    <li><b>Hit rate below 90% → widen next time.</b> Calibration beats precision.</li>
+  </ul></div>
+</section>
+
+<!-- G6 -->
+<section class="mod" id="g-event" data-scene="chips">
+  <h3>6 · Event Contracts</h3>
+  <div class="meta"><span class="tag">Skill: Bayesian updating, quoting in probability</span><span class="tag">Prediction-market desks</span><button class="done-btn" data-done="g-event" aria-pressed="false">Mark done</button></div>
+  <p>A YES contract pays 100 if the event happens and 0 if not, so its fair price in cents equals the probability. You start from a base rate, update with the news using odds × LR, then quote a two-sided market. Some traders already know the answer.</p>
+  <div class="desk">
+    <div class="desk-h">Desk · price the event <span class="stat" id="evcTot">P&amp;L 0 · calibration 0/0</span></div>
+    <div id="evcQ" style="font-size:17px"></div>
+    <div class="row"><label for="evcP">Your probability (%)</label><input type="number" id="evcP" min="1" max="99" value="50"><button id="evcCheck">Check estimate</button></div>
+    <div class="row"><label for="evcBid">Bid (¢)</label><input type="number" id="evcBid" value="40"><label for="evcAsk">Ask (¢)</label><input type="number" id="evcAsk" value="60">
+      <label for="evcInf">Informed share</label><input type="range" id="evcInf" min="0" max="50" value="20"><span class="stat" id="evcInfv">20%</span><button class="go" id="evcRun">Open market (40 traders)</button><button id="evcNext">Next event</button></div>
+    <div class="duo">
+      <div class="screen"><div class="dim lbl">Order tape</div><div id="evcTape" class="tape" aria-live="off" data-lenis-prevent></div></div>
+      <div class="scene" id="evcScene"><div class="lbl">Your quote on a 0–100¢ scale</div><canvas id="evcGauge" class="felt" width="400" height="130"></canvas><div class="settle" id="evcStamp"></div></div>
+    </div>
+    <div class="out" id="evcOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Price in cents = probability.</b> Edge buying YES = p − ask.</li>
+    <li><b>Informed traders only hit you when you're wrong.</b> Width must cover them.</li>
+    <li><b>Near 0% or 100%, quote tighter in cents</b> because there is less room to be wrong.</li>
+  </ul></div>
+</section>
+
+<!-- G7 -->
+<section class="mod" id="g-hilo" data-scene="hilo">
+  <h3>7 · Higher or Lower</h3>
+  <div class="meta"><span class="tag">Skill: conditional probability, Kelly sizing, ruin</span><button class="done-btn" data-done="g-hilo" aria-pressed="false">Mark done</button></div>
+  <p>A card is shown. Call whether the next card from the same deck is higher or lower, and choose what share of your bankroll to bet at even money. Ties lose. The deck is not reshuffled, so count what has gone.</p>
+  <div class="formula">p(higher) = cards left strictly above ÷ cards left      bet f* = 2p − 1</div>
+  <div class="desk">
+    <div class="desk-h">Desk · bankroll <span class="hud"><span class="pill" id="hlStreak">Streak 0</span><span class="pill stat" id="hlBank">1,000</span></span></div>
+    <div class="duo">
+      <div class="scene" id="hlScene"><div class="lbl">Current card · <span id="hlLeft"></span></div><div class="items" id="hlCard"></div><div class="lbl" style="margin-top:8px">Your stake: <span id="hlStakeTxt"></span></div><div id="hlChips"></div></div>
+      <div class="scene"><div class="lbl">Cards left, by rank</div><canvas id="hlHist" class="felt" width="400" height="170" aria-label="Remaining deck by rank"></canvas></div>
+    </div>
+    <canvas id="hlSpark" width="760" height="90" aria-label="Bankroll history"></canvas>
+    <div class="row"><label for="hlF">Stake % of bankroll</label><input type="range" id="hlF" min="0" max="100" value="20"><span class="stat" id="hlFv">20%</span>
+      <button class="buy" id="hlHi">Higher</button><button class="sell" id="hlLo">Lower</button><button id="hlReset">New deck</button></div>
+    <div class="out" id="hlOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>On a 7, both sides are ~46%.</b> Ties make it a losing bet. Stake 0.</li>
+    <li><b>Count the deck.</b> After many low cards, "higher" gets better even from a 6.</li>
+    <li><b>Stake = 2p − 1.</b> A 2 showing: p ≈ 0.92, Kelly ≈ 84%. Half-Kelly ≈ 42%.</li>
+  </ul></div>
+</section>
+
+<!-- G8 -->
+<section class="mod" id="g-board" data-scene="dice">
+  <h3>8 · Betting Board</h3>
+  <div class="meta"><span class="tag">Skill: implied probability, overround, arbitrage</span><span class="tag">Firm echo: Optiver betting round</span><button class="done-btn" data-done="g-board" aria-pressed="false">Mark done</button></div>
+  <p>A board quotes decimal odds on outcomes of a two-dice roll. Decimal odds d pay d per 1 staked (stake included), so the implied probability is 1/d. Back a line only when your true probability beats it.</p>
+  <div class="formula">EV per 1 staked = p · d − 1      implied p = 1/d      overround = Σ 1/d − 1</div>
+  <div class="desk">
+    <div class="desk-h">Desk · back the wrong prices <span class="stat" id="bbTot">Expected 0.000 · realised 0.00</span></div>
+    <div class="screen"><div class="dim lbl">Odds board · two dice · stake 1 on each line you back</div><div class="tbl"><table id="bbTable" class="term"></table></div></div>
+    <div class="scene" id="bbScene" style="margin-top:12px"><div class="lbl">The roll</div><div class="items" id="bbDice"></div><div class="settle" id="bbMsg"></div></div>
+    <div class="row"><button class="go" id="bbSubmit">Lock in and roll</button><button id="bbNew">New board</button></div>
+    <div class="out" id="bbOut"></div>
+  </div>
+  <div class="desk">
+    <div class="desk-h">Desk · two-bookmaker arbitrage</div>
+    <div class="row"><label for="arA">Book A odds on X</label><input type="number" id="arA" value="2.10" step="0.01"><label for="arB">Book B odds on not-X</label><input type="number" id="arB" value="2.05" step="0.01"><label for="arS">Total stake</label><input type="number" id="arS" value="100"></div>
+    <div class="out" id="arOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Two dice sums: ways = 6 − |7 − s|.</b> 7 has 6 ways of 36; 2 and 12 have 1.</li>
+    <li><b>Σ 1/d &lt; 1 across all outcomes → arbitrage.</b> Stake on each in proportion to 1/d.</li>
+    <li><b>Back if d &gt; 1/p.</b> A 1-in-6 event needs odds above 6.0.</li>
+  </ul></div>
+</section>
+
+<!-- ================= PART III ================= -->
+<div class="part slide" data-scene="poker"><div class="part-head"><span>Part III</span><h2>Poker</h2></div><p class="big">Read the table, <b>not the face.</b></p><p class="lede">Poker trains the same muscles as the games above: EV under uncertainty, sizing to edge, and reading whether the other side knows more than you. It also adds what the market games lack, a thinking opponent who adapts to you. Click the felt to run out the board.</p><div class="stagehud" data-hud></div></div>
+
+<section class="mod" id="p-rules" data-scene="poker">
+  <h3>Rules of No-Limit Texas Hold'em and hand ranks</h3>
+  <div class="meta"><button class="done-btn" data-done="p-rules" aria-pressed="false">Mark done</button></div>
+  <ul class="steps">
+    <li><b>Blinds:</b> the two players left of the dealer button post a small and big blind (e.g. 1 and 2). The button rotates each hand.</li>
+    <li><b>Preflop:</b> everyone gets two private cards. Action starts left of the big blind: fold, call, or raise.</li>
+    <li><b>Flop, turn, river:</b> three, then one, then one shared card. A betting round follows each.</li>
+    <li><b>Showdown:</b> the best five-card hand from your two cards plus the five shared cards wins the pot.</li>
+    <li><b>No-limit:</b> you may bet any amount up to your whole stack at any time.</li>
+  </ul>
+  <div class="tbl"><table>
+    <thead><tr><th>Hand</th><th>Example</th><th class="n">Chance in 7 cards</th></tr></thead>
+    <tbody>
+      <tr><td>Straight flush</td><td class="mono">9♥ 8♥ 7♥ 6♥ 5♥</td><td class="n">0.03%</td></tr>
+      <tr><td>Four of a kind</td><td class="mono">Q Q Q Q 4</td><td class="n">0.17%</td></tr>
+      <tr><td>Full house</td><td class="mono">8 8 8 K K</td><td class="n">2.60%</td></tr>
+      <tr><td>Flush</td><td class="mono">A♠ J♠ 9♠ 6♠ 2♠</td><td class="n">3.03%</td></tr>
+      <tr><td>Straight</td><td class="mono">T 9 8 7 6</td><td class="n">4.62%</td></tr>
+      <tr><td>Three of a kind</td><td class="mono">7 7 7 K 3</td><td class="n">4.83%</td></tr>
+      <tr><td>Two pair</td><td class="mono">J J 5 5 A</td><td class="n">23.5%</td></tr>
+      <tr><td>One pair</td><td class="mono">A A 9 6 3</td><td class="n">43.8%</td></tr>
+      <tr><td>High card</td><td class="mono">K J 8 5 2</td><td class="n">17.4%</td></tr>
+    </tbody></table></div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Rarer beats commoner.</b> Flush beats straight because it is rarer.</li>
+    <li><b>Most showdowns are won with one or two pair.</b> Value comes from betting, not from monster hands.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="p-odds" data-scene="poker">
+  <h3>Pot odds, outs and the rule of 2 and 4</h3>
+  <div class="meta"><button class="done-btn" data-done="p-odds" aria-pressed="false">Mark done</button></div>
+  <p>Facing a bet, calling is +EV when your chance of winning (equity) is higher than the share of the final pot you must put in.</p>
+  <div class="formula">required equity = call ÷ (pot after the call)  =  B ÷ (P + 2B)</div>
+  <p>Outs are the unseen cards that turn your hand into the winner. With one card to come, equity ≈ outs × 2%. With two cards to come (you're all-in on the flop), equity ≈ outs × 4%. Exact one-card equity on the turn is outs ÷ 46.</p>
+  <div class="tbl"><table><thead><tr><th>Draw</th><th class="n">Outs</th><th class="n">1 card</th><th class="n">2 cards</th></tr></thead><tbody>
+    <tr><td>Gutshot straight</td><td class="n">4</td><td class="n">~9%</td><td class="n">~17%</td></tr>
+    <tr><td>Two overcards</td><td class="n">6</td><td class="n">~13%</td><td class="n">~24%</td></tr>
+    <tr><td>Open-ended straight</td><td class="n">8</td><td class="n">~17%</td><td class="n">~32%</td></tr>
+    <tr><td>Flush draw</td><td class="n">9</td><td class="n">~20%</td><td class="n">~35%</td></tr>
+    <tr><td>Flush + open-ended</td><td class="n">15</td><td class="n">~33%</td><td class="n">~54%</td></tr>
+  </tbody></table></div>
+  <div class="desk">
+    <div class="desk-h">Desk · call or fold <span class="hud"><span class="pill" id="poScore">0/0 correct</span><span class="pill" id="poChips">Chips +0</span></span></div>
+    <div class="ptable" id="poTable">
+      <div class="seat-lbl">Opponent</div>
+      <div id="poVill" class="items"></div>
+      <div class="chipline" id="poBet"></div>
+      <div id="poBoard" class="items"></div>
+      <div class="chipline" id="poPot"></div>
+      <div id="poHero" class="items"></div>
+      <div class="seat-lbl">You</div>
+      <div id="poStamp" class="pstamp"></div>
+    </div>
+    <div id="poQ" style="font-size:17px;margin-top:10px"></div>
+    <div class="row"><button class="buy" id="poCall">Call</button><button class="sell" id="poFold">Fold</button><button class="go" id="poNext">Next spot</button></div>
+    <div class="out" id="poOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: reading B ÷ (P + 2B)</summary><div class="deep-body">
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>P</td><td>The pot before the opponent bets.</td></tr>
+      <tr><td>B</td><td>The opponent's bet, which is also what you must put in to call.</td></tr>
+      <tr><td>P + 2B</td><td>The final pot if you call: the old pot, their bet, and your matching call.</td></tr>
+      <tr><td>B ÷ (P + 2B)</td><td>The share of the final pot that is your money. You need to win at least that often to break even.</td></tr>
+      <tr><td>equity</td><td>Your probability of winning the pot from here.</td></tr>
+    </tbody></table></div>
+    <p><b>Why.</b> Calling has EV = equity × (P + B) − (1 − equity) × B. You win what is already in the middle (P + B), or you lose your call (B). Set that to zero and solve: equity = B ÷ (P + 2B). Example: a pot of 100 and a bet of 50 → 50 ÷ 200 = 25%.</p>
+  </div></details>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Half-pot bet → need 25%.</b> Pot-size bet → 33%. Two-thirds pot → 28.6%.</li>
+    <li><b>Flush draw on the flop vs a half-pot bet:</b> ~20% to hit next card, so pure pot odds say fold; implied odds (money you win later when you hit) can make it a call.</li>
+    <li><b>Rule of 4 only applies if you see both cards</b>, i.e. when all-in.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="p-equity" data-scene="poker">
+  <h3>Equity calculator (Monte Carlo)</h3>
+  <div class="meta"><button class="done-btn" data-done="p-equity" aria-pressed="false">Mark done</button></div>
+  <p>This calculator deals out the unknown cards thousands of times and counts how often each hand wins. It is the same Monte Carlo technique used to price options: simulate the uncertain future many times and average the payoff.</p>
+  <div class="desk">
+    <div class="desk-h">Desk · hand vs hand</div>
+    <div class="row"><label for="eqH">Your hand</label><input type="text" id="eqH" value="AsKs"><label for="eqV">Opponent</label><input type="text" id="eqV" value="QdQc"><label for="eqB">Board (0, 3, 4 or 5 cards)</label><input type="text" id="eqB" value=""></div>
+    <div class="row"><button class="go" id="eqRun">Run 20,000 deals</button><span class="mono" style="color:var(--muted)">Cards like As Td 9h 2c. Opponent "random" for any two cards.</span></div>
+    <div class="scene" id="eqScene" style="margin-top:8px"></div>
+    <div class="out" id="eqOut"></div>
+  </div>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Pair vs two higher cards ≈ coin flip</b> (QQ vs AK ≈ 54/46).</li>
+    <li><b>Pair vs smaller pair ≈ 80/20.</b> Dominated hand (AK vs AQ) ≈ 70/30.</li>
+    <li><b>Any two cards vs AA ≈ 15%.</b> Preflop edges are smaller than they feel.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="p-bluff" data-scene="poker">
+  <h3>Bluffing maths, minimum defence and position</h3>
+  <div class="meta"><button class="done-btn" data-done="p-bluff" aria-pressed="false">Mark done</button></div>
+  <p>A pure bluff of size B into pot P risks B to win P. It breaks even if the opponent folds often enough. Turn it around and you get the defender's rule: fold more than that and any two cards can bluff you profitably.</p>
+  <div class="formula">bluff needs folds ≥ B ÷ (P + B)      minimum defence frequency = P ÷ (P + B)</div>
+  <div class="desk">
+    <div class="desk-h">Desk · bet sizing calculator</div>
+    <div class="row"><label for="blP">Pot</label><input type="number" id="blP" value="100"><label for="blB">Bet</label><input type="range" id="blB" min="10" max="300" value="75"><span class="stat" id="blBv">75</span></div>
+    <div class="stats" id="blStats"></div>
+  </div>
+  <ul class="steps">
+    <li><b>Position:</b> acting last is a structural edge, because you see what others do first. Play more hands on the button, fewer under the gun.</li>
+    <li><b>Ranges, not hands:</b> put the opponent on every hand they would play this way, weighted by likelihood. This is Bayes again: each action is evidence with a likelihood ratio.</li>
+    <li><b>Balance:</b> bet your strong hands and some bluffs with the same size, in a ratio that makes the opponent indifferent. A pot-size river bet wants about 1 bluff for every 2 value bets.</li>
+    <li><b>Exploit:</b> once you know a player folds too much, bluff them more. Game theory optimal (GTO) play is the unexploitable baseline; profit comes from deviating against mistakes.</li>
+    <li><b>Variance and tilt:</b> a winning player can lose for weeks. Track results in big blinds per 100 hands (bb/100) over tens of thousands of hands, and never chase losses.</li>
+  </ul>
+  <div class="tip"><b class="lbl">Shorthand</b><ul>
+    <li><b>Pot-size bet:</b> bluff needs 50% folds; defend 50%; value:bluff = 2:1.</li>
+    <li><b>Half-pot bet:</b> bluff needs 33% folds; defend 67%; value:bluff = 3:1.</li>
+    <li><b>Same maths as quoting:</b> an informed counterparty is a player who only bets the nuts.</li>
+  </ul></div>
+</section>
+
+<section class="mod" id="p-sites" data-scene="deck">
+  <h3>Where to practise</h3>
+  <div class="meta"><button class="done-btn" data-done="p-sites" aria-pressed="false">Mark done</button></div>
+  <p>Use play-money tables and trainers only. Real-money online poker is illegal in mainland China and age-restricted almost everywhere, and for interview prep the decisions matter, not the stakes.</p>
+  <div class="sites">
+    <div class="site"><div class="kind">Solver trainer</div><a href="https://gtowizard.com" target="_blank" rel="noopener">GTO Wizard</a><p>The leading solver-based trainer and the official WSOP training partner. Play hands against a GTO bot and see the EV you lost on each decision. Start here once you know the rules.</p></div>
+    <div class="site"><div class="kind">GTO trainer</div><a href="https://www.fearlessriver.com/gto/" target="_blank" rel="noopener">Fearless River GTO Trainer</a><p>Formerly the WPT GTO Trainer. Play solved spots with instant feedback on EV loss per action; has a free tier.</p></div>
+    <div class="site"><div class="kind">Free play money</div><a href="https://www.replaypoker.com" target="_blank" rel="noopener">Replay Poker</a><p>Free play-money cash games and tournaments around the clock. Good for practising reads against humans.</p></div>
+    <div class="site"><div class="kind">Courses</div><a href="https://upswingpoker.com" target="_blank" rel="noopener">Upswing Poker</a><p>Rated the most complete structured curriculum. Free articles cover preflop charts and basics well.</p></div>
+    <div class="site"><div class="kind">Video library</div><a href="https://www.runitonce.com" target="_blank" rel="noopener">Run It Once</a><p>Phil Galfond's site with the deepest library of elite players thinking aloud through hands.</p></div>
+    <div class="site"><div class="kind">Trading card game</div><a href="https://www.figgie.com" target="_blank" rel="noopener">Figgie by Jane Street</a><p>Invented at Jane Street to simulate open-outcry trading. You deduce a hidden goal suit while trading cards. Closer to a trading desk than poker is. Also on iOS and Android.</p></div>
+    <div class="site"><div class="kind">Market games</div><a href="https://www.tradermath.org/market-games" target="_blank" rel="noopener">Tradermath Market Games</a><p>The eight games from Part II, timed and scored. Easy mode is free with no login.</p></div>
+    <div class="site"><div class="kind">Code a bot</div><a href="https://pokerbots.org" target="_blank" rel="noopener">MIT Pokerbots</a><p>Annual competition where you program a poker bot; past course materials teach game theory through code. Pairs well with your Python projects.</p></div>
+  </div>
+  <div class="tip"><b class="lbl">Suggested order</b><ul>
+    <li>Week 1–2: rules, hand ranks, pot odds drill above until 90% correct.</li>
+    <li>Week 3–4: preflop ranges by position (Upswing free charts), play-money sessions on Replay Poker.</li>
+    <li>Then: GTO Wizard or Fearless River for 20 minutes a day, review your worst EV-loss spots.</li>
+    <li>In parallel: Figgie and Tradermath for the market side.</li>
+  </ul></div>
+</section>
+
+<!-- ================= PART IV ================= -->
+<div class="part slide" data-scene="bell"><div class="part-head"><span>Part IV</span><h2>Bridge to finance and econometrics</h2></div><p class="big">The same maths <b>runs markets.</b></p><p class="lede">Expected value becomes pricing, variance becomes risk, and updating becomes econometrics. Click the felt to drop the chips.</p><div class="stagehud" data-hud></div></div>
+<section class="mod" id="bridge" data-scene="bell">
+  <h3>The same ideas, renamed</h3>
+  <div class="meta"><button class="done-btn" data-done="bridge" aria-pressed="false">Mark done</button></div>
+  <p>Nothing here is a detour. Each tool from the games reappears under a new name in financial economics and econometrics.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Here</th><th>In finance</th><th>In econometrics</th></tr></thead>
+    <tbody>
+      <tr><td>Expected value</td><td>Expected return, risk-neutral pricing (option price = discounted expected payoff)</td><td>Population mean, conditional expectation E[Y|X], the target of regression</td></tr>
+      <tr><td>Variance, σ√n</td><td>Volatility, portfolio risk, diversification</td><td>Standard errors shrink with √n; this is why sample size matters</td></tr>
+      <tr><td>Linearity</td><td>Portfolio return = weighted sum of asset returns</td><td>OLS: Y = β₀ + β₁X + ε, linear in parameters</td></tr>
+      <tr><td>Conditional EV updates</td><td>Prices react to news; efficient-market hypothesis</td><td>Conditioning on controls; omitted-variable bias when you don't</td></tr>
+      <tr><td>Bayes in odds</td><td>Updating forecasts, credit default models</td><td>Bayesian estimation, logistic regression (log-odds are linear)</td></tr>
+      <tr><td>Kelly sizing</td><td>Position sizing, leverage, the Sharpe ratio</td><td>Maximising expected log utility; geometric vs arithmetic mean</td></tr>
+      <tr><td>Adverse selection</td><td>Bid-ask spread theory (Glosten–Milgrom, Kyle)</td><td>Selection bias, endogeneity</td></tr>
+      <tr><td>Calibrated intervals</td><td>Value at Risk, confidence in forecasts</td><td>Confidence intervals and hypothesis tests</td></tr>
+      <tr><td>Monte Carlo equity</td><td>Monte Carlo option pricing</td><td>Bootstrap, simulation-based inference</td></tr>
+    </tbody></table></div>
+  <p>The most important bridge is statistical significance. Is your strategy, or your poker win rate, real edge or luck? The answer is the t-statistic, the core test statistic of econometrics.</p>
+  <div class="formula">t = (mean edge per trade) × √n ÷ σ      P(profitable over n) ≈ Φ(t)</div>
+  <div class="desk">
+    <div class="desk-h">Desk · edge or luck?</div>
+    <div class="row"><label for="brM">Edge per trade/hand</label><input type="number" id="brM" value="0.05" step="0.01"><label for="brS">σ per trade/hand</label><input type="number" id="brS" value="1" step="0.1"><label for="brN">Number n</label><input type="range" id="brN" min="1" max="5" step="0.05" value="3"><span class="stat" id="brNv">1,000</span></div>
+    <div class="stats" id="brStats"></div>
+    <div class="out" id="brOut"></div>
+  </div>
+  <details class="deep" open><summary>Under the hood: reading t = m · √n ÷ σ</summary><div class="deep-body">
+    <div class="tbl"><table class="sym"><tbody>
+      <tr><td>m</td><td>Your average edge per trade or hand: the EV of one repetition.</td></tr>
+      <tr><td>σ</td><td>The standard deviation of one trade's result: how noisy each repetition is.</td></tr>
+      <tr><td>n</td><td>How many trades or hands you've played.</td></tr>
+      <tr><td>m · n</td><td>Expected total profit. It grows in proportion to n.</td></tr>
+      <tr><td>σ · √n</td><td>Spread of the total profit, from the √n rule. It grows more slowly.</td></tr>
+      <tr><td>t</td><td>Signal ÷ noise = (m·n) ÷ (σ·√n) = m·√n ÷ σ. It counts how many standard deviations your result sits away from zero.</td></tr>
+      <tr><td>Φ(t)</td><td>The normal distribution's cumulative probability: the chance that a bell-curve variable lands below t. Here, the chance of being ahead after n trades.</td></tr>
+      <tr><td>1.96</td><td>The t at which only 5% of pure-luck results would look this good. Beyond it, econometricians call the edge "statistically significant".</td></tr>
+    </tbody></table></div>
+  </div></details>
+  <h3 style="margin-top:28px;font-family:var(--f-display);font-size:20px">Reading path</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Stage</th><th>Resource</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Now</td><td>Blitzstein &amp; Hwang, <i>Introduction to Probability</i> (Harvard Stat 110, free lectures)</td><td>The probability behind every game here, taught with intuition</td></tr>
+      <tr><td>Now</td><td>Zhou, <i>A Practical Guide to Quantitative Finance Interviews</i>; Crack, <i>Heard on the Street</i></td><td>The standard interview question banks</td></tr>
+      <tr><td>Now</td><td>Mosteller, <i>Fifty Challenging Problems in Probability</i></td><td>Short, classic EV puzzles</td></tr>
+      <tr><td>Year 1</td><td>Wooldridge, <i>Introductory Econometrics</i></td><td>Regression, standard errors, causality; the econometrics minor core</td></tr>
+      <tr><td>Year 1–2</td><td>Hull, <i>Options, Futures and Other Derivatives</i>; Natenberg, <i>Option Volatility and Pricing</i></td><td>How traders actually price and hedge</td></tr>
+      <tr><td>Year 2+</td><td>Harris, <i>Trading and Exchanges</i></td><td>Market microstructure: why spreads exist and who you trade against</td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>Simulators use simplified rules modelled on each Tradermath game's core decision. Probabilities computed exactly where stated; equity by simulation.</footer>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="app.js"></script>
+<script src="scene.js"></script>
+</body>
+</html>

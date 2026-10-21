@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/bridge.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>金融与计量经济学 · Edge Lab</title>
+<meta content="金融与计量经济学：t 统计量：要打多少手牌才能证明你有技术。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bridge.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bridge.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bridge.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bridge.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="金融与计量经济学 · Edge Lab" property="og:title"/>
+<meta content="金融与计量经济学：t 统计量：要打多少手牌才能证明你有技术。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/bridge.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bridge" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>自习室 · 6/6</small><b>金融与计量经济学</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="bridge">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 优势还是运气？</div>
+<div class="row"><label for="brM">每笔交易/每手的优势</label><input id="brM" step="0.01" type="number" value="0.05"/><label for="brS">每笔交易/每手的 σ</label><input id="brS" step="0.1" type="number" value="1"/><label for="brN">次数 n</label><input id="brN" max="5" min="1" step="0.05" type="range" value="3"/><span class="stat" id="brNv">1,000</span></div>
+<div class="stats" id="brStats"></div>
+<div class="out" id="brOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="kelly.html">← 凯利下注</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><span></span></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 自习室</small><h2 id="tutTitle">金融与计量经济学</h2></div>
+<div class="tut-b"><p>这里没有一样是绕远路。游戏里的每个工具，都会在金融经济学和计量经济学里换个名字再次出现。</p>
+<div class="tbl"><table>
+<thead><tr><th>这里</th><th>金融中</th><th>计量经济学中</th></tr></thead>
+<tbody>
+<tr><td>期望值</td><td>预期收益、风险中性定价（期权价格 = 折现后的期望收益）</td><td>总体均值、条件期望 E[Y|X]，也就是回归的目标</td></tr>
+<tr><td>方差，σ√n</td><td>波动率、组合风险、分散投资</td><td>标准误随 √n 缩小；这就是样本量重要的原因</td></tr>
+<tr><td>线性</td><td>组合收益 = 各资产收益的加权和</td><td>OLS：Y = β₀ + β₁X + ε，对参数是线性的</td></tr>
+<tr><td>条件期望的更新</td><td>价格对新闻作出反应；有效市场假说</td><td>控制变量的条件化；不控制就会有遗漏变量偏误</td></tr>
+<tr><td>赔率形式的贝叶斯</td><td>更新预测、信用违约模型</td><td>贝叶斯估计、逻辑回归（对数赔率是线性的）</td></tr>
+<tr><td>凯利下注</td><td>仓位大小、杠杆、夏普比率</td><td>最大化期望对数效用；几何平均与算术平均</td></tr>
+<tr><td>逆向选择</td><td>买卖价差理论（Glosten–Milgrom、Kyle）</td><td>选择偏误、内生性</td></tr>
+<tr><td>校准区间</td><td>风险价值（VaR）、预测的置信度</td><td>置信区间与假设检验</td></tr>
+<tr><td>蒙特卡洛胜率</td><td>蒙特卡洛期权定价</td><td>自助法、基于模拟的推断</td></tr>
+</tbody></table></div>
+<p>最重要的一座桥是统计显著性。你的策略或扑克胜率，是真实优势还是运气？答案是 t 统计量，计量经济学的核心检验统计量。</p>
+<div class="formula">t = (每笔平均优势) × √n ÷ σ P(n 次后盈利) ≈ Φ(t)</div>
+<details class="deep"><summary>原理：理解 t = m · √n ÷ σ</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>m</td><td>每笔交易或每手牌的平均优势：一次重复的期望值。</td></tr>
+<tr><td>σ</td><td>单笔交易结果的标准差：每次重复有多大噪声。</td></tr>
+<tr><td>n</td><td>你已经交易或打过的次数。</td></tr>
+<tr><td>m · n</td><td>预期总利润，与 n 成正比增长。</td></tr>
+<tr><td>σ · √n</td><td>总利润的离散度，来自 √n 法则，增长得更慢。</td></tr>
+<tr><td>t</td><td>信号 ÷ 噪声 = (m·n) ÷ (σ·√n) = m·√n ÷ σ。它计算你的结果离零有几个标准差。</td></tr>
+<tr><td>Φ(t)</td><td>正态分布的累积概率：钟形曲线变量落在 t 以下的概率。这里指 n 次交易后处于盈利的概率。</td></tr>
+<tr><td>1.96</td><td>只有 5% 的纯运气结果能好到这个程度时的 t 值。超过它，计量经济学家就说这个优势“统计显著”。</td></tr>
+</tbody></table></div>
+</div></details>
+<h3 style="margin-top:28px;font-family:var(--f-display);font-size:20px">阅读路线</h3>
+<div class="tbl"><table>
+<thead><tr><th>阶段</th><th>资源</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>现在</td><td>Blitzstein 与 Hwang，<i>Introduction to Probability</i>（哈佛 Stat 110，免费课程）</td><td>这里每个游戏背后的概率论，讲得很有直觉</td></tr>
+<tr><td>现在</td><td>Zhou，<i>A Practical Guide to Quantitative Finance Interviews</i>；Crack，<i>Heard on the Street</i></td><td>标准的面试题库</td></tr>
+<tr><td>现在</td><td>Mosteller，<i>Fifty Challenging Problems in Probability</i></td><td>简短经典的期望值谜题</td></tr>
+<tr><td>大一</td><td>Wooldridge，<i>Introductory Econometrics</i></td><td>回归、标准误、因果关系；计量经济学辅修的核心</td></tr>
+<tr><td>大一到大二</td><td>Hull，<i>Options, Futures and Other Derivatives</i>；Natenberg，<i>Option Volatility and Pricing</i></td><td>交易员实际如何定价和对冲</td></tr>
+<tr><td>大二以后</td><td>Harris，<i>Trading and Exchanges</i></td><td>市场微观结构：价差为何存在，你在和谁交易</td></tr>
+</tbody></table></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

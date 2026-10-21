@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/g-fermi.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Estimación de Fermi · Edge Lab</title>
+<meta content="Estimación de Fermi: Rangos del 90 % para preguntas que no puedes buscar." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-fermi.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-fermi.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-fermi.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-fermi.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Estimación de Fermi · Edge Lab" property="og:title"/>
+<meta content="Estimación de Fermi: Rangos del 90 % para preguntas que no puedes buscar." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/g-fermi.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-fermi" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de trading · 5/8</small><b>Estimación de Fermi</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="g-fermi">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · intervalo del 90 % <span class="stat" id="fmTot">Aciertos 0/0 · puntos 0</span></div>
+<div id="fmQ" style="font-size:18px;font-weight:600"></div>
+<div class="row"><label for="fmLo">Mínimo</label><input id="fmLo" placeholder="e.g. 2e6" type="text"/><label for="fmHi">Máximo</label><input id="fmHi" placeholder="e.g. 4e7" type="text"/><button class="go" id="fmSub">Enviar</button><button id="fmNext">Siguiente pregunta</button></div>
+<div class="scene" style="padding:8px 10px"><canvas aria-label="Recta numérica en escala logarítmica" class="felt" height="120" id="fmCanvas" width="760"></canvas></div>
+<div class="row small mono"><span style="color:var(--muted)">Calibración (objetivo 9 de 10):</span><span id="fmDots"></span></div>
+<div class="out" id="fmOut">Admite notación científica: 3e5 = 300.000. También abreviaturas como 25m u 8bn.</div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="g-etf.html">← Arbitraje de ETF</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="g-event.html">Contratos de eventos →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de trading</small><h2 id="tutTitle">Estimación de Fermi</h2><div class="tags"><span class="tag">Habilidad: descomposición, intervalos calibrados</span><span class="tag">Empresas afines: la mayoría de las prop firms</span></div></div>
+<div class="tut-b"><p>Da un rango que estés <b>90 % seguro</b> de que contiene la respuesta. Puntúas por acertar y por ser estrecho. Con muchas preguntas, unas 9 de cada 10 deberían caer dentro. Si caen 5 de 10, eres demasiado confiado, que en trading significa cotizar demasiado estrecho.</p>
+<ul class="steps"><li>Divide la cantidad en factores que puedas adivinar (personas × frecuencia × tiempo).</li><li>Estima en potencias de diez; suma los exponentes.</li><li>Fija el rango según tu incertidumbre en cada factor y comprueba: ¿apostarías 9 a 1?</li></ul>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Segundos en un año ≈ π × 10⁷.</b> Días en una vida ≈ 30.000.</li>
+<li><b>Amplitud del rango = log₁₀(máximo/mínimo).</b> Un orden de magnitud es un buen valor por defecto.</li>
+<li><b>Acierto por debajo del 90 % → amplía la próxima vez.</b> La calibración vale más que la precisión.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

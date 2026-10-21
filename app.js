@@ -10,6 +10,7 @@ const randn=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();r
 const die=()=>ri(1,6);
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function Phi(x){const t=1/(1+0.2316419*Math.abs(x));const d=0.3989423*Math.exp(-x*x/2);const p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return x>0?1-p:p}
+const T=window.T||((s,...a)=>a.reduce((x,v,i)=>x.split("{"+i+"}").join(v),s));
 const CARDN=v=>({1:"A",11:"J",12:"Q",13:"K"}[v]||String(v));
 
 /* ---------- progress ---------- */
@@ -17,9 +18,9 @@ const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},se
 let done={};try{done=JSON.parse(store.get("pitbook-done")||"{}")}catch(e){done={}}
 const TOTAL=19;
 function renderProg(){
-  document.querySelectorAll("[data-done]").forEach(b=>{const on=!!done[b.dataset.done];b.setAttribute("aria-pressed",on);b.textContent=on?"Done ✓":"Mark done"});
+  document.querySelectorAll("[data-done]").forEach(b=>{const on=!!done[b.dataset.done];b.setAttribute("aria-pressed",on);b.textContent=on?T("Done ✓"):T("Mark done")});
   document.querySelectorAll(".tick").forEach(t=>t.textContent=done[t.dataset.for]?"✓":"");
-  const n=Object.keys(done).filter(k=>done[k]).length,p=$("progTxt");if(p)p.textContent=`${Math.min(n,TOTAL)}/${TOTAL} done`}
+  const n=Object.keys(done).filter(k=>done[k]).length,p=$("progTxt");if(p)p.textContent=T("{0}/{1} done",Math.min(n,TOTAL),TOTAL)}
 document.querySelectorAll("[data-done]").forEach(b=>b.addEventListener("click",()=>{done[b.dataset.done]=!done[b.dataset.done];store.set("pitbook-done",JSON.stringify(done));renderProg()}));
 renderProg();
 
@@ -33,7 +34,7 @@ function evPreset(rows){evRows=rows.map(r=>({x:r[0],p:r[1]}));evRender()}
 function evRender(){
   const tb=$("evTable").querySelector("tbody");tb.innerHTML="";
   evRows.forEach((r,i)=>{const tr=document.createElement("tr");
-    tr.innerHTML=`<td><input type="number" step="any" value="${r.x}" aria-label="payoff ${i+1}"></td><td><input type="text" value="${r.p}" aria-label="probability ${i+1}"></td><td class="n"></td><td><button aria-label="remove row">×</button></td>`;
+    tr.innerHTML=`<td><input type="number" step="any" value="${r.x}" aria-label="${T("payoff")} ${i+1}"></td><td><input type="text" value="${r.p}" aria-label="${T("probability")} ${i+1}"></td><td class="n"></td><td><button aria-label="${T("remove row")}">×</button></td>`;
     const [ix,ip]=tr.querySelectorAll("input");
     ix.addEventListener("input",()=>{r.x=ix.value;evCalc()});ip.addEventListener("input",()=>{r.p=ip.value;evCalc()});
     tr.querySelector("button").addEventListener("click",()=>{evRows.splice(i,1);evRender()});tb.appendChild(tr)});
@@ -44,15 +45,15 @@ function evCalc(){
   let sp=0,ev=0,ex2=0;const cells=$("evTable").querySelectorAll("tbody td.n");
   evRows.forEach((r,i)=>{const p=parseP(r.p),x=Number(r.x);if(isFinite(p)&&isFinite(x)){sp+=p;ev+=p*x;ex2+=p*x*x;cells[i].textContent=fmt(p*x,3)}else cells[i].textContent="?"});
   const v=ex2-ev*ev;
-  $("evStats").innerHTML=`<div><span>EV</span><b>${fmt(ev,3)}</b></div><div><span>Variance</span><b>${fmt(v,3)}</b></div><div><span>σ</span><b>${fmt(Math.sqrt(Math.max(v,0)),3)}</b></div><div><span>Σ p</span><b class="${Math.abs(sp-1)<1e-6?"good":"bad"}">${fmt(sp,3)}</b></div>`;
-  $("evOut").textContent=Math.abs(sp-1)>1e-6?"Probabilities sum to "+fmt(sp,3)+", not 1. Fix them before trusting the EV.":
-    `EV ${ev>0?"> 0: take this bet":ev<0?"< 0: pass, or take the other side":"= 0: no edge"}. You can type probabilities as fractions, e.g. 1/6.`;
+  $("evStats").innerHTML=`<div><span>EV</span><b>${fmt(ev,3)}</b></div><div><span>${T("Variance")}</span><b>${fmt(v,3)}</b></div><div><span>σ</span><b>${fmt(Math.sqrt(Math.max(v,0)),3)}</b></div><div><span>Σ p</span><b class="${Math.abs(sp-1)<1e-6?"good":"bad"}">${fmt(sp,3)}</b></div>`;
+  $("evOut").textContent=Math.abs(sp-1)>1e-6?T("Probabilities sum to {0}, not 1. Fix them before trusting the EV.",fmt(sp,3)):
+    (ev>0?T("EV > 0: take this bet."):ev<0?T("EV < 0: pass, or take the other side."):T("EV = 0: no edge."))+" "+T("You can type probabilities as fractions, e.g. 1/6.");
   const z=v=>Math.abs(v)<1e-9?0:v;let h="<thead><tr><th>x</th><th>p</th><th>x − μ</th><th>(x − μ)²</th><th>p·(x − μ)</th><th>p·(x − μ)²</th></tr></thead><tbody>",sd=0,sv=0;
   evRows.forEach(r=>{const p=parseP(r.p),x=Number(r.x);if(!isFinite(p)||!isFinite(x))return;const d=x-ev;sd+=p*d;sv+=p*d*d;
     h+=`<tr><td class="n">${fmt(x,2)}</td><td class="n">${fmt(p,3)}</td><td class="n">${fmt(z(d),3)}</td><td class="n">${fmt(d*d,3)}</td><td class="n">${fmt(z(p*d),3)}</td><td class="n">${fmt(p*d*d,3)}</td></tr>`});
-  h+=`<tr><td colspan="4"><b>Σ (add the column)</b></td><td class="n"><b>${fmt(z(sd),3)}</b></td><td class="n"><b>${fmt(sv,3)}</b></td></tr></tbody>`;
+  h+=`<tr><td colspan="4"><b>${T("Σ (add the column)")}</b></td><td class="n"><b>${fmt(z(sd),3)}</b></td><td class="n"><b>${fmt(sv,3)}</b></td></tr></tbody>`;
   $("varTable").innerHTML=h;
-  $("varOut").textContent=`μ = ${fmt(ev,3)}\nΣ p·(x − μ) = ${fmt(z(sd),3)} → plain deviations always cancel to 0, so they can't measure spread.\nΣ p·(x − μ)² = ${fmt(sv,3)} → this is the variance.\nσ = √${fmt(sv,3)} = ${fmt(Math.sqrt(Math.max(sv,0)),3)}, back in the payoff's own units.\nShortcut check: E[X²] − μ² = ${fmt(ex2,3)} − ${fmt(ev*ev,3)} = ${fmt(ex2-ev*ev,3)}`;
+  $("varOut").textContent=`μ = ${fmt(ev,3)}\nΣ p·(x − μ) = ${fmt(z(sd),3)} → ${T("plain deviations always cancel to 0, so they can't measure spread.")}\nΣ p·(x − μ)² = ${fmt(sv,3)} → ${T("this is the variance.")}\nσ = √${fmt(sv,3)} = ${fmt(Math.sqrt(Math.max(sv,0)),3)}, ${T("back in the payoff's own units.")}\n${T("Shortcut check:")} E[X²] − μ² = ${fmt(ex2,3)} − ${fmt(ev*ev,3)} = ${fmt(ex2-ev*ev,3)}`;
 }
 $("evDie").onclick=()=>evPreset([[1,"1/6"],[2,"1/6"],[3,"1/6"],[4,"1/6"],[5,"1/6"],[6,"1/6"]]);
 $("evBet").onclick=()=>evPreset([[10,"1/6"],[-1,"5/6"]]);
@@ -73,7 +74,7 @@ function ldRoll(){
   x.fillStyle=css("--muted");x.font="12px "+css("--f-mono");x.textAlign="center";
   const step=Math.max(1,Math.ceil((hi-lo)/12));for(let v=lo;v<=hi;v+=step)x.fillText(v,pad+(v-lo+0.5)*bw,H-6);
   x.textAlign="left";x.fillStyle=css("--ask");x.fillText("EV "+ev,Math.min(xe+4,W-60),18);
-  $("ldStats").innerHTML=`<div><span>Theory EV</span><b>${fmt(ev,1)}</b></div><div><span>Sample mean</span><b>${fmt(m,2)}</b></div><div><span>Theory σ</span><b>${fmt(Math.sqrt(n*35/12),2)}</b></div><div><span>Sample σ</span><b>${fmt(sd,2)}</b></div><div><span>EV ÷ σ</span><b>${fmt(ev/Math.sqrt(n*35/12),2)}</b></div>`;
+  $("ldStats").innerHTML=`<div><span>${T("Theory EV")}</span><b>${fmt(ev,1)}</b></div><div><span>${T("Sample mean")}</span><b>${fmt(m,2)}</b></div><div><span>${T("Theory σ")}</span><b>${fmt(Math.sqrt(n*35/12),2)}</b></div><div><span>${T("Sample σ")}</span><b>${fmt(sd,2)}</b></div><div><span>EV ÷ σ</span><b>${fmt(ev/Math.sqrt(n*35/12),2)}</b></div>`;
 }
 $("ldN").oninput=ldRoll;$("ldRoll").onclick=ldRoll;ldRoll();
 }
@@ -83,11 +84,11 @@ if($("stTable")){
 function stRender(){
   const s=+$("stS").value,k=+$("stK").value;$("stKv").textContent=k;
   let V=[(s+1)/2];for(let i=1;i<=k;i++){let e=0;for(let x=1;x<=s;x++)e+=Math.max(x,V[i-1]);V.push(e/s)}
-  let h="<thead><tr><th>Re-rolls left</th><th class='n'>Game value</th><th>Keep the roll if it is</th></tr></thead><tbody>";
-  for(let i=k;i>=0;i--){h+=`<tr><td>${i}</td><td class="n">${fmt(V[i],3)}</td><td>${i===0?"forced to keep":"above "+fmt(V[i-1],3)+" → keep ≥ "+(Math.floor(V[i-1])+1)}</td></tr>`}
+  let h=`<thead><tr><th>${T("Re-rolls left")}</th><th class='n'>${T("Game value")}</th><th>${T("Keep the roll if it is")}</th></tr></thead><tbody>`;
+  for(let i=k;i>=0;i--){h+=`<tr><td>${i}</td><td class="n">${fmt(V[i],3)}</td><td>${i===0?T("forced to keep"):T("above {0} → keep ≥ {1}",fmt(V[i-1],3),Math.floor(V[i-1])+1)}</td></tr>`}
   $("stTable").innerHTML=h+"</tbody>";
-  $("stOut").textContent=k===0?`No choice: value = (${s}+1)/2 = ${fmt(V[0],2)}.`:
-    `With ${k} re-roll${k>1?"s":""}, the game is worth ${fmt(V[k],3)}. Each extra re-roll adds less: that is diminishing value of options, the same reason extra time on an option is worth less and less.`;
+  $("stOut").textContent=k===0?T("No choice: value = ({0}+1)/2 = {1}.",s,fmt(V[0],2)):
+    T(k>1?"With {0} re-rolls, the game is worth {1}.":"With {0} re-roll, the game is worth {1}.",k,fmt(V[k],3))+" "+T("Each extra re-roll adds less: that is diminishing value of options, the same reason extra time on an option is worth less and less.");
 }
 $("stS").onchange=stRender;$("stK").oninput=stRender;stRender();
 }
@@ -99,8 +100,8 @@ function byRender(){
   const o=p/(1-p),o2=o*L,p2=o2/(1+o2);
   const c=$("byCanvas"),x=ctxOf(c),W=c.width;
   const bar=(y,val,col,lab)=>{x.fillStyle=css("--sunk");x.fillRect(110,y,W-170,22);x.fillStyle=col;x.fillRect(110,y,(W-170)*val,22);x.fillStyle=css("--ink");x.font="13px "+css("--f-mono");x.fillText(lab,8,y+16);x.fillText(fmt(val*100,1)+"%",W-54,y+16)};
-  bar(14,p,css("--muted"),"prior");bar(52,p2,css("--felt"),"posterior");
-  $("byOut").textContent=`prior odds = ${fmt(p,2)} / ${fmt(1-p,2)} = ${fmt(o,3)}\n× LR ${fmt(L,2)} = ${fmt(o2,3)}\nposterior p = ${fmt(o2,3)} / (1 + ${fmt(o2,3)}) = ${fmt(p2*100,1)}%`;
+  bar(14,p,css("--muted"),T("prior"));bar(52,p2,css("--felt"),T("posterior"));
+  $("byOut").textContent=`${T("prior odds")} = ${fmt(p,2)} / ${fmt(1-p,2)} = ${fmt(o,3)}\n× LR ${fmt(L,2)} = ${fmt(o2,3)}\n${T("posterior p")} = ${fmt(o2,3)} / (1 + ${fmt(o2,3)}) = ${fmt(p2*100,1)}%`;
 }
 $("byP").oninput=byRender;$("byL").oninput=byRender;byRender();
 function nfRender(){
@@ -114,7 +115,7 @@ function nfRender(){
     x.beginPath();x.arc((i%cols+0.5)*cw,(Math.floor(i/cols)+0.5)*chh,r,0,2*Math.PI);x.fill()}
   x.globalAlpha=1;
   const tot=hE+nE,post=tot?hE/tot:0,o=pr/(1-pr),LR=a/b,o2=o*LR;
-  $("nfOut").textContent=`Of 1,000 days, ${nH} have H (prior ${fmt(pr*100,0)}%).\nEvidence appears on ${hE} of those ${nH} (${fmt(a*100,0)}%) and on ${nE} of the other ${N-nH} (${fmt(b*100,0)}%).\nYou saw the evidence, so only the ${tot} solid dots are still possible. ${hE} of them are H.\nPosterior P(H | E) = ${hE} ÷ ${tot} = ${fmt(post*100,1)}%\nOdds route: prior odds ${fmt(o,3)} × LR (${fmt(a,2)} ÷ ${fmt(b,2)} = ${fmt(LR,2)}) = ${fmt(o2,3)} → ${fmt(o2/(1+o2)*100,1)}%  (tiny gaps are dot rounding)`;
+  $("nfOut").textContent=T("Of 1,000 days, {0} have H (prior {1}%).",nH,fmt(pr*100,0))+"\n"+T("Evidence appears on {0} of those {1} ({2}%) and on {3} of the other {4} ({5}%).",hE,nH,fmt(a*100,0),nE,N-nH,fmt(b*100,0))+"\n"+T("You saw the evidence, so only the {0} solid dots are still possible. {1} of them are H.",tot,hE)+"\n"+T("Posterior P(H | E) = {0} ÷ {1} = {2}%",hE,tot,fmt(post*100,1))+"\n"+T("Odds route: prior odds {0} × LR ({1} ÷ {2} = {3}) = {4} → {5}%  (tiny gaps are dot rounding)",fmt(o,3),fmt(a,2),fmt(b,2),fmt(LR,2),fmt(o2,3),fmt(o2/(1+o2)*100,1));
 }
 ["nfP","nfA","nfB"].forEach(i=>$(i).oninput=nfRender);nfRender();
 }
@@ -123,18 +124,18 @@ function nfRender(){
 if($("kCanvas")){
 function kRun(){
   const p=$("kP").value/100,b=Math.max(0.05,+$("kB").value||1);$("kPv").textContent=Math.round(p*100)+"%";
-  const fk=Math.max(0,(b*p-(1-p))/b);const rules=[{n:"Half Kelly",f:fk/2,c:css("--bid")},{n:"Kelly",f:fk,c:css("--felt")},{n:"2× Kelly",f:Math.min(fk*2,0.99),c:css("--ask")}];
-  const T=300,wins=[];for(let i=0;i<T;i++)wins.push(Math.random()<p);
+  const fk=Math.max(0,(b*p-(1-p))/b);const rules=[{n:T("Half Kelly"),f:fk/2,c:css("--bid")},{n:"Kelly",f:fk,c:css("--felt")},{n:T("2× Kelly"),f:Math.min(fk*2,0.99),c:css("--ask")}];
+  const NT=300,wins=[];for(let i=0;i<NT;i++)wins.push(Math.random()<p);
   const paths=rules.map(r=>{let w=1;const a=[0];for(const win of wins){w*=win?1+r.f*b:1-r.f;a.push(Math.log10(Math.max(w,1e-12)))}return a});
   const c=$("kCanvas"),x=ctxOf(c),W=c.width,H=c.height,pad=34;
   let lo=Math.min(-1,...paths.flat()),hi=Math.max(1,...paths.flat());
-  const Y=v=>H-pad-(v-lo)/(hi-lo)*(H-2*pad),X=i=>pad+i/T*(W-pad-10);
+  const Y=v=>H-pad-(v-lo)/(hi-lo)*(H-2*pad),X=i=>pad+i/NT*(W-pad-10);
   x.strokeStyle=css("--line");x.lineWidth=1;x.fillStyle=css("--muted");x.font="11px "+css("--f-mono");
   for(let g=Math.ceil(lo);g<=Math.floor(hi);g++){x.beginPath();x.moveTo(pad,Y(g));x.lineTo(W-10,Y(g));x.stroke();x.fillText(g===0?"1×":"10^"+g,2,Y(g)+4)}
-  paths.forEach((a,k)=>{x.strokeStyle=rules[k].c;x.lineWidth=2;x.beginPath();a.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.stroke();x.fillStyle=rules[k].c;x.fillText(rules[k].n,X(T)-70,Y(a[T])-6)});
+  paths.forEach((a,k)=>{x.strokeStyle=rules[k].c;x.lineWidth=2;x.beginPath();a.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.stroke();x.fillStyle=rules[k].c;x.fillText(rules[k].n,X(NT)-70,Y(a[NT])-6)});
   const g=f=>p*Math.log(1+f*b)+(1-p)*Math.log(1-f);
-  $("kOut").textContent=fk<=0?`EV per unit = ${fmt(b*p-(1-p),3)} ≤ 0. Kelly says bet nothing.`:
-    `Kelly fraction f* = (${fmt(b,2)}×${fmt(p,2)} − ${fmt(1-p,2)}) / ${fmt(b,2)} = ${fmt(fk*100,1)}% of bankroll\nExpected log-growth per bet: half ${fmt(g(fk/2),4)}, Kelly ${fmt(g(fk),4)}, 2× ${fmt(g(Math.min(2*fk,.99)),4)}\nThe vertical axis is log scale. Run it a few times: 2× Kelly often ends below where it started.`;
+  $("kOut").textContent=fk<=0?T("EV per unit = {0} ≤ 0. Kelly says bet nothing.",fmt(b*p-(1-p),3)):
+    T("Kelly fraction f* = ({0}×{1} − {2}) / {0} = {3}% of bankroll",fmt(b,2),fmt(p,2),fmt(1-p,2),fmt(fk*100,1))+"\n"+T("Expected log-growth per bet: half {0}, Kelly {1}, 2× {2}",fmt(g(fk/2),4),fmt(g(fk),4),fmt(g(Math.min(2*fk,.99)),4))+"\n"+T("The vertical axis is log scale. Run it a few times: 2× Kelly often ends below where it started.");
 }
 $("kRun").onclick=kRun;$("kP").oninput=kRun;kRun();
 }
@@ -145,10 +146,10 @@ const sleep=ms=>new Promise(r=>setTimeout(r,reduceMotion?0:ms));
 const SUITS=["♠","♥","♦","♣"];
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 const signed=(x,d=2)=>(x>=0?"+":"−")+fmt(Math.abs(x),d);
-function dieHTML(v,cls=""){if(!v)return`<span class="die q ${cls}" role="img" aria-label="hidden die">?</span>`;let s=`<span class="die ${cls}" role="img" aria-label="die showing ${v}">`;for(let i=0;i<9;i++)s+=`<i class="${PIPS[v].includes(i)?"on":""}"></i>`;return s+"</span>"}
-function pcHTML(v,s,cls=""){if(v==null)return`<span class="pc back ${cls}" role="img" aria-label="face-down card"></span>`;const r=CARDN(v),su=SUITS[s];return`<span class="pc ${s===1||s===2?"red":""} ${cls}" role="img" aria-label="${r}${su}"><span>${r}${su}</span><span class="s2">${r}${su}</span></span>`}
+function dieHTML(v,cls=""){if(!v)return`<span class="die q ${cls}" role="img" aria-label="${T("hidden die")}">?</span>`;let s=`<span class="die ${cls}" role="img" aria-label="${T("die showing {0}",v)}">`;for(let i=0;i<9;i++)s+=`<i class="${PIPS[v].includes(i)?"on":""}"></i>`;return s+"</span>"}
+function pcHTML(v,s,cls=""){if(v==null)return`<span class="pc back ${cls}" role="img" aria-label="${T("face-down card")}"></span>`;const r=CARDN(v),su=SUITS[s];return`<span class="pc ${s===1||s===2?"red":""} ${cls}" role="img" aria-label="${r}${su}"><span>${r}${su}</span><span class="s2">${r}${su}</span></span>`}
 function pcStr(c,cls=""){const r="23456789TJQKA".indexOf(c[0])+2,s="shdc".indexOf(c[1]);return pcHTML(r===14?1:r,s,cls)}
-const coinHTML=(v,cls="")=>`<span class="coin ${cls}" role="img" aria-label="${v?"coin "+v:"hidden coin"}">${v||"?"}</span>`;
+const coinHTML=(v,cls="")=>`<span class="coin ${cls}" role="img" aria-label="${v?T("coin {0}",v):T("hidden coin")}">${v||"?"}</span>`;
 function chipsHTML(n){n=Math.max(0,Math.round(n));let h="";for(const[d,c] of [[100,"c100"],[25,"c25"],[5,"c5"],[1,"c1"]]){let k=Math.floor(n/d);n-=k*d;if(!k)continue;h+=`<span class="chipstack">${`<span class="chip ${c}"></span>`.repeat(Math.min(k,10))}</span>`}return`<span class="chips">${h}</span>`}
 function pop(host,text,good){if(!host)return;const p=document.createElement("span");p.className="pop "+(good?"g":"b");p.textContent=text;p.style.left=(25+Math.random()*45)+"%";p.style.top="38%";host.appendChild(p);setTimeout(()=>p.remove(),1200)}
 function newDeck(){const d=[];for(let s=0;s<4;s++)for(let v=1;v<=13;v++)d.push({v,s});for(let i=d.length-1;i>0;i--){const j=ri(0,i);[d[i],d[j]]=[d[j],d[i]]}return d}
@@ -158,8 +159,8 @@ function sfx(t){try{window.EL3D&&window.EL3D.react(t)}catch(e){}if(!soundOn)retu
   if(t==="good"){tone(660,.12);tone(990,.2,"sine",.07,.1)}else if(t==="bad"){tone(196,.28,"triangle",.09)}
   else if(t==="roll"){for(let k=0;k<6;k++)tone(140+Math.random()*220,.04,"square",.025,k*.06)}
   else if(t==="deal"){tone(1300,.03,"square",.025)}else if(t==="tick"){tone(900,.025,"square",.015)}else if(t==="fill"){tone(523,.09,"triangle",.07)}}catch(e){}}
-function sndRender(){const b=$("sndBtn");if(!b)return;b.textContent=soundOn?"Sound on":"Sound off";b.setAttribute("aria-pressed",soundOn)}
-window.ELsfx=sfx;
+function sndRender(){const b=$("sndBtn");if(!b)return;b.textContent=soundOn?T("Sound on"):T("Sound off");b.setAttribute("aria-pressed",soundOn)}
+window.ELsfx=sfx;window.ELkit={dieHTML,pcHTML,pcStr,coinHTML,chipsHTML,sfx};
 if($("sndBtn"))$("sndBtn").onclick=()=>{soundOn=!soundOn;store.set("edgelab-sound",soundOn?"1":"0");sndRender();sfx("good")};sndRender();
 function timerBar(el,secs,onEnd){el.hidden=false;const i=el.querySelector("i");i.style.transition="none";i.style.transform="scaleX(1)";void i.offsetWidth;i.style.transition=`transform ${secs}s linear`;i.style.transform="scaleX(0)";const t=setTimeout(onEnd,secs*1000);
   return()=>{clearTimeout(t);const m=getComputedStyle(i).transform;i.style.transition="none";i.style.transform=m}}
@@ -187,17 +188,17 @@ const CG=[
 ];
 function itemHTML(x,cls=""){if(x==="…")return`<span class="mono" style="font-size:24px;padding:0 6px">…</span>`;if(x.t==="d")return dieHTML(x.v,cls);if(x.t==="c")return pcHTML(x.v,x.s,cls);return coinHTML(x.v,cls)}
 let cg={i:0,bid:0,ask:0,done:true,edge:0,real:0,n:0,streak:0,best:0,cancel:null};
-function cgStats(){$("cgStreak").textContent=`Streak ${cg.streak} · best ${cg.best}`;
-  $("cgStats").innerHTML=`<div><span>Contracts</span><b>${cg.n}</b></div><div><span>Expected edge (skill)</span><b>${signed(cg.edge)}</b></div><div><span>Realised P&amp;L (luck)</span><b>${signed(cg.real)}</b></div>`}
+function cgStats(){$("cgStreak").textContent=T("Streak {0} · best {1}",cg.streak,cg.best);
+  $("cgStats").innerHTML=`<div><span>${T("Contracts")}</span><b>${cg.n}</b></div><div><span>${T("Expected edge (skill)")}</span><b>${signed(cg.edge)}</b></div><div><span>${T("Realised P&amp;L (luck)")}</span><b>${signed(cg.real)}</b></div>`}
 function cgNew(){
   if(cg.cancel){cg.cancel();cg.cancel=null}
   cg.i=ri(0,CG.length-1);const c=CG[cg.i];const sc=Math.max(0.3,c.f*0.12);const w=Math.max(0.2,Math.round(sc*rnd(0.6,1.4)*4)/4);
   let mid=c.f+(Math.random()<0.25?0:(Math.random()<.5?-1:1)*sc*rnd(0.6,2));mid=Math.round(mid*4)/4;
   cg.bid=+(mid-w/2).toFixed(2);cg.ask=+(mid+w/2).toFixed(2);cg.done=false;
   const sm=c.hid.length>8?" sm":"";
-  $("cgQ").textContent=c.q;$("cgItems").innerHTML=c.hid.map(t=>t==="…"?itemHTML("…"):itemHTML({t,v:null},"deal"+sm)).join("");
+  $("cgQ").textContent=T(c.q);$("cgItems").innerHTML=c.hid.map(t=>t==="…"?itemHTML("…"):itemHTML({t,v:null},"deal"+sm)).join("");
   $("cgSettle").textContent="";$("cgBidTxt").textContent=fmt(cg.bid);$("cgAskTxt").textContent=fmt(cg.ask);
-  $("cgOut").textContent="Work out the fair value before you click.";
+  $("cgOut").textContent=T("Work out the fair value before you click.");
   if($("cgClock").checked)cg.cancel=timerBar($("cgTimer"),8,()=>{if(!cg.done)cgAct("timeout")});else $("cgTimer").hidden=true;
   sfx("deal");cgStats();
 }
@@ -208,12 +209,12 @@ async function cgAct(a){
   const right=a!=="timeout"&&Math.abs(got-best)<1e-9;
   cg.streak=right?cg.streak+1:0;cg.best=Math.max(cg.best,cg.streak);cg.edge+=got;cg.n++;
   const ideal=best===0?"pass":eb>es?"buy":"sell";sfx(right?"good":"bad");
-  $("cgOut").innerHTML=`<span class="${right?"good":"bad"}">${a==="timeout"?"Too slow: the clock ran out, so you passed.":right?"Correct.":"Not the best choice."}</span> Fair value = ${fmt(f,3)}\n${c.w}\nBuy edge = fair − ask = ${fmt(eb,2)} · Sell edge = bid − fair = ${fmt(es,2)} → best: ${ideal}. Expected edge earned: ${signed(got)}.`;
+  $("cgOut").innerHTML=`<span class="${right?"good":"bad"}">${a==="timeout"?T("Too slow: the clock ran out, so you passed."):right?T("Correct."):T("Not the best choice.")}</span> ${T("Fair value = {0}",fmt(f,3))}\n${T(c.w)}\n${T("Buy edge = fair − ask = {0} · Sell edge = bid − fair = {1} → best: {2}. Expected edge earned: {3}.",fmt(eb,2),fmt(es,2),T(ideal),signed(got))}`;
   const r=c.sim(),sm=r.it.length>8?" sm":"",box=$("cgItems");box.innerHTML="";
   sfx(r.it[0].t==="d"?"roll":"deal");
   for(const x of r.it){box.insertAdjacentHTML("beforeend",itemHTML(x,(x.t==="d"?"rolling":"deal")+sm));await sleep(r.it.length>12?35:110)}
   const real=act==="buy"?r.val-cg.ask:act==="sell"?cg.bid-r.val:0;cg.real+=real;
-  $("cgSettle").innerHTML=`Settles at <b>${fmt(r.val,Number.isInteger(r.val)?0:2)}</b> · ${act==="pass"?"you passed":`your ${act} realised ${signed(real)}`}`;
+  $("cgSettle").innerHTML=T("Settles at {0}",`<b>${fmt(r.val,Number.isInteger(r.val)?0:2)}</b>`)+" · "+(act==="pass"?T("you passed"):T(act==="buy"?"your buy realised {0}":"your sell realised {0}",signed(real)));
   if(act!=="pass")pop($("cgScene"),signed(real),real>=0);
   cgStats();
 }
@@ -225,40 +226,40 @@ if($("mdDice")){
 let md={d:[],t:0,pos:0,cash:0,log:[],total:0,rounds:0,rev:false,over:false,q:[],last:null,busy:false};
 function mdFair(){return md.rev?md.d[0]+7:10.5}
 function mdDiceRender(anim){$("mdDice").innerHTML=md.d.map((v,i)=>(md.over||(md.rev&&i===0))?dieHTML(v,anim==="all"||(anim==="one"&&i===0)?"rolling":""):dieHTML(0)).join("")}
-function mdQueueRender(){$("mdQueue").innerHTML=[0,1,2,3,4].map(i=>{const q=md.q[i];const now=i===md.t&&!md.over;return`<span class="tr ${q?q.k:""} ${now?"now":""}" title="${q?q.title:"waiting"}">${q?q.sym:"?"}</span>`}).join("")}
+function mdQueueRender(){$("mdQueue").innerHTML=[0,1,2,3,4].map(i=>{const q=md.q[i];const now=i===md.t&&!md.over;return`<span class="tr ${q?q.k:""} ${now?"now":""}" title="${q?q.title:T("waiting")}">${q?q.sym:"?"}</span>`}).join("")}
 function mdLadder(){const bid=+$("mdBid").value,ask=+$("mdAsk").value,f=mdFair(),c=Math.round(f*2)/2;let h="";
   for(let p=c+4;p>=c-4-1e-9;p-=.5){const isF=Math.abs(p-f)<.26,hb=Math.abs(p-bid)<1e-9,ha=Math.abs(p-ask)<1e-9,hit=md.last&&Math.abs(md.last.px-p)<1e-9;
-    h+=`<div class="b ${hb?"on":""} ${hit&&md.last.side==="b"?"hit":""}" data-px="${p}" data-side="b">${hb?"BID":""}</div><div class="px ${isF?"fair":""}">${fmt(p,1)}${isF?" ◂ fair":""}</div><div class="a ${ha?"on":""} ${hit&&md.last.side==="a"?"hit":""}" data-px="${p}" data-side="a">${ha?"ASK":""}</div>`}
+    h+=`<div class="b ${hb?"on":""} ${hit&&md.last.side==="b"?"hit":""}" data-px="${p}" data-side="b">${hb?T("BID"):""}</div><div class="px ${isF?"fair":""}">${fmt(p,1)}${isF?" ◂ "+T("fair"):""}</div><div class="a ${ha?"on":""} ${hit&&md.last.side==="a"?"hit":""}" data-px="${p}" data-side="a">${ha?T("ASK"):""}</div>`}
   $("mdLadder").innerHTML=h}
-function mdShow(){$("mdStats").innerHTML=`<div><span>Position</span><b>${md.pos>0?"+":""}${md.pos}</b></div><div><span>Cash</span><b>${fmt(md.cash)}</b></div><div><span>Mark-to-fair</span><b>${fmt(md.cash+md.pos*mdFair())}</b></div>`}
+function mdShow(){$("mdStats").innerHTML=`<div><span>${T("Position")}</span><b>${md.pos>0?"+":""}${md.pos}</b></div><div><span>${T("Cash")}</span><b>${fmt(md.cash)}</b></div><div><span>${T("Mark-to-fair")}</span><b>${fmt(md.cash+md.pos*mdFair())}</b></div>`}
 function mdNew(){md.d=[die(),die(),die()];md.t=0;md.pos=0;md.cash=0;md.log=[];md.rev=false;md.over=false;md.q=[];md.last=null;
   $("mdBid").value=9.5;$("mdAsk").value=11.5;mdDiceRender();mdQueueRender();mdLadder();mdShow();
-  $("mdMsg").textContent="Fair is 10.5. Set your quote, then call the first trader.";$("mdOut").textContent="Round started. Fair = 10.5.";}
+  $("mdMsg").textContent=T("Fair is 10.5. Set your quote, then call the first trader.");$("mdOut").textContent=T("Round started. Fair = 10.5.");}
 async function mdNext(){
   if(md.busy)return;if(md.over){mdNew();return}
-  const bid=+$("mdBid").value,ask=+$("mdAsk").value;if(!(ask>bid)){$("mdOut").textContent="Your ask must be above your bid.";return}
+  const bid=+$("mdBid").value,ask=+$("mdAsk").value;if(!(ask>bid)){$("mdOut").textContent=T("Your ask must be above your bid.");return}
   md.busy=true;const idx=md.t;md.t++;const inf=Math.random()<$("mdInf").value/100;const fNow=mdFair();
   const v=inf?md.d[0]+md.d[1]+3.5:fNow+randn()*2.2;
-  let msg=`Trader ${md.t} (${inf?"informed: knows dice 1 and 2":"noise"}) values it at ${fmt(v,1)}. `,arrow="·",edge=null;
-  if(v>ask){md.pos--;md.cash+=ask;msg+=`Lifts your ask: you SELL 1 at ${ask}.`;arrow="↑";edge=ask-fNow;md.last={px:ask,side:"a"}}
-  else if(v<bid){md.pos++;md.cash-=bid;msg+=`Hits your bid: you BUY 1 at ${bid}.`;arrow="↓";edge=fNow-bid;md.last={px:bid,side:"b"}}
-  else{msg+="No trade.";md.last=null}
+  let msg=T(inf?"Trader {0} (informed: knows dice 1 and 2) values it at {1}.":"Trader {0} (noise) values it at {1}.",md.t,fmt(v,1))+" ",arrow="·",edge=null;
+  if(v>ask){md.pos--;md.cash+=ask;msg+=T("Lifts your ask: you SELL 1 at {0}.",ask);arrow="↑";edge=ask-fNow;md.last={px:ask,side:"a"}}
+  else if(v<bid){md.pos++;md.cash-=bid;msg+=T("Hits your bid: you BUY 1 at {0}.",bid);arrow="↓";edge=fNow-bid;md.last={px:bid,side:"b"}}
+  else{msg+=T("No trade.");md.last=null}
   md.q[idx]={k:inf?"i":"n",sym:(inf?"I":"N")+arrow,title:msg};md.log.push(msg);
-  if(edge!==null){sfx("fill");pop($("mdScene"),"edge "+signed(edge,1),edge>=0)}else sfx("tick");
+  if(edge!==null){sfx("fill");pop($("mdScene"),T("edge")+" "+signed(edge,1),edge>=0)}else sfx("tick");
   $("mdMsg").textContent=msg;mdQueueRender();mdLadder();mdShow();
   if(md.t===3&&!md.rev){await sleep(500);sfx("roll");for(let k=0;k<6;k++){$("mdDice").firstElementChild.outerHTML=dieHTML(die());await sleep(60)}
-    md.rev=true;mdDiceRender("one");const e=`EVENT: die 1 shows ${md.d[0]}. New fair = ${md.d[0]} + 7 = ${md.d[0]+7}. Re-centre now.`;md.log.push(e);$("mdMsg").textContent=e;mdLadder();mdShow()}
+    md.rev=true;mdDiceRender("one");const e=T("EVENT: die 1 shows {0}. New fair = {0} + 7 = {1}. Re-centre now.",md.d[0],md.d[0]+7);md.log.push(e);$("mdMsg").textContent=e;mdLadder();mdShow()}
   if(md.t>=5){await sleep(400);sfx("roll");for(let k=0;k<6;k++){$("mdDice").innerHTML=md.d.map(()=>dieHTML(die())).join("");await sleep(60)}
     md.over=true;mdDiceRender("all");const S=md.d[0]+md.d[1]+md.d[2],pnl=md.cash+md.pos*S;md.total+=pnl;md.rounds++;
-    md.log.push(`SETTLE at ${md.d.join("+")} = ${S}. Position ${md.pos} × ${S} + cash ${fmt(md.cash)} = P&L ${fmt(pnl)}. Press Next trader for a new round.`);
-    $("mdMsg").innerHTML=`Settles at ${S} <span class="stamp ${pnl>=0?"g":"b"}">${signed(pnl)}</span>`;sfx(pnl>=0?"good":"bad");
-    $("mdTot").textContent=`Total P&L ${fmt(md.total)} · rounds ${md.rounds}`;mdQueueRender();mdShow()}
-  $("mdOut").textContent=md.log.slice(-6).join("\n")+(md.over?"":`\nHint: fair ${fmt(mdFair(),1)}${md.pos?`, you are ${md.pos>0?"long":"short"} ${Math.abs(md.pos)}: skew ${md.pos>0?"down":"up"}.`:""}`);
+    md.log.push(T("SETTLE at {0} = {1}. Position {2} × {1} + cash {3} = P&L {4}. Press Next trader for a new round.",md.d.join("+"),S,md.pos,fmt(md.cash),fmt(pnl)));
+    $("mdMsg").innerHTML=`${T("Settles at {0}",S)} <span class="stamp ${pnl>=0?"g":"b"}">${signed(pnl)}</span>`;sfx(pnl>=0?"good":"bad");
+    $("mdTot").textContent=T("Total P&L {0} · rounds {1}",fmt(md.total),md.rounds);mdQueueRender();mdShow()}
+  $("mdOut").textContent=md.log.slice(-6).join("\n")+(md.over?"":"\n"+(md.pos?T(md.pos>0?"Hint: fair {0}, you are long {1}: skew down.":"Hint: fair {0}, you are short {1}: skew up.",fmt(mdFair(),1),Math.abs(md.pos)):T("Hint: fair {0}",fmt(mdFair(),1))));
   md.busy=false;
 }
 $("mdLadder").addEventListener("click",e=>{const d=e.target.closest("[data-side]");if(!d||md.over)return;const p=+d.dataset.px;
-  if(d.dataset.side==="b"){if(p>=+$("mdAsk").value){$("mdOut").textContent="Your bid must stay below your ask.";return}$("mdBid").value=p}
-  else{if(p<=+$("mdBid").value){$("mdOut").textContent="Your ask must stay above your bid.";return}$("mdAsk").value=p}
+  if(d.dataset.side==="b"){if(p>=+$("mdAsk").value){$("mdOut").textContent=T("Your bid must stay below your ask.");return}$("mdBid").value=p}
+  else{if(p<=+$("mdBid").value){$("mdOut").textContent=T("Your ask must stay above your bid.");return}$("mdAsk").value=p}
   sfx("tick");md.last=null;mdLadder()});
 $("mdBid").oninput=$("mdAsk").oninput=()=>{md.last=null;mdLadder()};
 $("mdInf").oninput=()=>$("mdInfv").textContent=$("mdInf").value+"%";
@@ -276,35 +277,35 @@ function tgChart(){const c=$("tgChart"),x=ctxOf(c),W=c.width,H=c.height,pl=40,pr
   const ys=[...tg.hist.map(h=>h.mid),...(showF?tg.hist.map(h=>h.fair):[]),...tg.trades.map(t=>t.px)];if(tg.over)ys.push(tg.settle);
   let lo=Math.min(...ys)-2,hi=Math.max(...ys)+2;const X=s=>pl+s/5*(W-pl-pr),Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
   x.font="11px "+css("--f-mono");x.fillStyle=css("--muted");x.strokeStyle=css("--line");x.lineWidth=1;
-  for(let s=0;s<=5;s++){x.beginPath();x.moveTo(X(s),pt);x.lineTo(X(s),H-pb);x.stroke();x.fillText(s===0?"start":"card "+s,X(s)-14,H-6)}
+  for(let s=0;s<=5;s++){x.beginPath();x.moveTo(X(s),pt);x.lineTo(X(s),H-pb);x.stroke();x.fillText(s===0?T("start"):T("card {0}",s),X(s)-14,H-6)}
   const step=Math.max(1,Math.round((hi-lo)/5));for(let v=Math.ceil(lo);v<=hi;v+=step){x.fillText(v,4,Y(v)+4)}
   const line=(pts,col,w,dash)=>{x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();pts.forEach((p,i)=>i?x.lineTo(X(p[0]),Y(p[1])):x.moveTo(X(p[0]),Y(p[1])));x.stroke();x.setLineDash([])};
   line(tg.hist.map(h=>[h.step,h.mid]),css("--muted"),2,[5,4]);
   if(showF)line(tg.hist.map(h=>[h.step,h.fair]).concat(tg.over?[[5,tg.settle]]:[]),css("--felt"),2.5);
   tg.trades.forEach(t=>{x.fillStyle=t.dir>0?css("--bid"):css("--ask");x.beginPath();const cx=X(t.step)+((t.k||0)*7),cy=Y(t.px);if(t.dir>0){x.moveTo(cx,cy-7);x.lineTo(cx-6,cy+4);x.lineTo(cx+6,cy+4)}else{x.moveTo(cx,cy+7);x.lineTo(cx-6,cy-4);x.lineTo(cx+6,cy-4)}x.fill()});
-  if(tg.over){x.strokeStyle=css("--gold");x.lineWidth=2;x.beginPath();x.moveTo(pl,Y(tg.settle));x.lineTo(W-pr,Y(tg.settle));x.stroke();x.fillStyle=css("--gold");x.fillText("settled "+tg.settle,W-pr-80,Y(tg.settle)-5)}
-  x.fillStyle=css("--muted");x.fillText("dashed = bot mid"+(showF?" · green = fair value":"")+" · ▲ buy ▼ sell",pl+4,pt+8)}
+  if(tg.over){x.strokeStyle=css("--gold");x.lineWidth=2;x.beginPath();x.moveTo(pl,Y(tg.settle));x.lineTo(W-pr,Y(tg.settle));x.stroke();x.fillStyle=css("--gold");x.fillText(T("settled {0}",tg.settle),W-pr-80,Y(tg.settle)-5)}
+  x.fillStyle=css("--muted");x.fillText(T("dashed = bot mid")+(showF?" · "+T("green = fair value"):"")+" · ▲ "+T("buy")+" ▼ "+T("sell"),pl+4,pt+8)}
 function tgShow(){
-  $("tgQuote").innerHTML=tg.over?`<span class="dim">SETTLED ${tg.settle}</span>`:`<span class="bidc">${fmt(tg.bid,1)}</span><span class="dim">/</span><span class="askc">${fmt(tg.ask,1)}</span>`;
+  $("tgQuote").innerHTML=tg.over?`<span class="dim">${T("SETTLED {0}",tg.settle)}</span>`:`<span class="bidc">${fmt(tg.bid,1)}</span><span class="dim">/</span><span class="askc">${fmt(tg.ask,1)}</span>`;
   const m=$("tgMeter").querySelector("i"),p=Math.max(-10,Math.min(10,tg.pos));m.style.left=(50+Math.min(0,p)*5)+"%";m.style.width=Math.abs(p)*5+"%";m.style.background=p>0?"var(--scr-bid)":"var(--scr-ask)";
   const f=tgFair();
-  $("tgStats").innerHTML=`<div><span>Position</span><b>${tg.pos>0?"+":""}${tg.pos}</b></div><div><span>Cash</span><b>${fmt(tg.cash,1)}</b></div>`+($("tgShow").checked||tg.over?`<div><span>Fair value</span><b>${fmt(f,2)}</b></div><div><span>Mark-to-fair</span><b>${fmt(tg.cash+tg.pos*f,2)}</b></div>`:"");
+  $("tgStats").innerHTML=`<div><span>${T("Position")}</span><b>${tg.pos>0?"+":""}${tg.pos}</b></div><div><span>${T("Cash")}</span><b>${fmt(tg.cash,1)}</b></div>`+($("tgShow").checked||tg.over?`<div><span>${T("Fair value")}</span><b>${fmt(f,2)}</b></div><div><span>${T("Mark-to-fair")}</span><b>${fmt(tg.cash+tg.pos*f,2)}</b></div>`:"");
   tgChart()}
 function tgNew(){tg.cards=newDeck().slice(0,5);tg.shown=0;tg.pos=0;tg.cash=0;tg.over=false;tg.hist=[];tg.trades=[];tg.settle=null;tgQuote();tgCardsRender();tgShow();
-  $("tgMsg").textContent="Five face-down cards. Fair starts at 5 × 7 = 35.";$("tgOut").textContent="Trade against the bot's quote, then reveal a card."}
-function tgTrade(dir){if(tg.over)return;const q=+$("tgQty").value;if(tg.traded+q>2){$("tgOut").textContent="Max 2 lots per step. Reveal the next card.";return}
+  $("tgMsg").textContent=T("Five face-down cards. Fair starts at 5 × 7 = 35.");$("tgOut").textContent=T("Trade against the bot's quote, then reveal a card.")}
+function tgTrade(dir){if(tg.over)return;const q=+$("tgQty").value;if(tg.traded+q>2){$("tgOut").textContent=T("Max 2 lots per step. Reveal the next card.");return}
   const k=tg.trades.filter(t=>t.step===tg.shown).length;tg.traded+=q;const px=dir>0?tg.ask:tg.bid;tg.pos+=dir*q;tg.cash-=dir*q*px;tg.trades.push({step:tg.shown,px,dir,k});const f=tgFair();
-  sfx("fill");pop($("tgScreen"),(dir>0?"BUY ":"SELL ")+q,dir>0);
-  $("tgOut").textContent=`${dir>0?"Bought":"Sold"} ${q} at ${fmt(px,1)}.`+($("tgShow").checked?` Fair is ${fmt(f,2)}, so edge = ${fmt(dir*(f-px)*q,2)}.`:"");tgShow()}
+  sfx("fill");pop($("tgScreen"),(dir>0?T("BUY"):T("SELL"))+" "+q,dir>0);
+  $("tgOut").textContent=T(dir>0?"Bought {0} at {1}.":"Sold {0} at {1}.",q,fmt(px,1))+($("tgShow").checked?" "+T("Fair is {0}, so edge = {1}.",fmt(f,2),fmt(dir*(f-px)*q,2)):"");tgShow()}
 function tgReveal(){
   if(tg.over){tgNew();return}
   const before=tgFair();tg.shown++;const c=tg.cards[tg.shown-1];const after=tgFair();sfx("deal");
-  let msg=`Card ${tg.shown}: ${CARDN(c.v)} (${c.v}). Fair ${fmt(before,2)} → ${fmt(after,2)}.`;
+  let msg=T("Card {0}: {1} ({2}). Fair {3} → {4}.",tg.shown,CARDN(c.v),c.v,fmt(before,2),fmt(after,2));
   if(tg.shown>=5){tg.over=true;const S=tg.cards.reduce((a,c)=>a+c.v,0);tg.settle=S;const pnl=tg.cash+tg.pos*S;tg.total+=pnl;tg.hist.push({step:5,mid:S,fair:S});
-    msg+=`\nSETTLE at ${S}. P&L = cash ${fmt(tg.cash,1)} + position ${tg.pos} × ${S} = ${fmt(pnl,2)}. Press Reveal for a new game.`;$("tgTot").textContent=`Total P&L ${fmt(tg.total)}`;
-    $("tgMsg").innerHTML=`Sum = ${S} <span class="stamp ${pnl>=0?"g":"b"}">${signed(pnl)}</span>`;sfx(pnl>=0?"good":"bad")}
-  else{const rev=tg.cards.slice(0,tg.shown).reduce((a,c)=>a+c.v,0);msg+=`\nWorking: revealed ${rev} + ${5-tg.shown} hidden × (${364-rev} ÷ ${52-tg.shown}) = ${fmt(after,2)}.`;tgQuote();
-    $("tgMsg").textContent=`Revealed total ${rev} · ${5-tg.shown} card${5-tg.shown>1?"s":""} still hidden`}
+    msg+="\n"+T("SETTLE at {0}. P&L = cash {1} + position {2} × {0} = {3}. Press Reveal for a new game.",S,fmt(tg.cash,1),tg.pos,fmt(pnl,2));$("tgTot").textContent=T("Total P&L {0}",fmt(tg.total));
+    $("tgMsg").innerHTML=`${T("Sum = {0}",S)} <span class="stamp ${pnl>=0?"g":"b"}">${signed(pnl)}</span>`;sfx(pnl>=0?"good":"bad")}
+  else{const rev=tg.cards.slice(0,tg.shown).reduce((a,c)=>a+c.v,0);msg+="\n"+T("Working: revealed {0} + {1} hidden × ({2} ÷ {3}) = {4}.",rev,5-tg.shown,364-rev,52-tg.shown,fmt(after,2));tgQuote();
+    $("tgMsg").textContent=T(5-tg.shown>1?"Revealed total {0} · {1} cards still hidden":"Revealed total {0} · {1} card still hidden",rev,5-tg.shown)}
   tgCardsRender(tg.shown-1);$("tgOut").textContent=msg;tgShow();
 }
 $("tgBuy").onclick=()=>tgTrade(1);$("tgSell").onclick=()=>tgTrade(-1);$("tgReveal").onclick=tgReveal;$("tgNew").onclick=tgNew;$("tgShow").onchange=tgShow;tgNew();
@@ -320,9 +321,9 @@ function etNew(){
   et.s=names.map(n=>({n,q:ri(1,4),p:+(rnd(10,120)).toFixed(2)}));et.nav=et.s.reduce((a,s)=>a+s.q*s.p,0);
   const r=Math.random();const off=r<0.33?0:(r<.66?1:-1)*rnd(0.15,1.2);const mid=et.nav+off;const w=+rnd(0.04,0.2).toFixed(2);
   et.bid=+(mid-w/2).toFixed(2);et.ask=+(mid+w/2).toFixed(2);et.done=false;
-  $("etTable").innerHTML="<thead><tr><th>Ticker</th><th class='n'>Shares / unit</th><th class='n'>Last</th><th class='n'>Chg</th></tr></thead><tbody>"+et.s.map(s=>{const ch=+(rnd(-1.5,1.5)).toFixed(2);return`<tr><td>${s.n}</td><td class="n">${s.q}</td><td class="n">${fmt(s.p)}</td><td class="n ${ch>=0?"up":"dn"}">${ch>=0?"▲":"▼"} ${fmt(Math.abs(ch))}</td></tr>`}).join("")+"</tbody>";
-  $("etQuote").innerHTML=`<span class="dim small">ETF</span> <span class="bidc">${fmt(et.bid)}</span><span class="dim">/</span><span class="askc">${fmt(et.ask)}</span> <span class="dim small">cost ${fmt(et.cost)}/unit</span>`;
-  $("etOut").textContent="Compute NAV, then compare with the price you can trade.";
+  $("etTable").innerHTML=`<thead><tr><th>${T("Ticker")}</th><th class='n'>${T("Shares / unit")}</th><th class='n'>${T("Last")}</th><th class='n'>${T("Chg")}</th></tr></thead><tbody>`+et.s.map(s=>{const ch=+(rnd(-1.5,1.5)).toFixed(2);return`<tr><td>${s.n}</td><td class="n">${s.q}</td><td class="n">${fmt(s.p)}</td><td class="n ${ch>=0?"up":"dn"}">${ch>=0?"▲":"▼"} ${fmt(Math.abs(ch))}</td></tr>`}).join("")+"</tbody>";
+  $("etQuote").innerHTML=`<span class="dim small">ETF</span> <span class="bidc">${fmt(et.bid)}</span><span class="dim">/</span><span class="askc">${fmt(et.ask)}</span> <span class="dim small">${T("cost {0}/unit",fmt(et.cost))}</span>`;
+  $("etOut").textContent=T("Compute NAV, then compare with the price you can trade.");
   et.t0=performance.now();clearInterval(et.timer);et.timer=setInterval(()=>{$("etTimer").textContent=fmt((performance.now()-et.t0)/1000,1)+"s"},100);
   et.cancel=timerBar($("etBar"),15,()=>{if(!et.done)etAct("timeout")});sfx("tick");
 }
@@ -332,8 +333,8 @@ function etAct(a){
   const act=a==="timeout"?"none":a;const got=act==="buy"?pb:act==="sell"?ps:0;et.pnl+=got;et.n++;
   const ok=a!=="timeout"&&act===best;et.streak=ok?et.streak+1:0;sfx(ok?"good":"bad");
   if(act!=="none")pop($("etScreen"),signed(got),got>=0);
-  $("etOut").innerHTML=`<span class="${ok?"good":"bad"}">${a==="timeout"?"Too slow":ok?"Correct":"Missed"}</span> in ${fmt(t,1)}s.\nNAV = ${et.s.map(s=>s.q+"×"+fmt(s.p)).join(" + ")} = ${fmt(et.nav,2)}\nBuy ETF: NAV − ask − cost = ${fmt(pb,2)} · Sell ETF: bid − NAV − cost = ${fmt(ps,2)} → best: ${best==="none"?"no trade":best+" the ETF"}. You made ${fmt(got,2)}.`;
-  $("etTot").textContent=`P&L ${fmt(et.pnl)} · ${et.n} decisions`;$("etStreak").textContent=`Streak ${et.streak}`;
+  $("etOut").innerHTML=`<span class="${ok?"good":"bad"}">${a==="timeout"?T("Too slow"):ok?T("Correct"):T("Missed")}</span> ${T("in {0}s.",fmt(t,1))}\nNAV = ${et.s.map(s=>s.q+"×"+fmt(s.p)).join(" + ")} = ${fmt(et.nav,2)}\n${T("Buy ETF: NAV − ask − cost = {0} · Sell ETF: bid − NAV − cost = {1} → best: {2}. You made {3}.",fmt(pb,2),fmt(ps,2),best==="none"?T("no trade"):best==="buy"?T("buy the ETF"):T("sell the ETF"),fmt(got,2))}`;
+  $("etTot").textContent=T("P&L {0} · {1} decisions",fmt(et.pnl),et.n);$("etStreak").textContent=T("Streak {0}",et.streak);
 }
 $("etBuy").onclick=()=>etAct("buy");$("etSell").onclick=()=>etAct("sell");$("etNone").onclick=()=>etAct("none");$("etNext").onclick=etNew;etNew();
 }
@@ -361,23 +362,23 @@ const FQ=[
 let fm={i:0,hit:0,n:0,score:0,done:false,hist:[]};
 const SUP={"-":"⁻",0:"⁰",1:"¹",2:"²",3:"³",4:"⁴",5:"⁵",6:"⁶",7:"⁷",8:"⁸",9:"⁹"};
 function num(s){s=String(s).replace(/,/g,"").trim().toLowerCase();const m=s.match(/^([\d.]+)\s*(k|m|bn|b)?$/);if(m){const mul={k:1e3,m:1e6,b:1e9,bn:1e9}[m[2]]||1;return parseFloat(m[1])*mul}return Number(s)}
-function fmDraw(T,hitState){const c=$("fmCanvas"),x=ctxOf(c),W=c.width,H=c.height;let lo=num($("fmLo").value),hi=num($("fmHi").value);
+function fmDraw(TV,hitState){const c=$("fmCanvas"),x=ctxOf(c),W=c.width,H=c.height;let lo=num($("fmLo").value),hi=num($("fmHi").value);
   const ok=v=>v>0&&isFinite(v);if(ok(lo)&&ok(hi)&&lo>hi)[lo,hi]=[hi,lo];
-  const vals=[lo,hi,T].filter(ok);const ink=css("--table-ink");x.fillStyle=ink;x.strokeStyle=ink;x.font="12px "+css("--f-mono");
-  if(!vals.length){x.globalAlpha=.7;x.fillText("Type a low and a high estimate to see your interval on a log scale.",14,H/2);x.globalAlpha=1;return}
+  const vals=[lo,hi,TV].filter(ok);const ink=css("--table-ink");x.fillStyle=ink;x.strokeStyle=ink;x.font="12px "+css("--f-mono");
+  if(!vals.length){x.globalAlpha=.7;x.fillText(T("Type a low and a high estimate to see your interval on a log scale."),14,H/2);x.globalAlpha=1;return}
   let a=Math.floor(Math.log10(Math.min(...vals)))-1,b=Math.ceil(Math.log10(Math.max(...vals)))+1;if(b-a<4)b=a+4;
   const X=v=>24+(Math.log10(v)-a)/(b-a)*(W-48),y=72;x.globalAlpha=.6;x.lineWidth=1;x.beginPath();x.moveTo(24,y);x.lineTo(W-24,y);x.stroke();
   const stepK=Math.ceil((b-a)/12);for(let k=a;k<=b;k+=stepK){x.beginPath();x.moveTo(X(10**k),y-4);x.lineTo(X(10**k),y+4);x.stroke();const lab="10"+String(k).split("").map(ch=>SUP[ch]).join("");x.fillText(lab,X(10**k)-10,y+20)}
   x.globalAlpha=1;
-  if(ok(lo)&&ok(hi)){x.fillStyle=hitState===false?css("--down"):css("--up");x.globalAlpha=.85;x.fillRect(X(lo),y-16,Math.max(3,X(hi)-X(lo)),12);x.globalAlpha=1;x.fillStyle=ink;x.fillText(`your 90% range · ${fmt(Math.log10(hi/lo),2)} orders wide`,Math.min(X(lo),W-260),y-24)}
-  if(ok(T)){x.fillStyle=css("--gold");const cx=X(T);x.beginPath();x.moveTo(cx,y-2);x.lineTo(cx-7,y+12);x.lineTo(cx+7,y+12);x.fill();x.fillText("true: "+T.toLocaleString("en-US"),Math.min(Math.max(4,cx-50),W-200),y+38)}}
-function fmNew(){fm.i=ri(0,FQ.length-1);fm.done=false;$("fmQ").textContent=FQ[fm.i][0];$("fmLo").value="";$("fmHi").value="";$("fmOut").textContent="Scientific notation works: 3e5 = 300,000. Shorthands like 25m or 8bn work too.";fmDraw()}
-async function fmSub(){if(fm.done)return;let lo=num($("fmLo").value),hi=num($("fmHi").value);if(!(lo>0&&hi>0)){$("fmOut").textContent="Enter two positive numbers.";return}
-  if(lo>hi)[lo,hi]=[hi,lo];fm.done=true;const T=FQ[fm.i][1];const hit=T>=lo&&T<=hi;const w=Math.log10(hi/lo);const pts=hit?Math.max(5,Math.round(100-30*w)):0;
-  fm.n++;if(hit)fm.hit++;fm.score+=pts;fm.hist.push(hit);await sleep(250);fmDraw(T,hit);sfx(hit?"good":"bad");
-  $("fmDots").innerHTML=fm.hist.slice(-20).map(h=>`<span class="dotr ${h?"h":"m"}" title="${h?"hit":"miss"}"></span>`).join("");
-  $("fmOut").innerHTML=`<span class="${hit?"good":"bad"}">${hit?"Inside":"Outside"}</span>. True answer: ${T.toLocaleString("en-US")}. Your width: ${fmt(w,2)} orders of magnitude → ${pts} pts.\n${FQ[fm.i][2]}\nCalibration so far: ${fm.hit}/${fm.n} = ${fmt(100*fm.hit/fm.n,0)}% (target 90%). ${fm.n>=5&&fm.hit/fm.n<0.8?"You are overconfident: widen your ranges.":fm.n>=5&&fm.hit/fm.n===1?"All hits: you may be too wide. Try narrowing.":""}`;
-  $("fmTot").textContent=`Hit ${fm.hit}/${fm.n} · score ${fm.score}`}
+  if(ok(lo)&&ok(hi)){x.fillStyle=hitState===false?css("--down"):css("--up");x.globalAlpha=.85;x.fillRect(X(lo),y-16,Math.max(3,X(hi)-X(lo)),12);x.globalAlpha=1;x.fillStyle=ink;x.fillText(T("your 90% range · {0} orders wide",fmt(Math.log10(hi/lo),2)),Math.min(X(lo),W-260),y-24)}
+  if(ok(TV)){x.fillStyle=css("--gold");const cx=X(TV);x.beginPath();x.moveTo(cx,y-2);x.lineTo(cx-7,y+12);x.lineTo(cx+7,y+12);x.fill();x.fillText(T("true: {0}",TV.toLocaleString("en-US")),Math.min(Math.max(4,cx-50),W-200),y+38)}}
+function fmNew(){fm.i=ri(0,FQ.length-1);fm.done=false;$("fmQ").textContent=T(FQ[fm.i][0]);$("fmLo").value="";$("fmHi").value="";$("fmOut").textContent=T("Scientific notation works: 3e5 = 300,000. Shorthands like 25m or 8bn work too.");fmDraw()}
+async function fmSub(){if(fm.done)return;let lo=num($("fmLo").value),hi=num($("fmHi").value);if(!(lo>0&&hi>0)){$("fmOut").textContent=T("Enter two positive numbers.");return}
+  if(lo>hi)[lo,hi]=[hi,lo];fm.done=true;const TV=FQ[fm.i][1];const hit=TV>=lo&&TV<=hi;const w=Math.log10(hi/lo);const pts=hit?Math.max(5,Math.round(100-30*w)):0;
+  fm.n++;if(hit)fm.hit++;fm.score+=pts;fm.hist.push(hit);await sleep(250);fmDraw(TV,hit);sfx(hit?"good":"bad");
+  $("fmDots").innerHTML=fm.hist.slice(-20).map(h=>`<span class="dotr ${h?"h":"m"}" title="${h?T("hit"):T("miss")}"></span>`).join("");
+  $("fmOut").innerHTML=`<span class="${hit?"good":"bad"}">${hit?T("Inside"):T("Outside")}</span>. ${T("True answer: {0}. Your width: {1} orders of magnitude → {2} pts.",TV.toLocaleString("en-US"),fmt(w,2),pts)}\n${FQ[fm.i][2]?T(FQ[fm.i][2]):""}\n${T("Calibration so far: {0}/{1} = {2}% (target 90%).",fm.hit,fm.n,fmt(100*fm.hit/fm.n,0))} ${fm.n>=5&&fm.hit/fm.n<0.8?T("You are overconfident: widen your ranges."):fm.n>=5&&fm.hit/fm.n===1?T("All hits: you may be too wide. Try narrowing."):""}`;
+  $("fmTot").textContent=T("Hit {0}/{1} · score {2}",fm.hit,fm.n,fm.score)}
 $("fmLo").oninput=$("fmHi").oninput=()=>{if(!fm.done)fmDraw()};
 $("fmSub").onclick=fmSub;$("fmNext").onclick=fmNew;fmNew();
 }
@@ -397,29 +398,29 @@ function evcGauge(){const c=$("evcGauge"),x=ctxOf(c),W=c.width,H=c.height,ink=cs
   const b=+$("evcBid").value,a=+$("evcAsk").value,u=+$("evcP").value;x.font="11px "+css("--f-mono");
   x.strokeStyle=ink;x.globalAlpha=.6;x.lineWidth=1;x.beginPath();x.moveTo(X(0),y);x.lineTo(X(100),y);x.stroke();
   x.fillStyle=ink;for(let v=0;v<=100;v+=25){x.fillRect(X(v)-.5,y-4,1,8);x.fillText(v+"¢",X(v)-8,y+20)}x.globalAlpha=1;
-  if(a>b){x.fillStyle=css("--up");x.globalAlpha=.35;x.fillRect(X(b),y-18,X(a)-X(b),14);x.globalAlpha=1;x.fillStyle=css("--scr-bid");x.fillRect(X(b)-1,y-22,3,22);x.fillStyle=css("--scr-ask");x.fillRect(X(a)-1,y-22,3,22);x.fillStyle=ink;x.fillText("your quote",X(b),y-28)}
+  if(a>b){x.fillStyle=css("--up");x.globalAlpha=.35;x.fillRect(X(b),y-18,X(a)-X(b),14);x.globalAlpha=1;x.fillStyle=css("--scr-bid");x.fillRect(X(b)-1,y-22,3,22);x.fillStyle=css("--scr-ask");x.fillRect(X(a)-1,y-22,3,22);x.fillStyle=ink;x.fillText(T("your quote"),X(b),y-28)}
   x.fillStyle=ink;x.beginPath();x.arc(X(u),y,4,0,7);x.fill();
-  if(evc.checked){x.fillStyle=css("--gold");const t=evc.p*100;x.beginPath();x.moveTo(X(t),y+4);x.lineTo(X(t)-6,y+15);x.lineTo(X(t)+6,y+15);x.fill();x.fillText("Bayes p "+fmt(t,1),Math.min(X(t)-30,W-110),y+44)}
+  if(evc.checked){x.fillStyle=css("--gold");const t=evc.p*100;x.beginPath();x.moveTo(X(t),y+4);x.lineTo(X(t)-6,y+15);x.lineTo(X(t)+6,y+15);x.fill();x.fillText(T("Bayes p {0}",fmt(t,1)),Math.min(X(t)-30,W-110),y+44)}
   if(evc.outcome!==null){x.fillStyle=evc.outcome?css("--up"):css("--down");x.fillRect(X(evc.outcome?100:0)-3,y-30,6,30)}}
 function evcNew(){if(evc.busy)return;evc.i=ri(0,EVC.length-1);const [q,p0,L]=EVC[evc.i];const o=p0/(1-p0)*L;evc.p=o/(1+o);evc.checked=false;evc.outcome=null;
-  $("evcQ").textContent=q;$("evcTape").textContent="Tape is empty. Quote, then open the market.";$("evcStamp").textContent="";
-  $("evcOut").textContent="Enter your probability, then check it. Then quote and open the market.";evcGauge()}
+  $("evcQ").textContent=T(q);$("evcTape").textContent=T("Tape is empty. Quote, then open the market.");$("evcStamp").textContent="";
+  $("evcOut").textContent=T("Enter your probability, then check it. Then quote and open the market.");evcGauge()}
 function evcCheck(){const u=+$("evcP").value/100;const [,p0,L]=EVC[evc.i];const o0=p0/(1-p0),o=o0*L;evc.n++;const ok=Math.abs(u-evc.p)<=0.03;if(ok)evc.cal++;evc.checked=true;sfx(ok?"good":"bad");
-  $("evcOut").innerHTML=`<span class="${ok?"good":"warn"}">${ok?"Within 3 points.":"Off by "+fmt(Math.abs(u-evc.p)*100,1)+" points."}</span>\nprior ${fmt(p0*100,0)}% → odds ${fmt(o0,3)} × LR ${L} = ${fmt(o,3)} → p = ${fmt(evc.p*100,1)}%\nNow quote around ${fmt(evc.p*100,0)}¢.`;
-  $("evcTot").textContent=`P&L ${fmt(evc.pnl,0)} · calibration ${evc.cal}/${evc.n}`;evcGauge()}
-async function evcRun(){if(evc.busy)return;const b=+$("evcBid").value,a=+$("evcAsk").value;if(!(a>b)){$("evcOut").textContent="Ask must be above bid.";return}
+  $("evcOut").innerHTML=`<span class="${ok?"good":"warn"}">${ok?T("Within 3 points."):T("Off by {0} points.",fmt(Math.abs(u-evc.p)*100,1))}</span>\n${T("prior {0}% → odds {1} × LR {2} = {3} → p = {4}%",fmt(p0*100,0),fmt(o0,3),L,fmt(o,3),fmt(evc.p*100,1))}\n${T("Now quote around {0}¢.",fmt(evc.p*100,0))}`;
+  $("evcTot").textContent=T("P&L {0} · calibration {1}/{2}",fmt(evc.pnl,0),evc.cal,evc.n);evcGauge()}
+async function evcRun(){if(evc.busy)return;const b=+$("evcBid").value,a=+$("evcAsk").value;if(!(a>b)){$("evcOut").textContent=T("Ask must be above bid.");return}
   evc.busy=true;evc.outcome=null;$("evcStamp").textContent="";
   const phi=$("evcInf").value/100;const yes=Math.random()<evc.p;const S=yes?100:0;let pos=0,cash=0,ni=0,nn=0;const tape=$("evcTape");tape.innerHTML="";
   for(let k=0;k<40;k++){let line=null,inf=false;
     if(Math.random()<phi){inf=true;if(yes&&a<100){pos--;cash+=a;ni++;line=["BUY",a]}else if(!yes&&b>0){pos++;cash-=b;ni++;line=["SELL",b]}}
     else{const v=evc.p*100+randn()*15;if(v>a){pos--;cash+=a;nn++;line=["BUY",a]}else if(v<b){pos++;cash-=b;nn++;line=["SELL",b]}}
     const n=String(k+1).padStart(2," ");
-    tape.insertAdjacentHTML("beforeend",line?`<div><span class="dim">#${n}</span> ${inf?'<span class="dn">INFORMED</span>':"noise   "} ${line[0]==="BUY"?'<span class="askc">BUYS </span>':'<span class="bidc">SELLS</span>'} 1 @ ${line[1]}¢  <span class="dim">your pos ${pos>0?"+":""}${pos}</span></div>`:`<div class="dim">#${n} no trade</div>`);
+    tape.insertAdjacentHTML("beforeend",line?`<div><span class="dim">#${n}</span> ${inf?`<span class="dn">${T("INFORMED")}</span>`:T("noise")+"   "} ${line[0]==="BUY"?`<span class="askc">${T("BUYS")} </span>`:`<span class="bidc">${T("SELLS")}</span>`} 1 @ ${line[1]}¢  <span class="dim">${T("your pos {0}",(pos>0?"+":"")+pos)}</span></div>`:`<div class="dim">#${n} ${T("no trade")}</div>`);
     tape.scrollTop=tape.scrollHeight;if(line)sfx("tick");await sleep(45)}
   const pnl=cash+pos*S;evc.pnl+=pnl;evc.outcome=yes;evcGauge();sfx(pnl>=0?"good":"bad");
-  $("evcStamp").innerHTML=`<span class="stamp ${yes?"g":"b"}">${yes?"YES · 100¢":"NO · 0¢"}</span> <span style="margin-left:10px">P&amp;L ${signed(pnl,0)}¢</span>`;
-  $("evcOut").innerHTML=`Outcome: <b>${yes?"YES (100)":"NO (0)"}</b>. Fills: ${nn} noise, ${ni} informed. Net position ${pos}.\nP&L = cash ${fmt(cash,0)} + ${pos} × ${S} = <span class="${pnl>=0?"good":"bad"}">${fmt(pnl,0)}</span>¢\nEach noise fill earns about half your width (${fmt((a-b)/2,1)}¢) on average; each informed fill loses about ${fmt(yes?100-a:b,0)}¢. Raise the informed share and watch how wide you must go.`;
-  $("evcTot").textContent=`P&L ${fmt(evc.pnl,0)} · calibration ${evc.cal}/${evc.n}`;evc.busy=false}
+  $("evcStamp").innerHTML=`<span class="stamp ${yes?"g":"b"}">${yes?T("YES")+" · 100¢":T("NO")+" · 0¢"}</span> <span style="margin-left:10px">P&amp;L ${signed(pnl,0)}¢</span>`;
+  $("evcOut").innerHTML=T("Outcome: {0}. Fills: {1} noise, {2} informed. Net position {3}.",`<b>${yes?T("YES")+" (100)":T("NO")+" (0)"}</b>`,nn,ni,pos)+"\n"+T("P&L = cash {0} + {1} × {2} = {3}¢",fmt(cash,0),pos,S,`<span class="${pnl>=0?"good":"bad"}">${fmt(pnl,0)}</span>`)+"\n"+T("Each noise fill earns about half your width ({0}¢) on average; each informed fill loses about {1}¢. Raise the informed share and watch how wide you must go.",fmt((a-b)/2,1),fmt(yes?100-a:b,0));
+  $("evcTot").textContent=T("P&L {0} · calibration {1}/{2}",fmt(evc.pnl,0),evc.cal,evc.n);evc.busy=false}
 ["evcBid","evcAsk","evcP"].forEach(i=>$(i).addEventListener("input",evcGauge));
 $("evcInf").oninput=()=>$("evcInfv").textContent=$("evcInf").value+"%";
 $("evcCheck").onclick=evcCheck;$("evcRun").onclick=evcRun;$("evcNext").onclick=evcNew;evcNew();
@@ -433,22 +434,22 @@ function hlHist(){const c=$("hlHist"),x=ctxOf(c),W=c.width,H=c.height,ink=css("-
   const bw=(W-20)/13;x.font="11px "+css("--f-mono");
   for(let r=1;r<=13;r++){const h=cnt[r]/4*(H-40);x.fillStyle=r>hl.cur.v?css("--scr-bid"):r<hl.cur.v?css("--scr-ask"):ink;x.globalAlpha=r===hl.cur.v?.4:.9;
     x.fillRect(10+(r-1)*bw+3,H-22-h,bw-6,h);x.globalAlpha=.8;x.fillStyle=ink;x.fillText(CARDN(r),10+(r-1)*bw+bw/2-4,H-6)}
-  x.globalAlpha=1;const p=hlProbs();x.fillStyle=css("--scr-bid");x.fillText(`higher ${p.h}/${p.n} = ${fmt(p.ph*100,0)}%`,10,14);x.fillStyle=css("--scr-ask");x.fillText(`lower ${p.l}/${p.n} = ${fmt(p.pl*100,0)}%`,W-150,14)}
+  x.globalAlpha=1;const p=hlProbs();x.fillStyle=css("--scr-bid");x.fillText(T("higher {0}/{1} = {2}%",p.h,p.n,fmt(p.ph*100,0)),10,14);x.fillStyle=css("--scr-ask");x.fillText(T("lower {0}/{1} = {2}%",p.l,p.n,fmt(p.pl*100,0)),W-150,14)}
 function hlSpark(){const c=$("hlSpark"),x=ctxOf(c),W=c.width,H=c.height,P=hl.path;const lo=Math.min(...P,1000)*0.95,hi=Math.max(...P,1000)*1.05;
   const X=i=>30+i/Math.max(1,P.length-1)*(W-40),Y=v=>8+(hi-v)/(hi-lo||1)*(H-24);
   x.strokeStyle=css("--line");x.setLineDash([4,4]);x.beginPath();x.moveTo(30,Y(1000));x.lineTo(W-10,Y(1000));x.stroke();x.setLineDash([]);
   x.strokeStyle=css("--felt");x.lineWidth=2;x.beginPath();P.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.stroke();
   x.fillStyle=css("--felt");x.beginPath();x.arc(X(P.length-1),Y(P[P.length-1]),4,0,7);x.fill();
-  x.fillStyle=css("--muted");x.font="11px "+css("--f-mono");x.fillText("bankroll · start 1,000",34,H-4)}
+  x.fillStyle=css("--muted");x.font="11px "+css("--f-mono");x.fillText(T("bankroll · start 1,000"),34,H-4)}
 function hlStake(){const f=$("hlF").value/100;$("hlFv").textContent=$("hlF").value+"%";$("hlStakeTxt").textContent=fmtN(hl.bank*f);$("hlChips").innerHTML=chipsHTML(Math.min(hl.bank*f/10,400))}
 function hlShow(msg,anim){$("hlCard").innerHTML=pcHTML(hl.cur.v,hl.cur.s,"big"+(anim?" deal":""))+`<span class="pc back" style="margin-left:14px"></span>`;
-  $("hlLeft").textContent=hl.deck.length+" cards left";$("hlBank").textContent=fmtN(hl.bank);$("hlStreak").textContent="Streak "+hl.streak;hlStake();hlHist();hlSpark();if(msg)$("hlOut").textContent=msg}
-function hlReset(){hl.deck=newDeck();hl.cur=hl.deck.pop();hl.bank=1000;hl.path=[1000];hl.streak=0;hlShow("New deck. Bankroll 1,000.",true)}
+  $("hlLeft").textContent=T("{0} cards left",hl.deck.length);$("hlBank").textContent=fmtN(hl.bank);$("hlStreak").textContent=T("Streak {0}",hl.streak);hlStake();hlHist();hlSpark();if(msg)$("hlOut").textContent=msg}
+function hlReset(){hl.deck=newDeck();hl.cur=hl.deck.pop();hl.bank=1000;hl.path=[1000];hl.streak=0;hlShow(T("New deck. Bankroll 1,000."),true)}
 function hlBet(dir){if(hl.deck.length===0||hl.bank<1){hlReset();return}
   const pr=hlProbs();const f=$("hlF").value/100;const st=hl.bank*f;const nx=hl.deck.pop();
   const win=dir>0?nx.v>hl.cur.v:nx.v<hl.cur.v;hl.bank+=win?st:-st;hl.path.push(hl.bank);hl.streak=win?hl.streak+1:0;
   const p=dir>0?pr.ph:pr.pl;const kb=Math.max(0,2*Math.max(pr.ph,pr.pl)-1);sfx(win?"good":"bad");
-  const msg=`${CARDN(hl.cur.v)} → ${CARDN(nx.v)}: ${win?"WIN":"LOSE"} ${fmtN(st)}.\nBefore the draw: p(higher) = ${pr.h}/${pr.n} = ${fmt(pr.ph*100,1)}%, p(lower) = ${pr.l}/${pr.n} = ${fmt(pr.pl*100,1)}%.\nYou picked ${dir>0?"higher":"lower"} (${fmt(p*100,1)}%) and staked ${fmt(f*100,0)}%. Kelly on the best side: ${pr.ph>=pr.pl?"higher":"lower"}, 2p − 1 = ${fmt(kb*100,1)}%.${hl.bank<1?"\nBust. Oversizing does this even with an edge.":""}`;
+  const msg=`${CARDN(hl.cur.v)} → ${CARDN(nx.v)}: ${win?T("WIN"):T("LOSE")} ${fmtN(st)}.\n`+T("Before the draw: p(higher) = {0}/{1} = {2}%, p(lower) = {3}/{1} = {4}%.",pr.h,pr.n,fmt(pr.ph*100,1),pr.l,fmt(pr.pl*100,1))+"\n"+T("You picked {0} ({1}%) and staked {2}%. Kelly on the best side: {3}, 2p − 1 = {4}%.",dir>0?T("higher"):T("lower"),fmt(p*100,1),fmt(f*100,0),pr.ph>=pr.pl?T("higher"):T("lower"),fmt(kb*100,1))+(hl.bank<1?"\n"+T("Bust. Oversizing does this even with an edge."):"");
   hl.cur=nx;hlShow(msg,true);if(st>=1)pop($("hlScene"),(win?"+":"−")+fmtN(st),win)}
 $("hlF").oninput=hlStake;$("hlHi").onclick=()=>hlBet(1);$("hlLo").onclick=()=>hlBet(-1);$("hlReset").onclick=hlReset;hlReset();
 }
@@ -459,23 +460,23 @@ const BB_OUT=[["Sum is 2, 3 or 4",6,(a,b)=>a+b<=4],["Sum is 5 or 6",9,(a,b)=>a+b
 let bb={lines:[],score:0,real:0,done:false,busy:false};
 function bbNew(){if(bb.busy)return;bb.done=false;const pick=[...BB_OUT].sort(()=>Math.random()-.5).slice(0,6);
   bb.lines=pick.map(([n,w,t])=>{const p=w/36;const m=Math.random()<0.35?rnd(0.85,0.97):rnd(1.03,1.15);return{n,p,w,t,d:+(1/(p*m)).toFixed(2)}});
-  $("bbTable").innerHTML="<thead><tr><th>Outcome</th><th class='n'>Odds</th><th>Back</th><th>Result</th></tr></thead><tbody>"+bb.lines.map((l,i)=>`<tr><td>${l.n}</td><td class="n">${fmt(l.d)}</td><td><input type="checkbox" id="bb${i}" aria-label="back ${l.n}"></td><td id="bbR${i}" class="dim">—</td></tr>`).join("")+"</tbody>";
-  $("bbDice").innerHTML=dieHTML(0)+dieHTML(0);$("bbMsg").textContent="Back the lines whose odds beat 1 ÷ true probability, then roll.";
-  $("bbOut").textContent="Tick each line whose odds beat 1 ÷ true probability."}
+  $("bbTable").innerHTML=`<thead><tr><th>${T("Outcome")}</th><th class='n'>${T("Odds")}</th><th>${T("Back")}</th><th>${T("Result")}</th></tr></thead><tbody>`+bb.lines.map((l,i)=>`<tr><td>${T(l.n)}</td><td class="n">${fmt(l.d)}</td><td><input type="checkbox" id="bb${i}" aria-label="${T("back {0}",T(l.n))}"></td><td id="bbR${i}" class="dim">—</td></tr>`).join("")+"</tbody>";
+  $("bbDice").innerHTML=dieHTML(0)+dieHTML(0);$("bbMsg").textContent=T("Back the lines whose odds beat 1 ÷ true probability, then roll.");
+  $("bbOut").textContent=T("Tick each line whose odds beat 1 ÷ true probability.")}
 async function bbSubmit(){if(bb.done||bb.busy)return;bb.done=true;bb.busy=true;let s=0,best=0,rows=[];const backed=bb.lines.map((l,i)=>$("bb"+i).checked);
-  bb.lines.forEach((l,i)=>{const b=backed[i];const e=l.p*l.d-1;if(b)s+=e;if(e>0)best+=e;rows.push(`${l.n.padEnd(22)} p=${l.w}/36=${fmt(l.p,3)}  implied=${fmt(1/l.d,3)}  EV=${e>=0?"+":""}${fmt(e,3)} ${e>0?"BACK":"skip"}${b?(e>0?"  ✓":"  ✗ you backed"):(e>0?"  ✗ missed":"")}`)});
-  bb.score+=s;$("bbOut").textContent=rows.join("\n")+`\nYour EV per 1 staked on each: ${fmt(s,3)} (best possible ${fmt(best,3)}).`;
+  bb.lines.forEach((l,i)=>{const b=backed[i];const e=l.p*l.d-1;if(b)s+=e;if(e>0)best+=e;rows.push(`${T(l.n)}: p=${l.w}/36=${fmt(l.p,3)}  ${T("implied")}=${fmt(1/l.d,3)}  EV=${e>=0?"+":""}${fmt(e,3)} ${e>0?T("BACK"):T("skip")}${b?(e>0?"  ✓":"  ✗ "+T("you backed")):(e>0?"  ✗ "+T("missed"):"")}`)});
+  bb.score+=s;$("bbOut").textContent=rows.join("\n")+"\n"+T("Your EV per 1 staked on each: {0} (best possible {1}).",fmt(s,3),fmt(best,3));
   sfx("roll");for(let k=0;k<7;k++){$("bbDice").innerHTML=dieHTML(die())+dieHTML(die());await sleep(60)}
   const d1=die(),d2=die();$("bbDice").innerHTML=dieHTML(d1,"rolling")+dieHTML(d2,"rolling");let real=0;
-  bb.lines.forEach((l,i)=>{const hit=l.t(d1,d2),cell=$("bbR"+i);if(backed[i]){const r=hit?l.d-1:-1;real+=r;cell.className=hit?"up":"dn";cell.textContent=(hit?"WIN ":"LOSE ")+signed(r)}else{cell.className="dim";cell.textContent=hit?"would win":"·"}});
-  bb.real+=real;$("bbMsg").innerHTML=`Rolled ${d1} + ${d2} = ${d1+d2} · this board ${backed.some(Boolean)?`<span class="stamp ${real>=0?"g":"b"}">${signed(real)}</span>`:"no bets"}`;
+  bb.lines.forEach((l,i)=>{const hit=l.t(d1,d2),cell=$("bbR"+i);if(backed[i]){const r=hit?l.d-1:-1;real+=r;cell.className=hit?"up":"dn";cell.textContent=(hit?T("WIN"):T("LOSE"))+" "+signed(r)}else{cell.className="dim";cell.textContent=hit?T("would win"):"·"}});
+  bb.real+=real;$("bbMsg").innerHTML=T("Rolled {0} + {1} = {2} · this board {3}",d1,d2,d1+d2,backed.some(Boolean)?`<span class="stamp ${real>=0?"g":"b"}">${signed(real)}</span>`:T("no bets"));
   if(backed.some(Boolean))sfx(real>=0?"good":"bad");
-  $("bbTot").textContent=`Expected ${fmt(bb.score,3)} · realised ${signed(bb.real)}`;bb.busy=false}
+  $("bbTot").textContent=T("Expected {0} · realised {1}",fmt(bb.score,3),signed(bb.real));bb.busy=false}
 $("bbSubmit").onclick=bbSubmit;$("bbNew").onclick=bbNew;bbNew();
 function arCalc(){const a=+$("arA").value,b=+$("arB").value,S=+$("arS").value;const sum=1/a+1/b;
-  if(!(a>1&&b>1)){$("arOut").textContent="Odds must be above 1.";return}
+  if(!(a>1&&b>1)){$("arOut").textContent=T("Odds must be above 1.");return}
   const sa=S*(1/a)/sum,sb=S*(1/b)/sum;const ret=sa*a;
-  $("arOut").innerHTML=`1/${a} + 1/${b} = ${fmt(sum,4)} ${sum<1?'<span class="good">&lt; 1 → arbitrage</span>':'<span class="bad">≥ 1 → no arbitrage</span>'}\nStake ${fmt(sa)} on A and ${fmt(sb)} on B. Either way you get back ${fmt(ret)} → locked profit ${fmt(ret-S)} (${fmt((ret/S-1)*100,2)}%).`}
+  $("arOut").innerHTML=`1/${a} + 1/${b} = ${fmt(sum,4)} ${sum<1?`<span class="good">&lt; 1 → ${T("arbitrage")}</span>`:`<span class="bad">≥ 1 → ${T("no arbitrage")}</span>`}\n${T("Stake {0} on A and {1} on B. Either way you get back {2} → locked profit {3} ({4}%).",fmt(sa),fmt(sb),fmt(ret),fmt(ret-S),fmt((ret/S-1)*100,2))}`}
 ["arA","arB","arS"].forEach(i=>$(i).oninput=arCalc);arCalc();
 }
 
@@ -496,25 +497,25 @@ let po={ok:0,n:0,done:true,ans:"",chips:0,info:null,busy:false};
 function poRender(extra){const i=po.info;$("poVill").innerHTML=pcHTML(null,0,"sm")+pcHTML(null,0,"sm");
   $("poHero").innerHTML=i.hole.map(c=>pcStr(c)).join("");
   const slots=5-i.shown.length;$("poBoard").innerHTML=i.shown.map(c=>pcStr(c)).join("")+(extra||[]).map(c=>pcStr(c,"deal")).join("")+'<span class="pc slot"></span>'.repeat(Math.max(0,slots-(extra||[]).length));
-  $("poPot").innerHTML=chipsHTML(Math.min(i.P,400)/4)+`<span>Pot ${i.P}</span>`;$("poBet").innerHTML=chipsHTML(Math.min(i.B,400)/4)+`<span>Bet ${i.B}</span>`}
+  $("poPot").innerHTML=chipsHTML(Math.min(i.P,400)/4)+`<span>${T("Pot {0}",i.P)}</span>`;$("poBet").innerHTML=chipsHTML(Math.min(i.B,400)/4)+`<span>${T("Bet {0}",i.B)}</span>`}
 function poNew(){if(po.busy)return;po.done=false;const sp=SPOTS[ri(0,SPOTS.length-1)];const o=sp.outs.length;const street=Math.random()<0.5?"flop":"turn";const allin=street==="flop"&&Math.random()<0.4;
   const P=ri(4,30)*10;const frac=[0.33,0.5,0.66,0.75,1,1.5][ri(0,5)];const B=Math.round(P*frac);
   const shown=street==="flop"?sp.board.slice():[...sp.board,sp.turn];const unseen=52-2-shown.length;
   const eq=allin?1-((unseen-o)/unseen)*((unseen-1-o)/(unseen-1)):o/unseen;const req=B/(P+2*B);po.ans=eq>req?"call":"fold";
   po.info={d:sp.name,o,street,allin,P,B,eq,req,unseen,hole:sp.hole,shown,outs:sp.outs};poRender();$("poStamp").innerHTML="";
-  $("poQ").textContent=`On the ${street}, you hold ${sp.name} (${o} outs). Pot is ${P}. Opponent bets ${B}${allin?" and is all-in (you see both turn and river)":""}. Assume you win only if you hit and get nothing extra later.`;
-  $("poOut").textContent="Compare equity with B ÷ (P + 2B).";sfx("deal")}
+  $("poQ").textContent=T(street==="flop"?(allin?"On the flop, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3} and is all-in (you see both turn and river). Assume you win only if you hit and get nothing extra later.":"On the flop, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3}. Assume you win only if you hit and get nothing extra later."):"On the turn, you hold {0} ({1} outs). Pot is {2}. Opponent bets {3}. Assume you win only if you hit and get nothing extra later.",T(sp.name),o,P,B);
+  $("poOut").textContent=T("Compare equity with B ÷ (P + 2B).");sfx("deal")}
 async function poAct(a){if(po.done||po.busy)return;po.done=true;po.busy=true;po.n++;const ok=a===po.ans;if(ok)po.ok++;const i=po.info;sfx(ok?"good":"bad");
   const rough=i.allin?i.o*4:i.o*2,evCall=i.eq*(i.P+i.B)-(1-i.eq)*i.B;
-  $("poOut").innerHTML=`<span class="${ok?"good":"bad"}">${ok?"Correct":"Wrong"}: ${po.ans}.</span>\nRequired = ${i.B} ÷ (${i.P} + 2×${i.B}) = ${fmt(i.req*100,1)}%\nEquity ≈ ${i.o} × ${i.allin?4:2} = ${rough}% (exact ${fmt(i.eq*100,1)}%: ${i.allin?`1 − (${i.unseen-i.o}/${i.unseen})(${i.unseen-1-i.o}/${i.unseen-1})`:`${i.o}/${i.unseen}`})\nEV of calling = ${fmt(i.eq,3)} × ${i.P+i.B} − ${fmt(1-i.eq,3)} × ${i.B} = ${fmt(evCall,1)}`;
-  $("poScore").textContent=`${po.ok}/${po.n} correct`;
+  $("poOut").innerHTML=`<span class="${ok?"good":"bad"}">${ok?T("Correct"):T("Wrong")}: ${T(po.ans)}.</span>\n${T("Required")} = ${i.B} ÷ (${i.P} + 2×${i.B}) = ${fmt(i.req*100,1)}%\n${T("Equity")} ≈ ${i.o} × ${i.allin?4:2} = ${rough}% (${T("exact")} ${fmt(i.eq*100,1)}%: ${i.allin?`1 − (${i.unseen-i.o}/${i.unseen})(${i.unseen-1-i.o}/${i.unseen-1})`:`${i.o}/${i.unseen}`})\n${T("EV of calling")} = ${fmt(i.eq,3)} × ${i.P+i.B} − ${fmt(1-i.eq,3)} × ${i.B} = ${fmt(evCall,1)}`;
+  $("poScore").textContent=T("{0}/{1} correct",po.ok,po.n);
   const used=new Set([...i.hole,...i.shown]);const deck=ALL52.filter(c=>!used.has(c)).sort(()=>Math.random()-.5);const run=deck.slice(0,i.allin?2:1);
   const extra=[];for(const c of run){extra.push(c);poRender(extra);sfx("deal");await sleep(450)}
   const hit=run.some(c=>i.outs.includes(c));let res=0;if(a==="call"){res=hit?i.P+i.B:-i.B;po.chips+=res}
-  $("poStamp").innerHTML=`<span class="stamp ${hit?"g":"b"}">${hit?"HIT":"MISS"}</span>`;
+  $("poStamp").innerHTML=`<span class="stamp ${hit?"g":"b"}">${hit?T("HIT"):T("MISS")}</span>`;
   if(a==="call")pop($("poTable"),(res>=0?"+":"−")+Math.abs(res),res>=0);
-  $("poOut").innerHTML+=`\n${a==="call"?`You called and ${hit?"hit":"missed"}: ${res>=0?"+":"−"}${Math.abs(res)} chips.`:`You folded. The runout would have ${hit?"hit":"missed"}.`} One result is luck; the EV is the decision.`;
-  $("poChips").textContent=`Chips ${po.chips>=0?"+":"−"}${Math.abs(po.chips)}`;po.busy=false}
+  $("poOut").innerHTML+="\n"+(a==="call"?T(hit?"You called and hit: {0} chips.":"You called and missed: {0} chips.",(res>=0?"+":"−")+Math.abs(res)):T(hit?"You folded. The runout would have hit.":"You folded. The runout would have missed."))+" "+T("One result is luck; the EV is the decision.");
+  $("poChips").textContent=T("Chips {0}",(po.chips>=0?"+":"−")+Math.abs(po.chips));po.busy=false}
 $("poCall").onclick=()=>poAct("call");$("poFold").onclick=()=>poAct("fold");$("poNext").onclick=poNew;poNew();
 }
 
@@ -524,7 +525,7 @@ function eqScene(){const toS=v=>v.replace(/\s+/g,"").match(/../g)||[];const H=to
   const valid=c=>/^[2-9TJQKA][shdc]$/i.test(c)&&true,norm=c=>c[0].toUpperCase()+c[1].toLowerCase();
   const cards=a=>a.filter(valid).map(c=>pcStr(norm(c),"deal")).join("");
   const V=/^random$/i.test(vs)||!vs?pcHTML(null,0)+pcHTML(null,0):cards(toS(vs));
-  $("eqScene").innerHTML=`<div class="lbl">Opponent</div><div class="items">${V}</div><div class="lbl" style="margin-top:6px">Board</div><div class="items">${cards(B)}${'<span class="pc slot"></span>'.repeat(Math.max(0,5-B.filter(valid).length))}</div><div class="lbl" style="margin-top:6px">You</div><div class="items">${cards(H)}</div>`}
+  $("eqScene").innerHTML=`<div class="lbl">${T("Opponent")}</div><div class="items">${V}</div><div class="lbl" style="margin-top:6px">${T("Board")}</div><div class="items">${cards(B)}${'<span class="pc slot"></span>'.repeat(Math.max(0,5-B.filter(valid).length))}</div><div class="lbl" style="margin-top:6px">${T("You")}</div><div class="items">${cards(H)}</div>`}
 const RS="23456789TJQKA",SS="shdc";
 function parseCards(s){s=s.replace(/\s+/g,"");if(!s)return[];if(s.length%2)return null;const out=[];for(let i=0;i<s.length;i+=2){const r=RS.indexOf(s[i].toUpperCase()),u=SS.indexOf(s[i+1].toLowerCase());if(r<0||u<0)return null;out.push(u*13+r)}return out}
 function eval5(c){
@@ -542,14 +543,14 @@ function eval7(c){let best=0;for(const k of C7){const v=eval5([c[k[0]],c[k[1]],c
 const CATN=["High card","One pair","Two pair","Three of a kind","Straight","Flush","Full house","Four of a kind","Straight flush"];
 function eqRun(){
   const H=parseCards($("eqH").value),vs=$("eqV").value.trim().toLowerCase(),V=vs==="random"||vs===""?"R":parseCards(vs),B=parseCards($("eqB").value);
-  if(!H||H.length!==2||(V!=="R"&&(!V||V.length!==2))||!B||![0,3,4,5].includes(B.length)){$("eqOut").textContent="Check the card format: two cards each, like AsKs, and 0/3/4/5 board cards.";return}
-  const used=new Set([...H,...(V==="R"?[]:V),...B]);if(used.size!==2+(V==="R"?0:2)+B.length){$("eqOut").textContent="A card appears twice.";return}
+  if(!H||H.length!==2||(V!=="R"&&(!V||V.length!==2))||!B||![0,3,4,5].includes(B.length)){$("eqOut").textContent=T("Check the card format: two cards each, like AsKs, and 0/3/4/5 board cards.");return}
+  const used=new Set([...H,...(V==="R"?[]:V),...B]);if(used.size!==2+(V==="R"?0:2)+B.length){$("eqOut").textContent=T("A card appears twice.");return}
   const N=20000;let w=0,t=0,l=0;const cats=new Array(9).fill(0);const base=[];for(let i=0;i<52;i++)if(!used.has(i))base.push(i);
   for(let it=0;it<N;it++){const d=base.slice();let k=d.length;const draw=()=>{const j=Math.floor(Math.random()*k);const c=d[j];d[j]=d[--k];return c};
     const vv=V==="R"?[draw(),draw()]:V;const bd=B.slice();while(bd.length<5)bd.push(draw());
     const a=eval7([...H,...bd]),b=eval7([...vv,...bd]);cats[Math.floor(a/759375)]++;if(a>b)w++;else if(a<b)l++;else t++}
   const eq=(w+t/2)/N;const se=Math.sqrt(eq*(1-eq)/N);
-  $("eqOut").textContent=`Win ${fmt(100*w/N,1)}%  Tie ${fmt(100*t/N,1)}%  Lose ${fmt(100*l/N,1)}%\nEquity = win + tie/2 = ${fmt(eq*100,1)}%  (± ${fmt(1.96*se*100,1)}% at 95%, from √(p(1−p)/n))\nYour final hand: `+cats.map((c,i)=>c?`${CATN[i]} ${fmt(100*c/N,1)}%`:"").filter(Boolean).join(", ");
+  $("eqOut").textContent=T("Win {0}%  Tie {1}%  Lose {2}%",fmt(100*w/N,1),fmt(100*t/N,1),fmt(100*l/N,1))+"\n"+T("Equity = win + tie/2 = {0}%  (± {1}% at 95%, from √(p(1−p)/n))",fmt(eq*100,1),fmt(1.96*se*100,1))+"\n"+T("Your final hand:")+" "+cats.map((c,i)=>c?`${T(CATN[i])} ${fmt(100*c/N,1)}%`:"").filter(Boolean).join(", ");
 }
 $("eqRun").onclick=()=>{eqRun();eqScene()};eqScene();
 }
@@ -558,7 +559,7 @@ $("eqRun").onclick=()=>{eqRun();eqScene()};eqScene();
 if($("blP")){
 function blRender(){const P=+$("blP").value||1,B=+$("blB").value;$("blBv").textContent=B;
   const be=B/(P+B),mdf=P/(P+B),req=B/(P+2*B),bluffShare=B/(P+2*B);
-  $("blStats").innerHTML=`<div><span>Bet / pot</span><b>${fmt(B/P*100,0)}%</b></div><div><span>Bluff needs folds</span><b>${fmt(be*100,1)}%</b></div><div><span>Defender must continue</span><b>${fmt(mdf*100,1)}%</b></div><div><span>Caller needs equity</span><b>${fmt(req*100,1)}%</b></div><div><span>Bluffs in betting range</span><b>${fmt(bluffShare*100,1)}%</b></div><div><span>Value : bluff</span><b>${fmt((1-bluffShare)/bluffShare,2)} : 1</b></div>`}
+  $("blStats").innerHTML=`<div><span>${T("Bet / pot")}</span><b>${fmt(B/P*100,0)}%</b></div><div><span>${T("Bluff needs folds")}</span><b>${fmt(be*100,1)}%</b></div><div><span>${T("Defender must continue")}</span><b>${fmt(mdf*100,1)}%</b></div><div><span>${T("Caller needs equity")}</span><b>${fmt(req*100,1)}%</b></div><div><span>${T("Bluffs in betting range")}</span><b>${fmt(bluffShare*100,1)}%</b></div><div><span>${T("Value : bluff")}</span><b>${fmt((1-bluffShare)/bluffShare,2)} : 1</b></div>`}
 $("blP").oninput=blRender;$("blB").oninput=blRender;blRender();
 }
 
@@ -566,8 +567,8 @@ $("blP").oninput=blRender;$("blB").oninput=blRender;blRender();
 if($("brM")){
 function brRender(){const m=+$("brM").value,s=Math.max(1e-9,+$("brS").value),n=Math.round(Math.pow(10,+$("brN").value));$("brNv").textContent=fmtN(n);
   const t=m*Math.sqrt(n)/s,pp=Phi(t),n95=Math.ceil(Math.pow(1.96*s/Math.max(Math.abs(m),1e-9),2));
-  $("brStats").innerHTML=`<div><span>Expected total</span><b>${fmt(m*n,1)}</b></div><div><span>σ of total</span><b>${fmt(s*Math.sqrt(n),1)}</b></div><div><span>t-statistic</span><b>${fmt(t,2)}</b></div><div><span>P(ahead after n)</span><b>${fmt(pp*100,1)}%</b></div><div><span>n for t = 1.96</span><b>${fmtN(n95)}</b></div>`;
-  $("brOut").textContent=`Expected profit grows with n, but noise grows with √n, so t grows with √n.\nAt t ≥ 1.96 you can reject "no edge" at the 5% level, which is a hypothesis test from econometrics.\nPoker example: a strong win rate of 5 bb/100 with σ ≈ 100 bb/100 needs about ${fmtN(Math.pow(1.96*100/5,2)*100)} hands to be statistically convincing.`}
+  $("brStats").innerHTML=`<div><span>${T("Expected total")}</span><b>${fmt(m*n,1)}</b></div><div><span>${T("σ of total")}</span><b>${fmt(s*Math.sqrt(n),1)}</b></div><div><span>${T("t-statistic")}</span><b>${fmt(t,2)}</b></div><div><span>${T("P(ahead after n)")}</span><b>${fmt(pp*100,1)}%</b></div><div><span>${T("n for t = 1.96")}</span><b>${fmtN(n95)}</b></div>`;
+  $("brOut").textContent=T("Expected profit grows with n, but noise grows with √n, so t grows with √n.")+"\n"+T("At t ≥ 1.96 you can reject \"no edge\" at the 5% level, which is a hypothesis test from econometrics.")+"\n"+T("Poker example: a strong win rate of 5 bb/100 with σ ≈ 100 bb/100 needs about {0} hands to be statistically convincing.",fmtN(Math.pow(1.96*100/5,2)*100))}
 ["brM","brS","brN"].forEach(i=>$(i).oninput=brRender);brRender();
 }
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/kelly.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>凯利下注 · Edge Lab</title>
+<meta content="凯利下注：有优势时该下多少注。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/kelly.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/kelly.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/kelly.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/kelly.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/kelly.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/kelly.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="凯利下注 · Edge Lab" property="og:title"/>
+<meta content="凯利下注：有优势时该下多少注。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/kelly.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="kelly" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>自习室 · 5/6</small><b>凯利下注</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="kelly">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 300 次下注，三种尺度规则，同样的运气</div>
+<div class="row"><label for="kP">获胜概率 p</label><input id="kP" max="80" min="40" type="range" value="55"/><span class="stat" id="kPv">55%</span>
+<label for="kB">净赔率 b</label><input id="kB" min="0.1" step="0.1" type="number" value="1"/><button class="go" id="kRun">模拟</button></div>
+<canvas height="240" id="kCanvas" width="760"></canvas>
+<div class="out" id="kOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="bayes.html">← 赔率形式的贝叶斯</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="bridge.html">金融与计量经济学 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 自习室</small><h2 id="tutTitle">凯利下注</h2><div class="tags"><span class="tag">用于：比大比小、投注板、扑克资金管理、仓位大小</span></div></div>
+<div class="tut-b"><p>正期望还不够：下注太大，一段连败就能让你出局。凯利公式选出让长期增长最大化的资金比例。设获胜概率为 p、净赔率为 b（每下注 1 赢 b）：</p>
+<div class="formula">f* = (b·p − (1 − p)) / b = 优势 / 赔率 1 赔 1 时：f* = 2p − 1</div>
+<p>下注两倍凯利时，长期增长大约为零；再多的话，即使每注都是正期望，资金也会缩水。大多数职业玩家下半凯利，因为他们的 p 只是估计值。</p>
+<details class="deep"><summary>原理：理解 f* = (b·p − q) ÷ b</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>f*</td><td>要下注的当前资金比例。星号表示它是最优值。</td></tr>
+<tr><td>p</td><td>你赢下这注的概率。</td></tr>
+<tr><td>q = 1 − p</td><td>你输的概率。</td></tr>
+<tr><td>b</td><td>净赔率：赢的话每下注 1 的利润。1 赔 1 时 b = 1。由小数赔率 d 换算，b = d − 1。</td></tr>
+<tr><td>b·p − q</td><td>每下注 1 的期望：以概率 p 赢 b，以概率 q 输 1。这就是你的<b>优势</b>。</td></tr>
+<tr><td>÷ b</td><td>对波动更大的高赔率注要缩小比例。所以结果是优势除以赔率。</td></tr>
+</tbody></table></div>
+<h4>为什么不直接最大化期望值？</h4>
+<p>最大化期望值会让你在每个正期望的注上押上全部，第一次输就归零。财富是按乘法复利增长的，不是加法：先 +50% 再 −50%，你只剩起点的 1.5 × 0.5 = 0.75。所以凯利最大化的是平均<i>增长率</i>，即每注资金乘数的对数的期望：</p>
+<div class="formula">g(f) = p · ln(1 + f·b) + q · ln(1 − f)</div>
+<p>这里 ln(1 + f·b) 是赢时资金乘数的对数，ln(1 − f) 是输时乘数的对数。令 g 的斜率为零，p·b ÷ (1 + f·b) = q ÷ (1 − f)，解出 f 得 f* = (b·p − q) ÷ b。</p>
+<p><b>例：</b>p = 0.55，b = 1 → f* = 0.10。每注增长 = 0.55 · ln 1.1 + 0.45 · ln 0.9 = 0.0524 − 0.0474 = 0.0050，约每注 0.5%，并且复利增长。</p>
+</div></details>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>1 赔 1：按你的优势下注。</b>胜率 55% → 资金的 10%。</li>
+<li><b>负期望 → 下注 0。</b>凯利永远不会让你押注一个亏钱的提议。</li>
+<li><b>半凯利</b>保留约 75% 的增长，回撤却小得多。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/g-fermi.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>フェルミ推定 · Edge Lab</title>
+<meta content="フェルミ推定：調べられない問いに90%区間で答える。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-fermi.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-fermi.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-fermi.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-fermi.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-fermi.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="フェルミ推定 · Edge Lab" property="og:title"/>
+<meta content="フェルミ推定：調べられない問いに90%区間で答える。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/g-fermi.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-fermi" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>トレーディングフロア · 5/8</small><b>フェルミ推定</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="g-fermi">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 90%区間 <span class="stat" id="fmTot">的中 0/0 · スコア 0</span></div>
+<div id="fmQ" style="font-size:18px;font-weight:600"></div>
+<div class="row"><label for="fmLo">下限</label><input id="fmLo" placeholder="e.g. 2e6" type="text"/><label for="fmHi">上限</label><input id="fmHi" placeholder="e.g. 4e7" type="text"/><button class="go" id="fmSub">回答</button><button id="fmNext">次の問題</button></div>
+<div class="scene" style="padding:8px 10px"><canvas aria-label="対数スケールの数直線" class="felt" height="120" id="fmCanvas" width="760"></canvas></div>
+<div class="row small mono"><span style="color:var(--muted)">キャリブレーション（目標は10問中9問）：</span><span id="fmDots"></span></div>
+<div class="out" id="fmOut">指数表記も使えます：3e5 = 300,000。25m や 8bn のような省略形もOK。</div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="g-etf.html">← ETFアービトラージ</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="g-event.html">イベント契約 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · トレーディングフロア</small><h2 id="tutTitle">フェルミ推定</h2><div class="tags"><span class="tag">スキル：分解、キャリブレーションされた区間</span><span class="tag">関連企業：ほとんどの自己勘定取引会社</span></div></div>
+<div class="tut-b"><p>真の答えを含むと<b>90%確信</b>できる範囲を答えます。当たっていて、かつ狭いほど高得点。多くの問題で、10問中9問ほどが範囲に入るのが理想です。10問中5問しか入らないなら自信過剰で、トレーディングでいえば気配が狭すぎる状態です。</p>
+<ul class="steps"><li>数量を推測できる要素に分解する（人数 × 頻度 × 時間）。</li><li>10のべき乗で見積もり、指数を足し合わせる。</li><li>各要素の不確かさから範囲を決め、確認する：9対1で賭けられるか？</li></ul>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>1年の秒数 ≈ π × 10⁷。</b>一生の日数 ≈ 30,000。</li>
+<li><b>範囲の幅 = log₁₀(上限/下限)。</b>1桁分が妥当なデフォルトです。</li>
+<li><b>的中率が90%未満 → 次は広げる。</b>精度よりキャリブレーション。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

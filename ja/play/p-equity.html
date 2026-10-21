@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/p-equity.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>エクイティ計算機 · Edge Lab</title>
+<meta content="エクイティ計算機：任意のハンド同士を2万回シミュレーション。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-equity.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-equity.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-equity.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-equity.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-equity.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-equity.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="エクイティ計算機 · Edge Lab" property="og:title"/>
+<meta content="エクイティ計算機：任意のハンド同士を2万回シミュレーション。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/p-equity.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="p-equity" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>ポーカールーム · 2/5</small><b>エクイティ計算機</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="p-equity">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · ハンド対ハンド</div>
+<div class="row"><label for="eqH">あなたのハンド</label><input id="eqH" type="text" value="AsKs"/><label for="eqV">相手</label><input id="eqV" type="text" value="QdQc"/><label for="eqB">ボード（0、3、4、5枚）</label><input id="eqB" type="text" value=""/></div>
+<div class="row"><button class="go" id="eqRun">2万回配る</button><span class="mono" style="color:var(--muted)">カードは As Td 9h 2c のように入力。相手を "random" にすると任意の2枚。</span></div>
+<div class="scene" id="eqScene" style="margin-top:8px"></div>
+<div class="out" id="eqOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="p-odds.html">← ポットオッズ</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="p-bluff.html">ブラフの数学 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · ポーカールーム</small><h2 id="tutTitle">エクイティ計算機</h2></div>
+<div class="tut-b"><p>この計算機は未知のカードを何千回も配り、それぞれのハンドが勝つ頻度を数えます。オプションの価格付けに使われるモンテカルロ法と同じ手法で、不確実な未来を何度もシミュレーションして利得を平均します。</p>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>ペア対それより高い2枚 ≈ コイントス</b>（QQ対AK ≈ 54/46）。</li>
+<li><b>ペア対小さいペア ≈ 80/20。</b>ドミネートされたハンド（AK対AQ）≈ 70/30。</li>
+<li><b>任意の2枚対AA ≈ 15%。</b>プリフロップの差は思ったより小さいものです。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

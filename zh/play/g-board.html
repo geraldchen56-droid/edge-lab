@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-board.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>投注板 · Edge Lab</title>
+<meta content="投注板：找出定价错误的赔率，锁定套利。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-board.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-board.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-board.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-board.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-board.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-board.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="投注板 · Edge Lab" property="og:title"/>
+<meta content="投注板：找出定价错误的赔率，锁定套利。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-board.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-board" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 8/8</small><b>投注板</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-board">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 押注定价错误的赔率 <span class="stat" id="bbTot">预期 0.000 · 实际 0.00</span></div>
+<div class="screen"><div class="dim lbl">赔率板 · 两颗骰子 · 你押的每一行下注 1</div><div class="tbl"><table class="term" id="bbTable"></table></div></div>
+<div class="scene" id="bbScene" style="margin-top:12px"><div class="lbl">掷骰</div><div class="items" id="bbDice"></div><div class="settle" id="bbMsg"></div></div>
+<div class="row"><button class="go" id="bbSubmit">锁定并掷骰</button><button id="bbNew">新赔率板</button></div>
+<div class="out" id="bbOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">操作台 · 两家庄家间套利</div>
+<div class="row"><label for="arA">A 庄对 X 的赔率</label><input id="arA" step="0.01" type="number" value="2.10"/><label for="arB">B 庄对“非 X”的赔率</label><input id="arB" step="0.01" type="number" value="2.05"/><label for="arS">总下注</label><input id="arS" type="number" value="100"/></div>
+<div class="out" id="arOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-hilo.html">← 比大比小</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="p-odds.html">底池赔率 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">投注板</h2><div class="tags"><span class="tag">技能：隐含概率、庄家抽水、套利</span><span class="tag">对应公司：Optiver 的投注轮面试</span></div></div>
+<div class="tut-b"><p>赔率板给两颗骰子的各种结果报出小数赔率。小数赔率 d 表示每下注 1 返还 d（含本金），所以隐含概率是 1/d。只有当你算出的真实概率高于它时才押这一行。</p>
+<div class="formula">每下注 1 的期望 = p · d − 1 隐含 p = 1/d 抽水 = Σ 1/d − 1</div>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>两颗骰子之和的组合数 = 6 − |7 − s|。</b>7 有 36 种中的 6 种；2 和 12 各 1 种。</li>
+<li><b>所有结果的 Σ 1/d &lt; 1 → 存在套利。</b>按 1/d 的比例在每个结果上下注。</li>
+<li><b>d &gt; 1/p 才押。</b>六分之一概率的事件需要赔率高于 6.0。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/p-rules.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Reglas y jugadas · Edge Lab</title>
+<meta content="Reglas y jugadas: Referencia: cómo se juega al Hold'em." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-rules.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-rules.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-rules.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-rules.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Reglas y jugadas · Edge Lab" property="og:title"/>
+<meta content="Reglas y jugadas: Referencia: cómo se juega al Hold'em." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/p-rules.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page ref-page" data-game="p-rules" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de póker · 4/5</small><b>Reglas y jugadas</b></div>
+<div class="tb-r"><button aria-pressed="false" class="tb-btn" data-done="p-rules">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<article class="desk ref"><ul class="steps">
+<li><b>Ciegas:</b> los dos jugadores a la izquierda del botón ponen la ciega pequeña y la grande (p. ej., 1 y 2). El botón rota en cada mano.</li>
+<li><b>Preflop:</b> cada jugador recibe dos cartas privadas. La acción empieza a la izquierda de la ciega grande: tirar, pagar o subir.</li>
+<li><b>Flop, turn, river:</b> tres, luego una y luego otra carta comunitaria. Tras cada una hay una ronda de apuestas.</li>
+<li><b>Showdown:</b> gana el bote la mejor mano de cinco cartas formada con tus dos cartas y las cinco comunitarias.</li>
+<li><b>No-limit:</b> puedes apostar cualquier cantidad hasta todas tus fichas en cualquier momento.</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>Mano</th><th>Ejemplo</th><th class="n">Probabilidad con 7 cartas</th></tr></thead>
+<tbody>
+<tr><td>Escalera de color</td><td class="mono">9♥ 8♥ 7♥ 6♥ 5♥</td><td class="n">0.03%</td></tr>
+<tr><td>Póker</td><td class="mono">Q Q Q Q 4</td><td class="n">0.17%</td></tr>
+<tr><td>Full</td><td class="mono">8 8 8 K K</td><td class="n">2.60%</td></tr>
+<tr><td>Color</td><td class="mono">A♠ J♠ 9♠ 6♠ 2♠</td><td class="n">3.03%</td></tr>
+<tr><td>Escalera</td><td class="mono">T 9 8 7 6</td><td class="n">4.62%</td></tr>
+<tr><td>Trío</td><td class="mono">7 7 7 K 3</td><td class="n">4.83%</td></tr>
+<tr><td>Doble pareja</td><td class="mono">J J 5 5 A</td><td class="n">23.5%</td></tr>
+<tr><td>Pareja</td><td class="mono">A A 9 6 3</td><td class="n">43.8%</td></tr>
+<tr><td>Carta alta</td><td class="mono">K J 8 5 2</td><td class="n">17.4%</td></tr>
+</tbody></table></div>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Lo más raro gana a lo más común.</b> El color gana a la escalera porque es más raro.</li>
+<li><b>La mayoría de los showdowns se ganan con pareja o doble pareja.</b> El valor sale de apostar, no de las manos monstruo.</li>
+</ul></div></article>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="p-bluff.html">← Matemáticas del farol</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="p-sites.html">Dónde practicar →</a></nav>
+</div>
+</main>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

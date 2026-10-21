@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/linear.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>線形性とばらつき · Edge Lab</title>
+<meta content="線形性とばらつき：リスクがnの平方根で増える理由。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/linear.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/linear.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/linear.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/linear.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="線形性とばらつき · Edge Lab" property="og:title"/>
+<meta content="線形性とばらつき：リスクがnの平方根で増える理由。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/linear.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="linear" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 2/6</small><b>線形性とばらつき</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="linear">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · n個のサイコロを4,000回振る</div>
+<div class="row"><label for="ldN">サイコロの数 n</label><input id="ldN" max="12" min="1" type="range" value="2"/><span class="stat" id="ldNv">2</span><button class="go" id="ldRoll">振る</button></div>
+<canvas height="230" id="ldCanvas" width="760"></canvas>
+<div class="stats" id="ldStats" style="margin-top:10px"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="ev.html">← 期待値</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="stopping.html">止めるか、続けるか →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">線形性とばらつき</h2><div class="tags"><span class="tag">使う場面：サイコロ、トレーディングゲーム、カードゲーム</span></div></div>
+<div class="tut-b"><p>和の期待値は期待値の和に等しくなります。各部分が独立でなくても成り立つので、サイコロ2個の値付けで36通りを書き出す必要はありません。</p>
+<div class="formula">E[X + Y] = E[X] + E[Y]</div>
+<p>分散が足し算できるのは、各部分が独立なときだけです。そのためσは部分の数の<i>平方根</i>で増えます。サイコロ10個の期待値は1個の10倍ですが、ばらつきは約3.2倍にすぎません。だから和は釣り鐘型になり、気配の幅はフェアバリューより緩やかに広げるべきなのです。</p>
+<div class="formula">σ（n個の独立な和）= σ₁ · √n</div>
+<details class="deep"><summary>仕組み：期待値は常に足せるのに、ばらつきはそうでない理由</summary><div class="deep-body">
+<h4>E[X + Y] = E[X] + E[Y] の読み方</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>E[ · ]</td><td>かっこ内の量の「期待値」。</td></tr>
+<tr><td>X, Y</td><td>2つの確率変数。たとえばサイコロ1とサイコロ2。</td></tr>
+<tr><td>X + Y</td><td>新しい確率変数：毎回の2つの合計。</td></tr>
+</tbody></table></div>
+<p><b>なぜ常に成り立つのか。</b>平均とは「全部足してから割る」ことで、足す順番は関係ありません。サイコロ2個を600回振ったとき、すべての和の総計は、サイコロ1の列の合計とサイコロ2の列の合計を足したものに等しくなります。依存関係が変えるのは同じ行に<i>どの</i>値が並ぶかであって、各列の合計ではありません。</p>
+<h4>Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y) の読み方</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>Cov(X, Y)</td><td><b>共分散</b>：XとYが一緒に大きくなりやすい（正）か、逆に動く（負）か、無関係（ゼロ）か。(X − μₓ)(Y − μᵧ) の平均です。</td></tr>
+<tr><td>独立</td><td>一方を知っても他方について何も分からない状態。このとき Cov = 0 で、分散はそのまま足せます。</td></tr>
+</tbody></table></div>
+<div class="tbl"><table><thead><tr><th>設定</th><th>関係</th><th class="n">分散</th><th class="n">σ</th></tr></thead><tbody>
+<tr><td>別々のサイコロ2個、X + Y</td><td>独立、Cov = 0</td><td class="n">2.92 + 2.92 = 5.83</td><td class="n">2.42</td></tr>
+<tr><td>同じサイコロを2回数える、X + X</td><td>完全に同じ向き</td><td class="n">4 × 2.92 = 11.67</td><td class="n">3.42</td></tr>
+<tr><td>X + (7 − X)</td><td>完全に逆向き</td><td class="n">0</td><td class="n">0</td></tr>
+</tbody></table></div>
+<p>最後の行は<b>ヘッジ</b>です。誤差がちょうど打ち消し合う2つのリスクのあるポジション。3つの設定はいずれも期待値7で、違うのはばらつきだけです。</p>
+<h4>√n はどこから来るのか</h4>
+<p>分散σ₁²を持つ独立なコピーをn個足します。分散を足すと n·σ₁² なので σ = √(n·σ₁²) = σ₁·√n。サイコロ10個なら 1.71 × √10 ≈ 5.40 で、期待値は35です。金融ではこれが分散投資が効く理由です。完全には相関しない多くの資産を持つと、期待リターンはリスクより速く増えます。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>和 → 期待値を足す。</b>サイコロn個 = 3.5n。戻さないカードn枚 = 7n。</li>
+<li><b>ばらつき → √n。</b>サイコロn個のσ ≈ 1.71√n。結果のおよそ95%は2σ以内に収まります。</li>
+<li><b>分かっている部分 → そのまま代入。</b>1個が5なら、サイコロ2個のフェアは 5 + 3.5 = 8.5。</li>
+<li><b>戻さない場合：</b>未知のカードの平均は7ではなく<i>残りの</i>デッキの平均。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

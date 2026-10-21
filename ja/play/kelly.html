@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/kelly.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ケリー基準のベットサイズ · Edge Lab</title>
+<meta content="ケリー基準のベットサイズ：エッジがあるとき、いくら賭けるべきか。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/kelly.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/kelly.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/kelly.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/kelly.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/kelly.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/kelly.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="ケリー基準のベットサイズ · Edge Lab" property="og:title"/>
+<meta content="ケリー基準のベットサイズ：エッジがあるとき、いくら賭けるべきか。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/kelly.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="kelly" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 5/6</small><b>ケリー基準のベットサイズ</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="kelly">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 300回の賭け、3つのサイズルール、同じ運</div>
+<div class="row"><label for="kP">勝率 p</label><input id="kP" max="80" min="40" type="range" value="55"/><span class="stat" id="kPv">55%</span>
+<label for="kB">ネットオッズ b</label><input id="kB" min="0.1" step="0.1" type="number" value="1"/><button class="go" id="kRun">シミュレーション</button></div>
+<canvas height="240" id="kCanvas" width="760"></canvas>
+<div class="out" id="kOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="bayes.html">← オッズ形式のベイズ</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="bridge.html">金融と計量経済学 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">ケリー基準のベットサイズ</h2><div class="tags"><span class="tag">使う場面：ハイ・オア・ロー、ベッティングボード、ポーカーの資金管理、ポジションサイズ</span></div></div>
+<div class="tut-b"><p>プラス期待値だけでは不十分です。賭けすぎれば、連敗で資金が尽きます。ケリー基準は長期的な成長を最大化する資金の割合を選びます。勝率p、ネットオッズb（1賭けて勝てばb）とすると：</p>
+<div class="formula">f* = (b·p − (1 − p)) / b = エッジ / オッズ 1対1なら：f* = 2p − 1</div>
+<p>ケリーの2倍を賭けると長期成長はほぼゼロ、それ以上だと、どの賭けもプラス期待値なのに資金が減っていきます。多くのプロはハーフケリーで賭けます。自分のpは推定値にすぎないからです。</p>
+<details class="deep"><summary>仕組み：f* = (b·p − q) ÷ b の読み方</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>f*</td><td>現在の資金のうち賭ける割合。星印は最適値であることを示します。</td></tr>
+<tr><td>p</td><td>賭けに勝つ確率。</td></tr>
+<tr><td>q = 1 − p</td><td>負ける確率。</td></tr>
+<tr><td>b</td><td>ネットオッズ：勝ったときの1賭けあたりの利益。1対1なら b = 1。小数オッズdからは b = d − 1。</td></tr>
+<tr><td>b·p − q</td><td>1賭けあたりの期待値：確率pでbを得て、確率qで1を失う。これがあなたの<b>エッジ</b>です。</td></tr>
+<tr><td>÷ b</td><td>振れ幅の大きい大穴の賭けでは縮小します。だから結果はエッジをオッズで割ったものになります。</td></tr>
+</tbody></table></div>
+<h4>なぜ単純に期待値を最大化しないのか？</h4>
+<p>期待値の最大化は、プラス期待値の賭けすべてに全額を賭けろと言い、最初の負けで資金はゼロになります。資産は足し算ではなく掛け算で複利的に増えます。+50%の後に−50%だと、1.5 × 0.5 = 0.75 になってしまいます。そこでケリーは平均<i>成長率</i>、つまり各賭けの資産倍率の対数の期待値を最大化します：</p>
+<div class="formula">g(f) = p · ln(1 + f·b) + q · ln(1 − f)</div>
+<p>ここで ln(1 + f·b) は勝ったときの資産倍率の対数、ln(1 − f) は負けたときの倍率の対数です。gの傾きをゼロと置くと p·b ÷ (1 + f·b) = q ÷ (1 − f)、fについて解くと f* = (b·p − q) ÷ b。</p>
+<p><b>例：</b>p = 0.55、b = 1 → f* = 0.10。1回あたりの成長 = 0.55 · ln 1.1 + 0.45 · ln 0.9 = 0.0524 − 0.0474 = 0.0050。1回あたり約0.5%が複利で効いてきます。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>1対1ならエッジ分を賭ける。</b>勝率55% → 資金の10%。</li>
+<li><b>マイナス期待値 → 0を賭ける。</b>ケリーは負ける提案に賭けろとは決して言いません。</li>
+<li><b>ハーフケリー</b>は成長の約75%を保ちつつ、ドローダウンをずっと小さくします。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

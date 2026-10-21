@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-etf.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ETF 套利 · Edge Lab</title>
+<meta content="ETF 套利：净值对比价格，15 秒倒计时。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-etf.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-etf.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-etf.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-etf.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-etf.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-etf.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="ETF 套利 · Edge Lab" property="og:title"/>
+<meta content="ETF 套利：净值对比价格，15 秒倒计时。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-etf.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-etf" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 4/8</small><b>ETF 套利</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-etf">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 找出错误定价 <span class="hud"><span class="pill" id="etStreak">连胜 0</span><span class="pill" id="etTot">盈亏 0.00 · 0 次决策</span></span></div>
+<div class="screen" id="etScreen">
+<div class="dim lbl">一篮子股票</div>
+<div class="tbl"><table class="term" id="etTable"></table></div>
+<div class="bigq" id="etQuote"></div>
+<div class="timer" id="etBar"><i></i></div>
+<div class="dim small">每次决策 15 秒 · <span id="etTimer"></span></div>
+</div>
+<div class="row"><button class="buy" id="etBuy">买 ETF / 卖一篮子</button><button class="sell" id="etSell">卖 ETF / 买一篮子</button><button id="etNone">不交易</button><button class="go" id="etNext">下一题</button></div>
+<div class="out" id="etOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-trade.html">← 交易游戏</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="g-fermi.html">费米估算 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">ETF 套利</h2><div class="tags"><span class="tag">技能：跨资产定价、速度</span><span class="tag">对应公司：IMC、Jane Street</span></div></div>
+<div class="tut-b"><p>ETF 就是一篮子股票。它的公允价值，即资产净值（NAV），等于里面股票的总价值。如果 ETF 价格偏离 NAV 超过你的成本，你就一边买一边卖，锁定差价。</p>
+<ul class="steps">
+<li>NAV = Σ（每单位股数 × 股价）。</li>
+<li>ETF <b>卖价</b>低于 NAV − 成本 → 买 ETF、卖股票。利润 = NAV − 卖价 − 成本。</li>
+<li>ETF <b>买价</b>高于 NAV + 成本 → 卖 ETF、买股票。利润 = 买价 − NAV − 成本。</li>
+<li>否则不交易。</li>
+</ul>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>先给一篮子定价，再看 ETF。</b>顺序永远不要反过来。</li>
+<li><b>用你真正能成交的价格和 NAV 比：</b>在卖价买入，在买价卖出。</li>
+<li><b>取整省时间：</b>2 × 49.8 就是 100 − 0.4 = 99.6。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/p-odds.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>底池赔率 · Edge Lab</title>
+<meta content="底池赔率：跟注还是弃牌：你的胜率对比价格。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-odds.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-odds.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-odds.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-odds.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="底池赔率 · Edge Lab" property="og:title"/>
+<meta content="底池赔率：跟注还是弃牌：你的胜率对比价格。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/p-odds.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="p-odds" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>扑克室 · 1/5</small><b>底池赔率</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="p-odds">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 跟注还是弃牌 <span class="hud"><span class="pill" id="poScore">答对 0/0</span><span class="pill" id="poChips">筹码 +0</span></span></div>
+<div class="ptable" id="poTable">
+<div class="seat-lbl">对手</div>
+<div class="items" id="poVill"></div>
+<div class="chipline" id="poBet"></div>
+<div class="items" id="poBoard"></div>
+<div class="chipline" id="poPot"></div>
+<div class="items" id="poHero"></div>
+<div class="seat-lbl">你</div>
+<div class="pstamp" id="poStamp"></div>
+</div>
+<div id="poQ" style="font-size:17px;margin-top:10px"></div>
+<div class="row"><button class="buy" id="poCall">跟注</button><button class="sell" id="poFold">弃牌</button><button class="go" id="poNext">下一个局面</button></div>
+<div class="out" id="poOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-board.html">← 投注板</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="p-equity.html">胜率计算器 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 扑克室</small><h2 id="tutTitle">底池赔率</h2></div>
+<div class="tut-b"><p>面对下注时，如果你的获胜概率（胜率）高于你需要投入的那部分最终底池，跟注就是正期望。</p>
+<div class="formula">所需胜率 = 跟注额 ÷（跟注后的底池）= B ÷ (P + 2B)</div>
+<p>“补牌”是能让你的手牌反超的未见牌。还剩一张牌时，胜率 ≈ 补牌数 × 2%。还剩两张牌时（你在翻牌圈全下），胜率 ≈ 补牌数 × 4%。转牌圈一张牌的精确胜率是 补牌数 ÷ 46。</p>
+<div class="tbl"><table><thead><tr><th>听牌</th><th class="n">补牌数</th><th class="n">1 张</th><th class="n">2 张</th></tr></thead><tbody>
+<tr><td>卡顺听牌</td><td class="n">4</td><td class="n">~9%</td><td class="n">~17%</td></tr>
+<tr><td>两张高张</td><td class="n">6</td><td class="n">~13%</td><td class="n">~24%</td></tr>
+<tr><td>两头顺听牌</td><td class="n">8</td><td class="n">~17%</td><td class="n">~32%</td></tr>
+<tr><td>同花听牌</td><td class="n">9</td><td class="n">~20%</td><td class="n">~35%</td></tr>
+<tr><td>同花 + 两头顺</td><td class="n">15</td><td class="n">~33%</td><td class="n">~54%</td></tr>
+</tbody></table></div>
+<details class="deep"><summary>原理：理解 B ÷ (P + 2B)</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>P</td><td>对手下注前的底池。</td></tr>
+<tr><td>B</td><td>对手的下注额，也是你跟注要投入的金额。</td></tr>
+<tr><td>P + 2B</td><td>你跟注后的最终底池：原底池、对手下注和你跟进的筹码。</td></tr>
+<tr><td>B ÷ (P + 2B)</td><td>最终底池中属于你的份额。你至少要以这个频率获胜才能保本。</td></tr>
+<tr><td>胜率</td><td>你从当前局面赢下底池的概率。</td></tr>
+</tbody></table></div>
+<p><b>原因。</b>跟注的期望 = 胜率 × (P + B) − (1 − 胜率) × B。你要么赢下桌上已有的 (P + B)，要么输掉跟注的 B。令其为零求解：胜率 = B ÷ (P + 2B)。例：底池 100、下注 50 → 50 ÷ 200 = 25%。</p>
+</div></details>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>半池下注 → 需要 25%。</b>满池下注 → 33%。三分之二池 → 28.6%。</li>
+<li><b>翻牌圈同花听牌面对半池下注：</b>下一张中牌约 20%，单看底池赔率应弃牌；隐含赔率（中牌后还能赢到的钱）可能让跟注合理。</li>
+<li><b>“乘 4 法则”只在你能看到两张牌时适用</b>，即全下时。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

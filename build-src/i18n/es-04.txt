@@ -1,0 +1,169 @@
+78fe5ef9|||Linealidad
+8314df54|||Rendimiento de cartera = suma ponderada de los rendimientos de los activos
+ef0d81b2|||MCO: Y = β₀ + β₁X + ε, lineal en los parámetros
+8a32b4a6|||Actualizar el VE condicional
+95f7eb3a|||Los precios reaccionan a las noticias; hipótesis del mercado eficiente
+75081e98|||Condicionar con controles; sesgo de variable omitida si no lo haces
+8a994632|||Bayes en odds
+4f489f5c|||Actualizar previsiones, modelos de impago
+fa90ed2b|||Estimación bayesiana, regresión logística (las log-odds son lineales)
+73cc7972|||Apuesta de Kelly
+033bad0a|||Tamaño de posición, apalancamiento, ratio de Sharpe
+e3bd8228|||Maximizar la utilidad logarítmica esperada; media geométrica frente a aritmética
+a09f9ed2|||Selección adversa
+0706f303|||Teoría del diferencial bid-ask (Glosten–Milgrom, Kyle)
+ff38cb2e|||Sesgo de selección, endogeneidad
+dda1ec2c|||Intervalos calibrados
+9a7576fe|||Valor en riesgo, confianza en las previsiones
+740e9322|||Intervalos de confianza y contrastes de hipótesis
+ed2a8344|||Equity por Monte Carlo
+4811f7ac|||Valoración de opciones por Monte Carlo
+4e0ee266|||Bootstrap, inferencia basada en simulación
+9f589491|||El puente más importante es la significación estadística. ¿Tu estrategia, o tu tasa de ganancia en póker, es ventaja real o suerte? La respuesta es el estadístico t, el contraste central de la econometría.
+99a35306|||t = (ventaja media por operación) × √n ÷ σ P(beneficio tras n) ≈ Φ(t)
+5917e8b6|||Por dentro: cómo leer t = m · √n ÷ σ
+5447d724|||Tu ventaja media por operación o mano: el VE de una repetición.
+f8cd94d1|||La desviación típica del resultado de una operación: cuánto ruido tiene cada repetición.
+1144a0bf|||Cuántas operaciones o manos has jugado.
+aa518e61|||Beneficio total esperado. Crece en proporción a n.
+b1b94380|||Dispersión del beneficio total, por la regla de √n. Crece más despacio.
+3612eccd|||Señal ÷ ruido = (m·n) ÷ (σ·√n) = m·√n ÷ σ. Cuenta a cuántas desviaciones típicas está tu resultado de cero.
+182f4519|||La probabilidad acumulada de la distribución normal: la probabilidad de que una variable en forma de campana quede por debajo de t. Aquí, la probabilidad de ir ganando tras n operaciones.
+ed8ecd9e|||El t a partir del cual solo el 5 % de los resultados de pura suerte se verían así de bien. Por encima, los econometristas llaman a la ventaja «estadísticamente significativa».
+e8ad553e|||Ruta de lectura
+ca6d0e3a|||Etapa
+021493f3|||Recurso
+21e2caea|||Por qué
+e3b82040|||Ahora
+2ceeb2f7|||Blitzstein y Hwang, <i>Introduction to Probability</i> (Harvard Stat 110, clases gratuitas)
+003ebf6d|||La probabilidad detrás de cada juego de aquí, explicada con intuición
+39354223|||Zhou, <i>A Practical Guide to Quantitative Finance Interviews</i>; Crack, <i>Heard on the Street</i>
+db7c9511|||Los bancos de preguntas de entrevista de referencia
+6b7d7624|||Mosteller, <i>Fifty Challenging Problems in Probability</i>
+54db8bfc|||Acertijos de VE breves y clásicos
+59814329|||Año 1
+b3b9d0fd|||Wooldridge, <i>Introductory Econometrics</i>
+f93bcbd7|||Regresión, errores estándar, causalidad; el núcleo de una mención en econometría
+955b6362|||Años 1–2
+745e4be0|||Hull, <i>Options, Futures and Other Derivatives</i>; Natenberg, <i>Option Volatility and Pricing</i>
+fce11e63|||Cómo valoran y cubren de verdad los traders
+5546f995|||Año 2+
+827878d4|||Harris, <i>Trading and Exchanges</i>
+238f746e|||Microestructura de mercado: por qué existen los spreads y contra quién operas
+7538091c|||Edge Lab ·
+728298d3|||Diario
+151a9eeb|||Diez preguntas. <b>Las mismas para todos.</b>
+9c890642|||Una pregunta de cada tema: valor justo, pot odds, arbitraje de ETF, Bayes, Kelly, faroles y más.
+48c89b8c|||30 segundos por pregunta. Pulsa 1–4 para responder con el teclado.
+e232a40b|||80 puntos por acierto, más hasta 200 por velocidad. El máximo es 1.000.
+603e7c27|||Un intento clasificatorio al día. El desafío se reinicia a las 00:00 UTC.
+952f3754|||Empezar
+5faa59d4|||Resultado
+b75b4f37|||Compartir en LinkedIn
+2bbef68b|||Guardar imagen del resultado
+06a76cc6|||Copiar texto
+beff2224|||Top 10 de hoy
+7b702820|||Clasificación completa →
+e29a79fe|||Repaso
+afb78a23|||Repetir para practicar
+d6ae1497|||Diez preguntas de entrevista de trading, las mismas para todos cada día: valor justo, pot odds, arbitraje de ETF, Bayes y Kelly. Puntuación, racha y clasificación.
+bdce1952|||Edge Lab · Desafío diario
+c7b2d514|||Clasificación <span class="hud"><a class="pill" data-nav="" href="daily.html">Jugar el desafío de hoy →</a></span>
+24345a14|||Hoy
+dbad49d8|||Histórico
+3d592d7d|||Las puntuaciones vienen del Desafío diario. Inicia sesión con Google para aparecer aquí; los invitados pueden jugar pero no entran en la clasificación.
+170a28a9|||Periodo
+9440ab68|||Clasificación del Desafío diario: las mejores puntuaciones de hoy y los totales históricos con rachas.
+08469453|||Instrucciones
+a821d153|||Hecho ✓
+a9b04920|||{0}/{1} hechos
+7ab3e824|||pago
+a88397b6|||probabilidad
+3f7dfc17|||quitar fila
+596509d8|||Las probabilidades suman {0}, no 1. Corrígelas antes de fiarte del VE.
+1521b4c8|||VE > 0: acepta esta apuesta.
+699294d1|||VE < 0: pasa, o toma el otro lado.
+e1482f4b|||VE = 0: sin ventaja.
+2be2f5bf|||Puedes escribir las probabilidades como fracciones, p. ej. 1/6.
+44ac8b26|||Σ (suma la columna)
+45fc1481|||las desviaciones simples siempre se cancelan a 0, así que no miden la dispersión.
+047a1ced|||esta es la varianza.
+ef04a332|||de vuelta en las unidades del pago.
+01e05a07|||Comprobación con el atajo:
+3ba720d0|||VE teórico
+e0cbcc0b|||Media muestral
+4fe379e6|||σ teórica
+d803c1c5|||σ muestral
+d81e54fb|||Tiradas extra restantes
+5a3fd585|||Valor del juego
+065d7e26|||Quédate con la tirada si es
+ea7041ab|||obligado a quedarte
+1cd493a3|||mayor que {0} → quédate con ≥ {1}
+58a1c5ab|||Sin elección: valor = ({0}+1)/2 = {1}.
+e37a7abd|||Con {0} tiradas extra, el juego vale {1}.
+4dbd16b3|||Con {0} tirada extra, el juego vale {1}.
+9be034c3|||Cada tirada extra añade menos: es el valor decreciente de las opciones, la misma razón por la que el tiempo extra en una opción vale cada vez menos.
+4a47653d|||previa
+0fba9ce5|||posterior
+e8d82351|||odds previas
+7d9c1bb0|||p posterior
+6c9d91db|||De 1.000 días, {0} tienen H (previa {1} %).
+085f96c7|||La evidencia aparece en {0} de esos {1} ({2} %) y en {3} de los otros {4} ({5} %).
+a0cd1d28|||Viste la evidencia, así que solo quedan posibles los {0} puntos sólidos. {1} de ellos son H.
+ac98309f|||Posterior P(H | E) = {0} ÷ {1} = {2} %
+dfb35cdb|||Vía odds: odds previas {0} × LR ({1} ÷ {2} = {3}) = {4} → {5} %  (las pequeñas diferencias vienen del redondeo de puntos)
+4760b816|||Medio Kelly
+8f4c67ba|||2× Kelly
+818c42c3|||VE por unidad = {0} ≤ 0. Kelly dice no apostar nada.
+2d42c335|||Fracción de Kelly f* = ({0}×{1} − {2}) / {0} = {3} % del bankroll
+826482fb|||Crecimiento logarítmico esperado por apuesta: medio {0}, Kelly {1}, 2× {2}
+5881c57f|||El eje vertical está en escala logarítmica. Ejecútalo varias veces: 2× Kelly a menudo acaba por debajo de donde empezó.
+c5cf0d27|||dado oculto
+14e7b5e5|||dado que muestra {0}
+238fdc6e|||carta boca abajo
+e617a22a|||moneda {0}
+84a35734|||moneda oculta
+967f1a26|||Sonido sí
+f6d0b01d|||Racha {0} · mejor {1}
+32767bc8|||Contratos
+a40ad5e2|||Ventaja esperada (habilidad)
+5d446584|||P&amp;L realizado (suerte)
+7abb61f9|||Demasiado lento: se acabó el tiempo y pasaste.
+1919e7be|||Correcto.
+ae37aea0|||No es la mejor opción.
+372f03a0|||Valor justo = {0}
+2a6f9c1d|||Ventaja al comprar = justo − ask = {0} · Ventaja al vender = bid − justo = {1} → mejor: {2}. Ventaja esperada obtenida: {3}.
+5972423f|||Se liquida a {0}
+8f8a0a77|||pasaste
+a066f070|||comprar
+c815b17c|||tu compra realizó {0}
+f62257bb|||tu venta realizó {0}
+12625ba3|||esperando
+63e1ce93|||BID
+187770cf|||justo
+51138d42|||ASK
+cf1c85ad|||Posición
+758ec54e|||Efectivo
+e5ad6664|||Valor a precio justo
+1aee9f8e|||El justo es 10,5. Fija tu cotización y llama al primer trader.
+8e82ed95|||Ronda iniciada. Justo = 10,5.
+5b9d06cb|||Tu ask debe estar por encima de tu bid.
+5bed65b7|||El trader {0} (informado: conoce los dados 1 y 2) lo valora en {1}.
+898e7332|||El trader {0} (ruido) lo valora en {1}.
+fe007d2b|||Te compra en el ask: VENDES 1 a {0}.
+06e3dd7e|||Te vende en el bid: COMPRAS 1 a {0}.
+b3b2cf2c|||Sin operación.
+a0f2c69a|||ventaja
+00042ae4|||EVENTO: el dado 1 muestra {0}. Nuevo justo = {0} + 7 = {1}. Recentra ya.
+54f0ea36|||LIQUIDACIÓN a {0} = {1}. Posición {2} × {1} + efectivo {3} = P&L {4}. Pulsa Siguiente trader para una nueva ronda.
+0cf0104a|||P&L total {0} · rondas {1}
+0a4b47f9|||Pista: justo {0}, estás largo {1}: inclina hacia abajo.
+51d3bc2a|||Pista: justo {0}, estás corto {1}: inclina hacia arriba.
+f6d66a7e|||Pista: justo {0}
+1018340e|||Tu bid debe quedar por debajo de tu ask.
+f4dcaed8|||Tu ask debe quedar por encima de tu bid.
+2b020927|||inicio
+f0e87eaa|||carta {0}
+90c7b443|||liquidado {0}
+268c91a4|||discontinua = precio medio del bot
+cc7e73ca|||verde = valor justo

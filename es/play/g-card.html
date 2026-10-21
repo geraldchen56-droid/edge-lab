@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/g-card.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Juego de cartas · Edge Lab</title>
+<meta content="Juego de cartas: Pon precio a un contrato aleatorio. Compra, vende o pasa." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-card.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-card.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-card.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-card.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Juego de cartas · Edge Lab" property="og:title"/>
+<meta content="Juego de cartas: Pon precio a un contrato aleatorio. Compra, vende o pasa." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/g-card.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-card" data-scene3d="deal">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de trading · 1/8</small><b>Juego de cartas</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="g-card">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · tomar o pasar <span class="hud"><span class="pill" id="cgStreak">Racha 0 · mejor 0</span><label class="pill"><input id="cgClock" type="checkbox"/> Reloj de 8 s</label></span></div>
+<div class="duo">
+<div class="scene" id="cgScene"><div class="lbl">El contrato</div><div class="scene-q" id="cgQ"></div><div class="items" id="cgItems"></div><div class="settle" id="cgSettle"></div></div>
+<div class="screen" id="cgScreen"><div class="dim lbl">Su mercado</div><div class="bigq"><span class="bidc" id="cgBidTxt"></span><span class="dim">/</span><span class="askc" id="cgAskTxt"></span></div><div class="dim small">bid / ask · compras en el ask, vendes en el bid</div><div class="timer" hidden="" id="cgTimer"><i></i></div></div>
+</div>
+<div class="row"><button class="buy" id="cgBuy">Comprar en el ask</button><button class="sell" id="cgSell">Vender en el bid</button><button id="cgPass">Pasar</button><button class="go" id="cgNext">Siguiente contrato</button></div>
+<div class="stats" id="cgStats"></div>
+<div class="out" id="cgOut">Calcula el valor justo antes de hacer clic.</div>
+<p class="small" style="color:var(--muted)">Cada contrato se liquida de verdad después de decidir. La ventaja esperada mide la calidad de tu decisión; el P&amp;L realizado añade suerte. Con muchas operaciones, ambos convergen.</p>
+</div>
+<nav aria-label="Más mesas" class="pager"><span></span><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="g-dice.html">Market making con dados →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de trading</small><h2 id="tutTitle">Juego de cartas</h2><div class="tags"><span class="tag">Habilidad: VE, detectar ventaja</span><span class="tag">Empresa afín: SIG</span></div></div>
+<div class="tut-b"><p>Alguien te cotiza un precio de doble sentido sobre una cantidad aleatoria. Puedes <b>comprar en su ask</b>, <b>vender en su bid</b> o pasar. Tu único trabajo es calcular rápido el valor justo y comparar.</p>
+<ul class="steps"><li>Valor justo por encima del ask → compra. Ventaja = justo − ask.</li><li>Valor justo por debajo del bid → vende. Ventaja = bid − justo.</li><li>Valor justo dentro de la cotización → pasa. Operar ahí pierde dinero en promedio.</li></ul>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Máximo de dos dados = 161/36 ≈ 4,47. Mínimo = 91/36 ≈ 2,53.</b> Suman 7.</li>
+<li><b>Tiempo de espera para probabilidad p → 1/p.</b> Tiradas hasta un 6 = 6.</li>
+<li><b>Producto de independientes → multiplica los VE.</b> Dos dados: 3,5² = 12,25.</li>
+<li><b>E[X²] = Var + VE².</b> Un dado al cuadrado: 35/12 + 12,25 = 15,17.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

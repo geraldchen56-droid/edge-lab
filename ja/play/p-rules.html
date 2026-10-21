@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/p-rules.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ルールと役の強さ · Edge Lab</title>
+<meta content="ルールと役の強さ：参考：テキサスホールデムの遊び方。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-rules.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-rules.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-rules.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-rules.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-rules.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="ルールと役の強さ · Edge Lab" property="og:title"/>
+<meta content="ルールと役の強さ：参考：テキサスホールデムの遊び方。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/p-rules.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page ref-page" data-game="p-rules" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>ポーカールーム · 4/5</small><b>ルールと役の強さ</b></div>
+<div class="tb-r"><button aria-pressed="false" class="tb-btn" data-done="p-rules">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<article class="desk ref"><ul class="steps">
+<li><b>ブラインド：</b>ディーラーボタンの左の2人がスモールブラインドとビッグブラインド（例：1と2）を出します。ボタンは毎ハンド移動します。</li>
+<li><b>プリフロップ：</b>全員に非公開のカードが2枚配られます。ビッグブラインドの左から行動：フォールド、コール、レイズ。</li>
+<li><b>フロップ、ターン、リバー：</b>共有カードが3枚、1枚、1枚と出て、そのたびにベッティングラウンドがあります。</li>
+<li><b>ショーダウン：</b>自分の2枚と共有の5枚から作る最強の5枚がポットを獲得します。</li>
+<li><b>ノーリミット：</b>いつでも手持ちのチップ全額まで好きな額をベットできます。</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>役</th><th>例</th><th class="n">7枚で成立する確率</th></tr></thead>
+<tbody>
+<tr><td>ストレートフラッシュ</td><td class="mono">9♥ 8♥ 7♥ 6♥ 5♥</td><td class="n">0.03%</td></tr>
+<tr><td>フォーカード</td><td class="mono">Q Q Q Q 4</td><td class="n">0.17%</td></tr>
+<tr><td>フルハウス</td><td class="mono">8 8 8 K K</td><td class="n">2.60%</td></tr>
+<tr><td>フラッシュ</td><td class="mono">A♠ J♠ 9♠ 6♠ 2♠</td><td class="n">3.03%</td></tr>
+<tr><td>ストレート</td><td class="mono">T 9 8 7 6</td><td class="n">4.62%</td></tr>
+<tr><td>スリーカード</td><td class="mono">7 7 7 K 3</td><td class="n">4.83%</td></tr>
+<tr><td>ツーペア</td><td class="mono">J J 5 5 A</td><td class="n">23.5%</td></tr>
+<tr><td>ワンペア</td><td class="mono">A A 9 6 3</td><td class="n">43.8%</td></tr>
+<tr><td>ハイカード</td><td class="mono">K J 8 5 2</td><td class="n">17.4%</td></tr>
+</tbody></table></div>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>珍しい役ほど強い。</b>フラッシュがストレートより強いのは、より出にくいからです。</li>
+<li><b>ショーダウンの多くはワンペアかツーペアで決まる。</b>価値はモンスターハンドではなくベッティングから生まれます。</li>
+</ul></div></article>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="p-bluff.html">← ブラフの数学</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="p-sites.html">練習できる場所 →</a></nav>
+</div>
+</main>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/p-odds.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Pot odds · Edge Lab</title>
+<meta content="Pot odds: ¿Pagar o tirar? Tu equity frente al precio." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-odds.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/p-odds.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/p-odds.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/p-odds.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/p-odds.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Pot odds · Edge Lab" property="og:title"/>
+<meta content="Pot odds: ¿Pagar o tirar? Tu equity frente al precio." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/p-odds.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="p-odds" data-scene3d="poker">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de póker · 1/5</small><b>Pot odds</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="p-odds">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · pagar o tirar <span class="hud"><span class="pill" id="poScore">0/0 aciertos</span><span class="pill" id="poChips">Fichas +0</span></span></div>
+<div class="ptable" id="poTable">
+<div class="seat-lbl">Rival</div>
+<div class="items" id="poVill"></div>
+<div class="chipline" id="poBet"></div>
+<div class="items" id="poBoard"></div>
+<div class="chipline" id="poPot"></div>
+<div class="items" id="poHero"></div>
+<div class="seat-lbl">Tú</div>
+<div class="pstamp" id="poStamp"></div>
+</div>
+<div id="poQ" style="font-size:17px;margin-top:10px"></div>
+<div class="row"><button class="buy" id="poCall">Pagar</button><button class="sell" id="poFold">Tirar</button><button class="go" id="poNext">Siguiente situación</button></div>
+<div class="out" id="poOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="g-board.html">← Tablero de apuestas</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="p-equity.html">Calculadora de equity →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de póker</small><h2 id="tutTitle">Pot odds</h2></div>
+<div class="tut-b"><p>Ante una apuesta, pagar tiene VE positivo cuando tu probabilidad de ganar (equity) supera la parte del bote final que tienes que poner tú.</p>
+<div class="formula">equity necesaria = lo que pagas ÷ (bote tras pagar) = B ÷ (P + 2B)</div>
+<p>Los outs son las cartas no vistas que convierten tu mano en ganadora. Con una carta por salir, equity ≈ outs × 2 %. Con dos cartas por salir (all-in en el flop), equity ≈ outs × 4 %. La equity exacta de una carta en el turn es outs ÷ 46.</p>
+<div class="tbl"><table><thead><tr><th>Proyecto</th><th class="n">Outs</th><th class="n">1 carta</th><th class="n">2 cartas</th></tr></thead><tbody>
+<tr><td>Escalera interna</td><td class="n">4</td><td class="n">~9%</td><td class="n">~17%</td></tr>
+<tr><td>Dos overcards</td><td class="n">6</td><td class="n">~13%</td><td class="n">~24%</td></tr>
+<tr><td>Escalera abierta</td><td class="n">8</td><td class="n">~17%</td><td class="n">~32%</td></tr>
+<tr><td>Proyecto de color</td><td class="n">9</td><td class="n">~20%</td><td class="n">~35%</td></tr>
+<tr><td>Color + escalera abierta</td><td class="n">15</td><td class="n">~33%</td><td class="n">~54%</td></tr>
+</tbody></table></div>
+<details class="deep"><summary>Por dentro: cómo leer B ÷ (P + 2B)</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>P</td><td>El bote antes de que apueste el rival.</td></tr>
+<tr><td>B</td><td>La apuesta del rival, que también es lo que debes poner para pagar.</td></tr>
+<tr><td>P + 2B</td><td>El bote final si pagas: el bote anterior, su apuesta y tu pago.</td></tr>
+<tr><td>B ÷ (P + 2B)</td><td>La parte del bote final que es dinero tuyo. Necesitas ganar al menos con esa frecuencia para no perder.</td></tr>
+<tr><td>equity</td><td>Tu probabilidad de ganar el bote desde aquí.</td></tr>
+</tbody></table></div>
+<p><b>Por qué.</b> Pagar tiene VE = equity × (P + B) − (1 − equity) × B. Ganas lo que ya está en el centro (P + B) o pierdes tu pago (B). Iguala a cero y despeja: equity = B ÷ (P + 2B). Ejemplo: bote de 100 y apuesta de 50 → 50 ÷ 200 = 25 %.</p>
+</div></details>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Apuesta de medio bote → necesitas 25 %.</b> Apuesta de bote → 33 %. Dos tercios → 28,6 %.</li>
+<li><b>Proyecto de color en el flop contra medio bote:</b> ~20 % de ligar en la siguiente carta, así que las pot odds puras dicen tirar; las odds implícitas (lo que ganas después si ligas) pueden convertirlo en un pago.</li>
+<li><b>La regla del 4 solo vale si ves las dos cartas</b>, es decir, en all-in.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

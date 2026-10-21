@@ -1,0 +1,175 @@
+129766bb|||Orden sugerido
+c5d3a7f5|||Semanas 1–2: reglas, jugadas y el ejercicio de pot odds de arriba hasta acertar el 90 %.
+84c6e66e|||Semanas 3–4: rangos preflop por posición (tablas gratuitas de Upswing) y sesiones con fichas de juego en Replay Poker.
+9b524706|||Después: GTO Wizard o Fearless River 20 minutos al día, repasando las situaciones con más VE perdido.
+9078ddf9|||En paralelo: Figgie y Tradermath para el lado del mercado.
+cd5fc19d|||Sala de estudio · 1/6
+9d8f1a80|||Mesa · construye una tabla de pagos
+b0feda80|||Ejemplo: un dado
+6109576c|||Ejemplo: ganar $10 con un 6
+f648af13|||Añadir fila
+c1514b7e|||Pago x
+2207c4e2|||Probabilidad p
+7c8f2d4a|||Mesa · varianza, columna a columna (usa la tabla de pagos de arriba)
+45377c4f|||Instrucciones · Sala de estudio
+a0a0c486|||Se usa en: todos los juegos
+bba93b2a|||El valor esperado es la media a largo plazo de un pago aleatorio. Enumera cada resultado, multiplica cada uno por su probabilidad y suma.
+dbdb1a13|||VE = Σ pᵢ · xᵢ
+33b74d69|||La varianza mide cuánto se dispersan los resultados alrededor de esa media, y la desviación típica (σ) es su raíz cuadrada. El VE te dice <i>si</i> operar; σ te dice qué amplitud cotizar y cuánto apostar.
+4015905d|||Var = Σ pᵢ · (xᵢ − VE)² = E[X²] − VE²
+39e5e579|||Por dentro: cada símbolo del VE y la varianza
+f6b77e7c|||Cómo leer VE = Σ pᵢ · xᵢ
+b3707d33|||La cantidad aleatoria: un número que no conocerás hasta que ocurra el evento, como la tirada de un dado.
+c0468225|||Una etiqueta para cada resultado posible: 1, 2, 3… En un dado, i va de 1 a 6.
+eb1f1e1b|||El pago del resultado i. En un dado, x₁ = 1, x₂ = 2 … x₆ = 6.
+d77e27f6|||La probabilidad del resultado i, entre 0 y 1. Todas las pᵢ juntas suman exactamente 1.
+0b5e0ed0|||La aportación de ese resultado a la media.
+45081ff2|||Sigma mayúscula griega, que significa «sumar para cada i»: haz lo mismo con cada resultado y suma.
+80afc135|||VE, E[X], μ
+9267e9c8|||Tres nombres para la misma respuesta. μ (mu) es el símbolo habitual al usarlo dentro de otras fórmulas.
+076312d5|||<b>¿Por qué multiplicar por p?</b> Imagina tirar un dado 600 veces. Sale cada cara unas 100 veces, así que el total es aproximadamente 100·1 + 100·2 + … + 100·6 = 2.100, y la media es 2.100 ÷ 600 = 3,5. Divide cada recuento entre 600 y los recuentos se convierten en probabilidades: (1/6)·1 + (1/6)·2 + … + (1/6)·6. El VE es una media corriente en la que cada resultado cuenta según la frecuencia con que ocurre.
+add27726|||Cómo leer Var(X) = Σ pᵢ · (xᵢ − μ)²
+6833052c|||El VE de arriba: el centro de los resultados.
+1773d9b1|||La <b>desviación</b>: a qué distancia del centro cae el resultado i. Negativa significa por debajo del centro.
+6f199e76|||La <b>desviación al cuadrado</b>. Elevar al cuadrado hace positiva cada distancia y castiga mucho más los fallos grandes que los pequeños (un fallo de 3 cuenta 9; uno de 1 cuenta 1).
+b48db79d|||Cada fallo al cuadrado, ponderado por su frecuencia.
+0f29d748|||Súmalos. La varianza es la <b>distancia media al cuadrado respecto al centro</b>.
+1275c17b|||σ = √Var
+ff235f09|||Desviación típica (sigma minúscula). La raíz cuadrada deshace el cuadrado, así que el resultado vuelve a las unidades del pago (puntos, dólares) y puedes compararlo con el VE.
+4d7614ab|||<b>¿Por qué elevar al cuadrado en vez de promediar las desviaciones?</b> Porque la desviación media simple es <i>siempre exactamente cero</i>. El centro se define como el punto de equilibrio, así que los fallos por arriba y por abajo se cancelan. La tabla de abajo lo demuestra: la columna p·(x − μ) siempre suma 0. Podrías usar la distancia absoluta |x − μ|, pero los cuadrados tienen una propiedad que hace que todo lo demás funcione: las varianzas de cantidades independientes se suman. De ahí sale la regla de √n.
+02ed320f|||<b>Por qué funciona el atajo E[X²] − μ².</b> E[X²] significa «la media de los pagos al cuadrado», Σ pᵢxᵢ². Desarrolla (x − μ)² = x² − 2μx + μ² y promedia cada término: E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ². Para un dado: 91/6 − 3,5² = 15,17 − 12,25 = 2,92.
+c372156c|||<b>Uniforme 1…n → (n+1)/2.</b> Dado 3,5; carta (A=1…K=13) 7.
+315fa2a9|||<b>Varianza de un dado = 35/12 ≈ 2,92</b>, σ ≈ 1,71. Varianza de una carta = 14, σ ≈ 3,74.
+934b534a|||<b>Las probabilidades deben sumar 1.</b> Compruébalo primero, siempre.
+7254151b|||Sala de estudio · 2/6
+57cd748c|||Mesa · tira n dados 4.000 veces
+7a432533|||Dados n
+03d4b056|||Tirar
+f762d45f|||Se usa en: Dados, Juego de trading, Juego de cartas
+bd37a06e|||El valor esperado de una suma es la suma de los valores esperados. Se cumple incluso cuando las partes son dependientes, por eso nunca tienes que enumerar 36 resultados para valorar dos dados.
+05b16f34|||Las varianzas solo se suman cuando las partes son independientes. Así que σ crece con la <i>raíz cuadrada</i> del número de partes: diez dados tienen diez veces el VE de uno, pero solo unas 3,2 veces la dispersión. Por eso las sumas parecen una campana y por eso la amplitud de tu cotización debe crecer más despacio que tu valor justo.
+55882ee9|||σ(suma de n independientes) = σ₁ · √n
+ed7f6958|||Por dentro: por qué los VE siempre se suman y la dispersión no
+a68f9c71|||Cómo leer E[X + Y] = E[X] + E[Y]
+830c2e3b|||«El valor esperado de» lo que haya dentro de los corchetes.
+d9244ea1|||Dos cantidades aleatorias, como el dado 1 y el dado 2.
+190ea367|||Una nueva cantidad aleatoria: su total en cada tirada.
+97d897e1|||<b>Por qué se cumple siempre.</b> Una media es «sumarlo todo y dividir», y el orden en que sumas no importa. En 600 tiradas de dos dados, el total de todas las sumas es igual al total de la columna del dado 1 más el total de la columna del dado 2. La dependencia cambia <i>qué</i> valores aparecen juntos en la misma fila, pero no cuánto suma cada columna.
+220c06c4|||Cómo leer Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)
+3511cd09|||Cov(X, Y)
+52819016|||<b>Covarianza</b>: ¿X e Y tienden a ser altas a la vez (positiva), a moverse en sentidos opuestos (negativa) o a ignorarse (cero)? Es la media de (X − μₓ)(Y − μᵧ).
+7601834e|||independientes
+e9fb50ea|||Conocer una no dice nada de la otra. Entonces Cov = 0 y las varianzas simplemente se suman.
+cdd7bb28|||Caso
+9b4a86cb|||Relación
+eb39bbf6|||Varianza
+d5377b38|||Dos dados distintos, X + Y
+7619e7c4|||Independientes, Cov = 0
+e1e20977|||Un dado contado dos veces, X + X
+ac0526f9|||Totalmente juntos
+b70b5bdf|||Totalmente opuestos
+b8e44c85|||La última fila es una <b>cobertura</b>: dos posiciones con riesgo cuyos errores se cancelan exactamente. Los tres casos tienen VE 7; solo cambia la dispersión.
+09fe96ed|||De dónde sale √n
+d693db01|||Suma n copias independientes, cada una con varianza σ₁². Las varianzas suman n·σ₁², así que σ = √(n·σ₁²) = σ₁·√n. Diez dados: 1,71 × √10 ≈ 5,40, frente a un VE de 35. En finanzas, por eso funciona la diversificación: tener muchos activos que no están perfectamente correlacionados hace crecer el rendimiento esperado más rápido que el riesgo.
+3f85b5dd|||<b>Suma → suma los VE.</b> n dados = 3,5n. n cartas sin reposición = 7n.
+60726c5e|||<b>Dispersión → √n.</b> n dados σ ≈ 1,71√n. Aproximadamente el 95 % de los resultados cae dentro de 2σ.
+0b7d68e4|||<b>Parte conocida → sustitúyela.</b> Un dado muestra 5: el justo de dos dados es 5 + 3,5 = 8,5.
+fce02aa6|||<b>Sin reposición:</b> las cartas desconocidas promedian la baraja <i>restante</i>, no 7.
+9fb0cfa8|||Sala de estudio · 3/6
+22907783|||Mesa · resolver el juego de volver a tirar
+74afea7a|||Caras del dado
+e9c6cbfe|||Tiradas extra permitidas
+34435540|||Se usa en: acertijos de VE en entrevistas, Mayor o menor
+2ee477f5|||Cuando puedes elegir durante un juego, resuelve desde la última decisión hacia atrás. En cada paso, quédate con lo que tienes si supera el VE de continuar.
+606f0368|||V₀ = (s+1)/2 Vₖ = E[ max(X, Vₖ₋₁) ]
+c86d54ae|||Vₖ es el valor del juego cuando te quedan k tiradas extra con un dado de s caras. La regla del umbral es: quédate con cualquier tirada estrictamente superior a Vₖ₋₁.
+23dcccc9|||Por dentro: cómo leer Vₖ = E[ max(X, Vₖ₋₁) ]
+53ae570c|||Número de caras del dado.
+4770a833|||Lo que vale el juego cuando aún te quedan k tiradas extra y juegas de forma perfecta.
+a931da65|||Sin tiradas extra debes quedarte con la siguiente, así que el juego vale el VE simple de una tirada.
+714a98bc|||La tirada que estás a punto de ver.
+8a511201|||Lo que valdrías si descartas esta tirada: el mismo juego con una tirada extra menos.
+9394d984|||max(X, Vₖ₋₁)
+f9a2b3b8|||Tu pago tras ver X: quedarte con X o cambiarlo por el resto del juego. Tomas lo mayor.
+0b90d1bf|||Promedia ese pago sobre todas las tiradas que podrías ver.
+fe26d15a|||Ejemplo: dado de seis caras, una tirada extra
+35187266|||V₀ = 3,5. Con un 1, 2 o 3, volver a tirar (vale 3,5) es mejor que quedarse, así que max = 3,5. Con 4, 5 o 6, te quedas. Así que V₁ = (3,5 + 3,5 + 3,5 + 4 + 5 + 6) ÷ 6 = 25,5 ÷ 6 = <b>4,25</b>.
+38be9b7a|||Con dos tiradas extra el listón sube a 4,25, así que solo te quedas con 5 y 6: V₂ = (4 × 4,25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4,67</b>.
+a4a07838|||<b>¿Por qué hacia atrás?</b> No puedes valorar la primera decisión sin saber cuánto vale continuar. Solo la última decisión tiene una continuación conocida (el VE simple), así que empiezas ahí y retrocedes paso a paso. Este método se llama inducción hacia atrás, y es exactamente como se valoran las opciones americanas en un árbol binomial: en cada nodo, el máximo entre ejercer ahora o mantener.
+eea418c0|||<b>Dado de seis caras, una tirada extra = 4,25.</b> Dos tiradas extra = 4,67. Memoriza estos dos.
+495937a8|||<b>Quédate si la tirada &gt; valor de continuar.</b> Nunca compares con la media global.
+81b3414e|||Sala de estudio · 4/6
+7dc468f8|||Mesa · actualiza una creencia
+73c405e4|||Probabilidad previa
+814d7465|||Razón de verosimilitud de la noticia
+47481e5c|||Mesa · frecuencias naturales
+90fe3698|||P(H) previa
+ff37aab5|||P(E | H): tasa de evidencia si es cierto
+3e98eb0f|||P(E | no H): tasa de evidencia si es falso
+37283b5f|||<i style="background:var(--felt)"></i>H y evidencia
+153c7c55|||<i style="background:var(--felt);opacity:.25"></i>H, sin evidencia
+d738b8e3|||<i style="background:var(--ask)"></i>no H, evidencia
+0a2c62f6|||<i style="background:var(--muted);opacity:.25"></i>no H, sin evidencia
+11422aa6|||Se usa en: Contratos de eventos, Fermi, Juego de trading, lecturas en póker
+679ea1aa|||Los traders actualizan probabilidades en <b>odds</b>, porque la aritmética se reduce a una multiplicación. Las odds son p / (1 − p). Una razón de verosimilitud (LR) indica cuántas veces más probable es la noticia si el evento es cierto que si es falso.
+40329d36|||odds posteriores = odds previas × LR p = odds / (1 + odds)
+b6080133|||Por dentro: previa, verosimilitud, posterior
+b944e86f|||La <b>hipótesis</b>: aquello de lo que no estás seguro, p. ej. «hoy llueve».
+fe755c52|||La <b>evidencia</b>: la noticia que observas, p. ej. «la mañana está nublada».
+1092d161|||La <b>previa</b>: tu probabilidad <i>antes</i> de ver la evidencia (del latín <i>prior</i>, «anterior»). Suele ser una tasa base, como «llueve el 20 % de los días este mes».
+8f869f29|||Una <b>verosimilitud</b>: con qué frecuencia verías esta evidencia <i>si H fuera cierta</i>. La barra «|» se lee «dado». Ejemplo: los días de lluvia, la mañana está nublada el 70 % de las veces.
+e5d16923|||P(E | no H)
+4a7a65a3|||Con qué frecuencia verías la misma evidencia si H fuera falsa. Ejemplo: los días secos, el 20 % de las mañanas están nubladas.
+8214ac23|||La <b>posterior</b>: tu probabilidad <i>después</i> de la evidencia (del latín <i>posterior</i>, «que viene después»). Es lo que de verdad quieres. La posterior de hoy se convierte en la previa de mañana cuando llega una nueva noticia.
+b2ff75ef|||odds = p ÷ (1 − p)
+23518255|||Probabilidad a favor frente a probabilidad en contra. 20 % → 0,2 ÷ 0,8 = 0,25, que se dice «1 a 4».
+777f2196|||LR
+0155d68d|||<b>Razón de verosimilitud</b> = P(E | H) ÷ P(E | no H). Cuántas veces más frecuente es la evidencia cuando H es cierta: 0,7 ÷ 0,2 = 3,5. Es la fuerza de la noticia.
+b668ab90|||De dónde sale la forma en odds
+55df32ad|||La regla de Bayes es <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>. Escribe la misma regla para «no H» y divide una entre otra. El incómodo término P(E) se cancela y obtienes <span class="mono">odds posteriores = odds previas × LR</span>. Ejemplo de la lluvia: 0,25 × 3,5 = 0,875, y 0,875 ÷ 1,875 = 46,7 %.
+1a9bb9a2|||Míralo como 1.000 casos
+19dee779|||La forma más clara de entender una posterior es contar. Cada punto de abajo es un día. En cuanto ves la evidencia, estás sobre uno de los puntos sólidos, así que descarta los difuminados. La posterior es la proporción de puntos sólidos que son verdes.
+5e6259f0|||La trampa clásica
+d94ef1fe|||P(E | H) no es P(H | E). Supón que un sistema detecta el 90 % de las operaciones fraudulentas y marca por error el 5 % de las buenas, y que el 1 % de las operaciones son fraude. Una operación marcada parece un 90 % probable de ser fraude, pero: odds previas 1:99, LR = 0,90 ÷ 0,05 = 18, odds posteriores = 18/99 ≈ 0,18, así que p ≈ <b>15 %</b>. Una tasa base baja ahoga incluso una evidencia fuerte. Pon los controles en 1 %, 90 % y 5 % para verlo.
+72619480|||<b>Convierte, multiplica y vuelve a convertir.</b> 20 % → 1:4 → ×3 → 3:4 → 3/7 ≈ 43 %.
+655a1ea5|||<b>LR = 1 significa que la noticia no dice nada.</b> Una LR menor que 1 te hace bajar.
+3a7bd5a3|||<b>Dos pistas independientes → multiplica ambas LR.</b>
+319bf166|||Sala de estudio · 5/6
+f6be0822|||Mesa · 300 apuestas, tres reglas de tamaño, la misma suerte
+fbee1317|||Prob. de ganar p
+475993af|||Cuota neta b
+95c60456|||Simular
+2a99e073|||Se usa en: Mayor o menor, Tablero de apuestas, bankroll de póker, tamaño de posición
+c1c11065|||Un VE positivo no basta: apuesta demasiado y una mala racha te arruina. Kelly elige la fracción del bankroll que maximiza el crecimiento a largo plazo. Con probabilidad de ganar p y cuota neta b (ganas b por cada 1 apostado):
+9d82cc26|||f* = (b·p − (1 − p)) / b = ventaja / cuota a la par: f* = 2p − 1
+229d19d5|||Apostar el doble de Kelly da un crecimiento a largo plazo de casi cero, y más que eso reduce el bankroll aunque cada apuesta sea +VE. La mayoría de los profesionales apuesta medio Kelly, porque su p es solo una estimación.
+e5cba2c0|||Por dentro: cómo leer f* = (b·p − q) ÷ b
+f04409be|||La fracción de tu bankroll actual que apuestas. La estrella indica que es el valor óptimo.
+0f4acd61|||Probabilidad de ganar la apuesta.
+09fe1627|||Probabilidad de perder.
+d3b8d1bc|||Cuota neta: beneficio por cada 1 apostado si ganas. A la par es b = 1. A partir de una cuota decimal d, b = d − 1.
+15dd25df|||VE por cada 1 apostado: ganas b con probabilidad p y pierdes 1 con probabilidad q. Esta es tu <b>ventaja</b>.
+0eecbe1b|||Reduce el tamaño en los pagos improbables, que oscilan más. Por eso el resultado es la ventaja dividida por la cuota.
+07d0980b|||¿Por qué no maximizar simplemente el VE?
+cb188caf|||Maximizar el VE te dice que lo apuestes todo en cada apuesta +VE, y la primera derrota te deja a cero. La riqueza se compone multiplicando, no sumando: +50 % seguido de −50 % te deja en 1,5 × 0,5 = 0,75 de lo que tenías. Por eso Kelly maximiza la <i>tasa de crecimiento</i> media, que es el logaritmo esperado del multiplicador de cada apuesta:
+e6e31229|||g(f) = p · ln(1 + f·b) + q · ln(1 − f)
+5729c6ff|||Aquí ln(1 + f·b) es el logaritmo del multiplicador de tu riqueza si ganas, y ln(1 − f) el del multiplicador si pierdes. Iguala a cero la pendiente de g, p·b ÷ (1 + f·b) = q ÷ (1 − f), y al despejar f obtienes f* = (b·p − q) ÷ b.
+30ece9c2|||<b>Ejemplo:</b> p = 0,55, b = 1 → f* = 0,10. Crecimiento por apuesta = 0,55 · ln 1,1 + 0,45 · ln 0,9 = 0,0524 − 0,0474 = 0,0050, alrededor de un 0,5 % por apuesta, compuesto.
+c5382ff5|||<b>A la par: apuesta tu ventaja.</b> 55 % de acierto → 10 % del bankroll.
+00cd45f4|||<b>VE negativo → apuesta 0.</b> Kelly nunca dice apostar en una propuesta perdedora.
+ad6d2de8|||<b>Medio Kelly</b> conserva alrededor del 75 % del crecimiento con caídas mucho menores.
+0d59fdb0|||Sala de estudio · 6/6
+66af00bb|||Mesa · ¿ventaja o suerte?
+c6c4f210|||Ventaja por operación/mano
+1b7fbe37|||σ por operación/mano
+5a22c05b|||Número n
+8be2291b|||Nada de esto es un desvío. Cada herramienta de los juegos reaparece con otro nombre en la economía financiera y la econometría.
+ecbcb0e4|||Aquí
+f177733e|||En finanzas
+67cab674|||En econometría
+7afd56ae|||Valor esperado
+65527de7|||Rendimiento esperado, valoración neutral al riesgo (precio de la opción = pago esperado descontado)
+af428138|||Media poblacional, esperanza condicional E[Y|X], el objetivo de la regresión
+cb75e4d0|||Varianza, σ√n
+3e078824|||Volatilidad, riesgo de cartera, diversificación
+9153b414|||Los errores estándar se reducen con √n; por eso importa el tamaño de la muestra

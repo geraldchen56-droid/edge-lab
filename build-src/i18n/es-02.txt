@@ -1,0 +1,160 @@
+9203f12e|||Fija el rango según tu incertidumbre en cada factor y comprueba: ¿apostarías 9 a 1?
+bb4b339f|||<b>Segundos en un año ≈ π × 10⁷.</b> Días en una vida ≈ 30.000.
+f9d5a4b2|||<b>Amplitud del rango = log₁₀(máximo/mínimo).</b> Un orden de magnitud es un buen valor por defecto.
+0fc5afb5|||<b>Acierto por debajo del 90 % → amplía la próxima vez.</b> La calibración vale más que la precisión.
+41b35088|||Recta numérica en escala logarítmica
+6ea4ec3a|||Sala de trading · 6/8
+3421b11f|||Mesa · valora el evento
+7cfcdcb6|||P&amp;L 0 · calibración 0/0
+d6a7c4ef|||Tu probabilidad (%)
+feb25555|||Comprobar estimación
+4f1e010a|||Bid (¢)
+be6800da|||Ask (¢)
+60e19359|||Abrir mercado (40 traders)
+85547663|||Siguiente evento
+6bb8b39c|||Cinta de órdenes
+5466d8d8|||Tu cotización en una escala de 0–100¢
+915cb481|||Habilidad: actualización bayesiana, cotizar en probabilidad
+b13967c6|||Mesas de mercados de predicción
+766bfcc1|||Un contrato SÍ paga 100 si el evento ocurre y 0 si no, así que su precio justo en céntimos es igual a la probabilidad. Partes de una tasa base, actualizas con la noticia usando odds × razón de verosimilitud y cotizas un mercado de doble sentido. Algunos traders ya saben la respuesta.
+0d74b5f8|||<b>Precio en céntimos = probabilidad.</b> Ventaja al comprar SÍ = p − ask.
+a4efa996|||<b>Los informados solo te ejecutan cuando te equivocas.</b> La amplitud debe cubrirlos.
+4d2c761c|||<b>Cerca del 0 % o del 100 %, cotiza más estrecho en céntimos</b> porque hay menos margen de error.
+c06f5790|||Sala de trading · 7/8
+317944bb|||Mesa · bankroll
+f4eea9be|||Carta actual ·
+967c91c3|||Tu apuesta:
+cafe5263|||Cartas restantes, por valor
+f4089065|||Apuesta en % del bankroll
+062787aa|||Mayor
+b91eed4b|||Menor
+c4660cc4|||Nueva baraja
+f1314d65|||Habilidad: probabilidad condicional, apuesta de Kelly, ruina
+24873413|||Se muestra una carta. Adivina si la siguiente de la misma baraja será mayor o menor, y elige qué parte de tu bankroll apostar a la par. Los empates pierden. La baraja no se vuelve a mezclar, así que cuenta lo que ha salido.
+0345ff86|||p(mayor) = cartas restantes estrictamente mayores ÷ cartas restantes apuesta f* = 2p − 1
+1e0d4889|||<b>Con un 7, ambos lados rondan el 46 %.</b> Los empates hacen que sea una apuesta perdedora. Apuesta 0.
+4a333fe8|||<b>Cuenta la baraja.</b> Tras muchas cartas bajas, «mayor» mejora incluso desde un 6.
+15eb72ad|||<b>Apuesta = 2p − 1.</b> Con un 2: p ≈ 0,92, Kelly ≈ 84 %. Medio Kelly ≈ 42 %.
+41f88e5c|||Baraja restante por valor
+fd50ee0e|||Historial del bankroll
+2dd9e853|||Sala de trading · 8/8
+8f971817|||Mesa · apuesta a los precios erróneos
+2c8c159f|||Esperado 0.000 · realizado 0.00
+04e2ce3c|||Tablero de cuotas · dos dados · apuesta 1 a cada línea que elijas
+54e2a105|||La tirada
+eeab12e5|||Confirmar y tirar
+65060b5f|||Nuevo tablero
+5d8e14f4|||Mesa · arbitraje entre dos casas
+e74310af|||Cuota de la casa A a X
+24b3dfa6|||Cuota de la casa B a no-X
+5cd6978d|||Apuesta total
+25b7e338|||Habilidad: probabilidad implícita, margen de la casa, arbitraje
+cef0bdfb|||Empresa afín: ronda de apuestas de Optiver
+9be05886|||Un tablero ofrece cuotas decimales sobre resultados de dos dados. Una cuota decimal d paga d por cada 1 apostado (apuesta incluida), así que la probabilidad implícita es 1/d. Apuesta a una línea solo cuando tu probabilidad real la supera.
+681a1074|||VE por 1 apostado = p · d − 1 p implícita = 1/d margen = Σ 1/d − 1
+13c0aa1f|||<b>Sumas de dos dados: formas = 6 − |7 − s|.</b> El 7 tiene 6 de 36; el 2 y el 12 tienen 1.
+74b75878|||<b>Σ 1/d &lt; 1 en todos los resultados → arbitraje.</b> Apuesta a cada uno en proporción a 1/d.
+17c77e7e|||<b>Apuesta si d &gt; 1/p.</b> Un evento de 1 entre 6 necesita una cuota superior a 6,0.
+baf86ee7|||Sala de póker · 1/5
+09025678|||Mesa · pagar o tirar
+a3667964|||0/0 aciertos
+73621b7a|||Fichas +0
+45482cd9|||Rival
+905cb326|||Tú
+291a0a58|||Pagar
+b6ba0db1|||Tirar
+a1aa928f|||Siguiente situación
+dbab0fcf|||Instrucciones · Sala de póker
+e6e7227c|||Ante una apuesta, pagar tiene VE positivo cuando tu probabilidad de ganar (equity) supera la parte del bote final que tienes que poner tú.
+16fb2a9d|||equity necesaria = lo que pagas ÷ (bote tras pagar) = B ÷ (P + 2B)
+a360035d|||Los outs son las cartas no vistas que convierten tu mano en ganadora. Con una carta por salir, equity ≈ outs × 2 %. Con dos cartas por salir (all-in en el flop), equity ≈ outs × 4 %. La equity exacta de una carta en el turn es outs ÷ 46.
+bfa50c7a|||Proyecto
+98fa5fbd|||Outs
+41ce3c6e|||1 carta
+3d42976c|||2 cartas
+5ecb26dc|||Escalera interna
+477bc679|||Dos overcards
+7ac55e3c|||Escalera abierta
+88766268|||Proyecto de color
+f9fbdea9|||Color + escalera abierta
+b3387d13|||Por dentro: cómo leer B ÷ (P + 2B)
+f1670978|||El bote antes de que apueste el rival.
+6205193e|||La apuesta del rival, que también es lo que debes poner para pagar.
+4b5c8d36|||El bote final si pagas: el bote anterior, su apuesta y tu pago.
+a082d497|||La parte del bote final que es dinero tuyo. Necesitas ganar al menos con esa frecuencia para no perder.
+6caa1923|||equity
+b8b0ec45|||Tu probabilidad de ganar el bote desde aquí.
+fa4b996e|||<b>Por qué.</b> Pagar tiene VE = equity × (P + B) − (1 − equity) × B. Ganas lo que ya está en el centro (P + B) o pierdes tu pago (B). Iguala a cero y despeja: equity = B ÷ (P + 2B). Ejemplo: bote de 100 y apuesta de 50 → 50 ÷ 200 = 25 %.
+06a51c27|||<b>Apuesta de medio bote → necesitas 25 %.</b> Apuesta de bote → 33 %. Dos tercios → 28,6 %.
+96b4bea3|||<b>Proyecto de color en el flop contra medio bote:</b> ~20 % de ligar en la siguiente carta, así que las pot odds puras dicen tirar; las odds implícitas (lo que ganas después si ligas) pueden convertirlo en un pago.
+c3f7f10b|||<b>La regla del 4 solo vale si ves las dos cartas</b>, es decir, en all-in.
+555fd87e|||Sala de póker · 2/5
+995ce1f5|||Mesa · mano contra mano
+2eb97859|||Tu mano
+0bcd824e|||Mesa (0, 3, 4 o 5 cartas)
+9dc16bb0|||Simular 20.000 repartos
+38f5313d|||Cartas como As Td 9h 2c. Rival "random" para cualquier par de cartas.
+cc37cf4b|||Esta calculadora reparte las cartas desconocidas miles de veces y cuenta cuántas veces gana cada mano. Es la misma técnica de Monte Carlo que se usa para valorar opciones: simular muchas veces el futuro incierto y promediar el resultado.
+a677977d|||<b>Pareja contra dos cartas más altas ≈ moneda al aire</b> (QQ vs AK ≈ 54/46).
+ce3cbde3|||<b>Pareja contra pareja menor ≈ 80/20.</b> Mano dominada (AK vs AQ) ≈ 70/30.
+5e6f4a21|||<b>Cualquier par de cartas contra AA ≈ 15 %.</b> Las ventajas preflop son menores de lo que parecen.
+afb2f580|||Sala de póker · 3/5
+0154eecc|||Mesa · calculadora de tamaño de apuesta
+492dc400|||Bote
+40880286|||Apuesta
+ec19c3f6|||Un farol puro de tamaño B a un bote P arriesga B para ganar P. No pierde dinero si el rival se retira con suficiente frecuencia. Dale la vuelta y tienes la regla del defensor: si te retiras más que eso, cualquier par de cartas puede farolearte con beneficio.
+c9aeefab|||el farol necesita retiradas ≥ B ÷ (P + B) frecuencia mínima de defensa = P ÷ (P + B)
+1e4f51f1|||<b>Posición:</b> actuar el último es una ventaja estructural, porque ves antes lo que hacen los demás. Juega más manos en el botón y menos en primera posición.
+9c7668a1|||<b>Rangos, no manos:</b> asigna al rival todas las manos que jugaría así, ponderadas por su probabilidad. Es Bayes otra vez: cada acción es una evidencia con su razón de verosimilitud.
+1ecf84c1|||<b>Equilibrio:</b> apuesta tus manos fuertes y algunos faroles con el mismo tamaño, en una proporción que deje al rival indiferente. Una apuesta de bote en el river pide más o menos 1 farol por cada 2 apuestas de valor.
+ebcf3431|||<b>Explotar:</b> en cuanto sepas que un jugador se retira demasiado, farolea más contra él. El juego teóricamente óptimo (GTO) es la base inexplotable; el beneficio sale de desviarse ante los errores.
+7895ceac|||<b>Varianza y tilt:</b> un jugador ganador puede perder durante semanas. Mide tus resultados en ciegas grandes por cada 100 manos (bb/100) a lo largo de decenas de miles de manos, y nunca persigas pérdidas.
+e694aac8|||<b>Apuesta de bote:</b> el farol necesita 50 % de retiradas; defiende el 50 %; valor:farol = 2:1.
+81a34ab4|||<b>Apuesta de medio bote:</b> el farol necesita 33 % de retiradas; defiende el 67 %; valor:farol = 3:1.
+3552cab1|||<b>Las mismas matemáticas que al cotizar:</b> una contraparte informada es un jugador que solo apuesta con las nuts.
+60f2a032|||Sala de póker · 4/5
+2a0c7ab9|||<b>Ciegas:</b> los dos jugadores a la izquierda del botón ponen la ciega pequeña y la grande (p. ej., 1 y 2). El botón rota en cada mano.
+f1950a95|||<b>Preflop:</b> cada jugador recibe dos cartas privadas. La acción empieza a la izquierda de la ciega grande: tirar, pagar o subir.
+a4236b35|||<b>Flop, turn, river:</b> tres, luego una y luego otra carta comunitaria. Tras cada una hay una ronda de apuestas.
+65bc28c6|||<b>Showdown:</b> gana el bote la mejor mano de cinco cartas formada con tus dos cartas y las cinco comunitarias.
+acd9dc19|||<b>No-limit:</b> puedes apostar cualquier cantidad hasta todas tus fichas en cualquier momento.
+c65d489c|||Mano
+0f01ed56|||Ejemplo
+d899467b|||Probabilidad con 7 cartas
+cf83e721|||Escalera de color
+d27ba03b|||Póker
+dbe8641c|||Full
+7c936d7c|||Color
+2501c652|||Escalera
+ca1a0d48|||Trío
+6876b406|||Doble pareja
+36b562ae|||Pareja
+b4b323e3|||Carta alta
+a5d00550|||<b>Lo más raro gana a lo más común.</b> El color gana a la escalera porque es más raro.
+0ffdf4e1|||<b>La mayoría de los showdowns se ganan con pareja o doble pareja.</b> El valor sale de apostar, no de las manos monstruo.
+5db8b2f9|||Sala de póker · 5/5
+2a2e0c27|||Usa solo mesas con fichas de juego y entrenadores. El póker online con dinero real es ilegal en China continental y tiene restricción de edad casi en todas partes; además, para preparar entrevistas importan las decisiones, no lo que se apuesta.
+05b48081|||Entrenador con solver
+072f88e6|||GTO Wizard
+3544496b|||El entrenador basado en solver de referencia y socio oficial de formación de las WSOP. Juega manos contra un bot GTO y ve cuánto VE perdiste en cada decisión. Empieza aquí cuando sepas las reglas.
+3ef75238|||Entrenador GTO
+f472f2a7|||Fearless River GTO Trainer
+1514bec4|||Antes WPT GTO Trainer. Juega situaciones resueltas con feedback inmediato sobre el VE perdido por acción; tiene versión gratuita.
+923c4b1d|||Fichas de juego gratis
+575463ee|||Replay Poker
+bd4ccd97|||Partidas cash y torneos gratuitos con fichas de juego a todas horas. Bueno para practicar lecturas contra personas.
+a16536d7|||Cursos
+ba9692f5|||Upswing Poker
+633ea863|||Considerado el plan de estudios más completo. Sus artículos gratuitos cubren bien las tablas preflop y los fundamentos.
+f2538ed8|||Videoteca
+a3dc902f|||Run It Once
+86eb3a7b|||La web de Phil Galfond, con la mayor colección de jugadores de élite razonando manos en voz alta.
+a5fe5713|||Juego de cartas de trading
+9aa4db50|||Figgie de Jane Street
+814a2fc8|||Inventado en Jane Street para simular el trading a viva voz. Deduces un palo objetivo oculto mientras intercambias cartas. Se parece más a una mesa de trading que el póker. También en iOS y Android.
+1ca2a030|||Juegos de mercado
+5bd6e0e5|||Tradermath Market Games
+91bb6f59|||Los ocho juegos de la sala de trading, cronometrados y puntuados. El modo fácil es gratis y sin registro.
+51fb183f|||Programa un bot
+631b6ee1|||MIT Pokerbots
+a6a5ec3a|||Competición anual en la que programas un bot de póker; los materiales de cursos anteriores enseñan teoría de juegos con código. Encaja bien con tus proyectos en Python.

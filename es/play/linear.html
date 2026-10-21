@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/linear.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Linealidad y dispersión · Edge Lab</title>
+<meta content="Linealidad y dispersión: Por qué el riesgo crece con la raíz cuadrada de n." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/linear.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/linear.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/linear.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/linear.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Linealidad y dispersión · Edge Lab" property="og:title"/>
+<meta content="Linealidad y dispersión: Por qué el riesgo crece con la raíz cuadrada de n." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/linear.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="linear" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de estudio · 2/6</small><b>Linealidad y dispersión</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="linear">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · tira n dados 4.000 veces</div>
+<div class="row"><label for="ldN">Dados n</label><input id="ldN" max="12" min="1" type="range" value="2"/><span class="stat" id="ldNv">2</span><button class="go" id="ldRoll">Tirar</button></div>
+<canvas height="230" id="ldCanvas" width="760"></canvas>
+<div class="stats" id="ldStats" style="margin-top:10px"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="ev.html">← Valor esperado</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="stopping.html">Parar o seguir →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de estudio</small><h2 id="tutTitle">Linealidad y dispersión</h2><div class="tags"><span class="tag">Se usa en: Dados, Juego de trading, Juego de cartas</span></div></div>
+<div class="tut-b"><p>El valor esperado de una suma es la suma de los valores esperados. Se cumple incluso cuando las partes son dependientes, por eso nunca tienes que enumerar 36 resultados para valorar dos dados.</p>
+<div class="formula">E[X + Y] = E[X] + E[Y]</div>
+<p>Las varianzas solo se suman cuando las partes son independientes. Así que σ crece con la <i>raíz cuadrada</i> del número de partes: diez dados tienen diez veces el VE de uno, pero solo unas 3,2 veces la dispersión. Por eso las sumas parecen una campana y por eso la amplitud de tu cotización debe crecer más despacio que tu valor justo.</p>
+<div class="formula">σ(suma de n independientes) = σ₁ · √n</div>
+<details class="deep"><summary>Por dentro: por qué los VE siempre se suman y la dispersión no</summary><div class="deep-body">
+<h4>Cómo leer E[X + Y] = E[X] + E[Y]</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>E[ · ]</td><td>«El valor esperado de» lo que haya dentro de los corchetes.</td></tr>
+<tr><td>X, Y</td><td>Dos cantidades aleatorias, como el dado 1 y el dado 2.</td></tr>
+<tr><td>X + Y</td><td>Una nueva cantidad aleatoria: su total en cada tirada.</td></tr>
+</tbody></table></div>
+<p><b>Por qué se cumple siempre.</b> Una media es «sumarlo todo y dividir», y el orden en que sumas no importa. En 600 tiradas de dos dados, el total de todas las sumas es igual al total de la columna del dado 1 más el total de la columna del dado 2. La dependencia cambia <i>qué</i> valores aparecen juntos en la misma fila, pero no cuánto suma cada columna.</p>
+<h4>Cómo leer Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>Cov(X, Y)</td><td><b>Covarianza</b>: ¿X e Y tienden a ser altas a la vez (positiva), a moverse en sentidos opuestos (negativa) o a ignorarse (cero)? Es la media de (X − μₓ)(Y − μᵧ).</td></tr>
+<tr><td>independientes</td><td>Conocer una no dice nada de la otra. Entonces Cov = 0 y las varianzas simplemente se suman.</td></tr>
+</tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Caso</th><th>Relación</th><th class="n">Varianza</th><th class="n">σ</th></tr></thead><tbody>
+<tr><td>Dos dados distintos, X + Y</td><td>Independientes, Cov = 0</td><td class="n">2.92 + 2.92 = 5.83</td><td class="n">2.42</td></tr>
+<tr><td>Un dado contado dos veces, X + X</td><td>Totalmente juntos</td><td class="n">4 × 2.92 = 11.67</td><td class="n">3.42</td></tr>
+<tr><td>X + (7 − X)</td><td>Totalmente opuestos</td><td class="n">0</td><td class="n">0</td></tr>
+</tbody></table></div>
+<p>La última fila es una <b>cobertura</b>: dos posiciones con riesgo cuyos errores se cancelan exactamente. Los tres casos tienen VE 7; solo cambia la dispersión.</p>
+<h4>De dónde sale √n</h4>
+<p>Suma n copias independientes, cada una con varianza σ₁². Las varianzas suman n·σ₁², así que σ = √(n·σ₁²) = σ₁·√n. Diez dados: 1,71 × √10 ≈ 5,40, frente a un VE de 35. En finanzas, por eso funciona la diversificación: tener muchos activos que no están perfectamente correlacionados hace crecer el rendimiento esperado más rápido que el riesgo.</p>
+</div></details>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Suma → suma los VE.</b> n dados = 3,5n. n cartas sin reposición = 7n.</li>
+<li><b>Dispersión → √n.</b> n dados σ ≈ 1,71√n. Aproximadamente el 95 % de los resultados cae dentro de 2σ.</li>
+<li><b>Parte conocida → sustitúyela.</b> Un dado muestra 5: el justo de dos dados es 5 + 3,5 = 8,5.</li>
+<li><b>Sin reposición:</b> las cartas desconocidas promedian la baraja <i>restante</i>, no 7.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

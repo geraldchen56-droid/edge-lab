@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-dice.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>骰子做市 · Edge Lab</title>
+<meta content="骰子做市：为三颗骰子报价，扛住知情交易者。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-dice.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-dice.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-dice.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-dice.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-dice.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-dice.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="骰子做市 · Edge Lab" property="og:title"/>
+<meta content="骰子做市：为三颗骰子报价，扛住知情交易者。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-dice.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-dice" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 2/8</small><b>骰子做市</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-dice">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 你是做市商 <span class="stat" id="mdTot">总盈亏 0.00 · 0 轮</span></div>
+<div class="row"><label for="mdInf">知情交易者占比</label><input id="mdInf" max="60" min="0" type="range" value="25"/><span class="stat" id="mdInfv">25%</span></div>
+<div class="mm">
+<div class="scene" id="mdScene">
+<div class="lbl">按三颗骰子之和结算</div>
+<div class="items" id="mdDice"></div>
+<div class="lbl" style="margin-top:10px">交易者（N 噪声 · I 知情 · ↑ 吃了你的卖价 · ↓ 砸了你的买价）</div>
+<div class="queue" id="mdQueue"></div>
+<div class="settle" id="mdMsg"></div>
+</div>
+<div><div aria-label="价格阶梯" class="ladder" id="mdLadder"></div><div class="small mono" style="color:var(--muted);margin-top:4px">点左侧格子设置买价，点右侧格子设置卖价。</div></div>
+</div>
+<div class="row"><label for="mdBid">你的买价</label><input id="mdBid" step="0.5" type="number" value="9.5"/><label for="mdAsk">你的卖价</label><input id="mdAsk" step="0.5" type="number" value="11.5"/>
+<button class="go" id="mdNext">下一位交易者</button><button id="mdNew">新一轮</button></div>
+<div class="stats" id="mdStats"></div>
+<div class="out" id="mdOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-card.html">← 卡牌游戏</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="g-trade.html">交易游戏 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">骰子做市</h2><div class="tags"><span class="tag">技能：双边定价、价差宽度、库存、事件风险</span><span class="tag">对应公司：Optiver、Flow Traders</span></div></div>
+<div class="tut-b"><p>现在由你来报价。合约按<b>三颗骰子之和</b>结算。五位交易者依次到来，如果喜欢你的报价就成交 1 手。大多数是噪声交易者，少数人看到了一颗骰子。中途会向所有人公开一颗骰子。</p>
+<ul class="steps">
+<li>把报价<b>居中</b>在公允价值上（开局为 10.5）。</li>
+<li><b>价差宽度</b>是风险补偿。太窄会被知情交易者狙击；太宽就没人成交。</li>
+<li>成交后要<b>倾斜</b>报价。如果你卖出了，你就是空头：同时抬高买卖价，让下一笔成交更可能是别人卖给你。</li>
+<li>骰子一公开就立即<b>重新居中</b>。公允价值 = 公开的骰子 + 7。</li>
+</ul>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>初始宽度 ≈ 未知部分的 1σ。</b>三颗骰子 σ ≈ 3.0，所以 ±1 到 ±1.5。</li>
+<li><b>被吃卖价？往上移。被砸买价？往下移。</b>两边同时移动约四分之一的宽度。</li>
+<li><b>知情流越多 → 报价越宽。</b>从噪声交易赚的价差必须覆盖被知情交易者赢走的钱。</li>
+<li><b>已知骰子会压缩风险：</b>两颗未知骰子 σ ≈ 2.4，所以要收窄。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

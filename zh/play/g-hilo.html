@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-hilo.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>比大比小 · Edge Lab</title>
+<meta content="比大比小：记牌，并用凯利公式决定每注大小。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-hilo.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-hilo.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-hilo.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-hilo.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-hilo.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-hilo.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="比大比小 · Edge Lab" property="og:title"/>
+<meta content="比大比小：记牌，并用凯利公式决定每注大小。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-hilo.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-hilo" data-scene3d="hilo">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 7/8</small><b>比大比小</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-hilo">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 资金 <span class="hud"><span class="pill" id="hlStreak">连胜 0</span><span class="pill stat" id="hlBank">1,000</span></span></div>
+<div class="duo">
+<div class="scene" id="hlScene"><div class="lbl">当前牌 · <span id="hlLeft"></span></div><div class="items" id="hlCard"></div><div class="lbl" style="margin-top:8px">你的下注： <span id="hlStakeTxt"></span></div><div id="hlChips"></div></div>
+<div class="scene"><div class="lbl">剩余牌（按点数）</div><canvas aria-label="按点数统计的剩余牌" class="felt" height="170" id="hlHist" width="400"></canvas></div>
+</div>
+<canvas aria-label="资金曲线" height="90" id="hlSpark" width="760"></canvas>
+<div class="row"><label for="hlF">下注占资金的 %</label><input id="hlF" max="100" min="0" type="range" value="20"/><span class="stat" id="hlFv">20%</span>
+<button class="buy" id="hlHi">更大</button><button class="sell" id="hlLo">更小</button><button id="hlReset">新牌堆</button></div>
+<div class="out" id="hlOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="g-event.html">← 事件合约</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="g-board.html">投注板 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">比大比小</h2><div class="tags"><span class="tag">技能：条件概率、凯利下注、破产风险</span></div></div>
+<div class="tut-b"><p>亮出一张牌。猜同一副牌的下一张更大还是更小，并选择用多少比例的资金按 1 赔 1 下注。平局算输。牌不重洗，所以要记住已经出过的牌。</p>
+<div class="formula">p(更大) = 严格更大的剩余牌 ÷ 剩余牌数 下注 f* = 2p − 1</div>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>当前是 7 时，两边都约 46%。</b>平局让它成为负期望的赌注。下注 0。</li>
+<li><b>要记牌。</b>出了很多小牌之后，即使当前是 6，“更大”的胜率也会变好。</li>
+<li><b>下注 = 2p − 1。</b>当前是 2：p ≈ 0.92，凯利 ≈ 84%，半凯利 ≈ 42%。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

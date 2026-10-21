@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="index.html" data-root="../zh/" data-site="../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Edge Lab · 交易面试游戏</title>
+<meta content="为交易面试打造的 3D 赌场：做市、ETF 套利、贝叶斯、凯利下注和扑克数学，还有带排行榜的每日挑战。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/index.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/index.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/index.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/index.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/index.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/index.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Edge Lab · 交易面试游戏" property="og:title"/>
+<meta content="为交易面试打造的 3D 赌场：做市、ETF 套利、贝叶斯、凯利下注和扑克数学，还有带排行榜的每日挑战。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/index.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="lobby-page">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-lobby"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a class="brand" href="index.html"><i aria-hidden="true"></i>Edge Lab</a>
+<div class="tb-r"><span class="tb-prog" id="progTxt"></span><button class="tb-btn gold" hidden="" id="installBtn">安装应用</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button></div>
+</header>
+<main class="lobby" data-scene="fan">
+<div class="lobby-l">
+<div class="kicker">交易面试训练 · 夜场</div>
+<h1>庄家懂赔率。<b>现在你也懂。</b></h1>
+<p class="lede">选一张桌子。每个游戏都全屏打开，首次进入附带一次简报。</p>
+<div class="daily-row"><a class="daily-cta" data-nav="" href="play/daily.html"><span class="k">每日挑战 <b id="dailyNo"></b></span><span class="t">十道题，所有人相同。每天一次排名机会。</span><span aria-hidden="true" class="go">开始今日挑战 →</span></a>
+<a class="lb-link" data-nav="" href="play/leaderboard.html"><span class="k">排行榜</span><span class="t">今日与历史总榜</span></a></div>
+<div aria-label="房间" class="tabs" role="tablist"><button aria-controls="floor-trade" class="tab" data-tab="trade" id="tab-trade" role="tab">交易大厅 <span>8</span></button><button aria-controls="floor-poker" class="tab" data-tab="poker" id="tab-poker" role="tab">扑克室 <span>5</span></button><button aria-controls="floor-study" class="tab" data-tab="study" id="tab-study" role="tab">自习室 <span>6</span></button></div>
+<ul aria-labelledby="tab-trade" class="floor" hidden="" id="floor-trade" role="tabpanel"><li><a data-preview="deal" href="play/g-card.html"><span class="no">01</span><span class="nm">卡牌游戏</span><span class="tick" data-for="g-card"></span><span class="ds">给随机合约定价：买入、卖出或放弃。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="dice" href="play/g-dice.html"><span class="no">02</span><span class="nm">骰子做市</span><span class="tick" data-for="g-dice"></span><span class="ds">为三颗骰子报价，扛住知情交易者。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="trade" href="play/g-trade.html"><span class="no">03</span><span class="nm">交易游戏</span><span class="tick" data-for="g-trade"></span><span class="ds">五张暗牌。每翻一张就重新定价。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="chips" href="play/g-etf.html"><span class="no">04</span><span class="nm">ETF 套利</span><span class="tick" data-for="g-etf"></span><span class="ds">净值对比价格，15 秒倒计时。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="bell" href="play/g-fermi.html"><span class="no">05</span><span class="nm">费米估算</span><span class="tick" data-for="g-fermi"></span><span class="ds">为查不到答案的问题给出 90% 区间。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="chips" href="play/g-event.html"><span class="no">06</span><span class="nm">事件合约</span><span class="tick" data-for="g-event"></span><span class="ds">用贝叶斯更新，再为“是/否”合约做市。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="hilo" href="play/g-hilo.html"><span class="no">07</span><span class="nm">比大比小</span><span class="tick" data-for="g-hilo"></span><span class="ds">记牌，并用凯利公式决定每注大小。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="dice" href="play/g-board.html"><span class="no">08</span><span class="nm">投注板</span><span class="tick" data-for="g-board"></span><span class="ds">找出定价错误的赔率，锁定套利。</span><span aria-hidden="true" class="go">开始 →</span></a></li></ul><ul aria-labelledby="tab-poker" class="floor" hidden="" id="floor-poker" role="tabpanel"><li><a data-preview="poker" href="play/p-odds.html"><span class="no">01</span><span class="nm">底池赔率</span><span class="tick" data-for="p-odds"></span><span class="ds">跟注还是弃牌：你的胜率对比价格。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="poker" href="play/p-equity.html"><span class="no">02</span><span class="nm">胜率计算器</span><span class="tick" data-for="p-equity"></span><span class="ds">任意手牌对任意手牌，模拟 20,000 次发牌。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="poker" href="play/p-bluff.html"><span class="no">03</span><span class="nm">诈唬数学</span><span class="tick" data-for="p-bluff"></span><span class="ds">诈唬需要多常成功，以及你该多常防守。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="poker" href="play/p-rules.html"><span class="no">04</span><span class="nm">规则与牌型</span><span class="tick" data-for="p-rules"></span><span class="ds">参考：德州扑克怎么玩。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="deck" href="play/p-sites.html"><span class="no">05</span><span class="nm">练习平台</span><span class="tick" data-for="p-sites"></span><span class="ds">参考：求解器、模拟器和游戏币牌桌。</span><span aria-hidden="true" class="go">开始 →</span></a></li></ul><ul aria-labelledby="tab-study" class="floor" hidden="" id="floor-study" role="tabpanel"><li><a data-preview="dice" href="play/ev.html"><span class="no">01</span><span class="nm">期望值</span><span class="tick" data-for="ev"></span><span class="ds">给任何赌注定价，观察方差。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="bell" href="play/linear.html"><span class="no">02</span><span class="nm">线性与离散度</span><span class="tick" data-for="linear"></span><span class="ds">为什么风险按 n 的平方根增长。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="dice" href="play/stopping.html"><span class="no">03</span><span class="nm">停还是继续</span><span class="tick" data-for="stopping"></span><span class="ds">用一颗骰子学最优停止。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="chips" href="play/bayes.html"><span class="no">04</span><span class="nm">赔率形式的贝叶斯</span><span class="tick" data-for="bayes"></span><span class="ds">先验赔率 × 似然比 = 后验。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="chips" href="play/kelly.html"><span class="no">05</span><span class="nm">凯利下注</span><span class="tick" data-for="kelly"></span><span class="ds">有优势时该下多少注。</span><span aria-hidden="true" class="go">开始 →</span></a></li><li><a data-preview="bell" href="play/bridge.html"><span class="no">06</span><span class="nm">金融与计量经济学</span><span class="tick" data-for="bridge"></span><span class="ds">t 统计量：要打多少手牌才能证明你有技术。</span><span aria-hidden="true" class="go">开始 →</span></a></li></ul>
+<p class="foot">参照 <a href="https://www.tradermath.org/market-games" rel="noopener" target="_blank">Tradermath 市场游戏</a>设计。注明处的概率为精确值；胜率由模拟得出。<a href="https://github.com/geraldchen56-droid/edge-lab" rel="noopener" target="_blank">GitHub 源代码</a>。</p>
+</div>
+<div aria-live="polite" class="stagehud" data-hud=""></div>
+</main>
+<dialog aria-labelledby="ihTitle" class="tut sm" id="installHelp"><div class="tut-in">
+<div class="tut-h"><small>安装</small><h2 id="ihTitle">把 Edge Lab 装成应用</h2></div>
+<div class="tut-b"><p><b>iPhone 或 iPad（Safari）：</b>点“分享”，再点<b>添加到主屏幕</b>。</p><p><b>安卓（Chrome）：</b>点 ⋮ 菜单，再点<b>安装应用</b>。</p><p><b>电脑（Chrome 或 Edge）：</b>点击地址栏右侧的安装图标。</p><p>它会以全屏和独立图标打开，离线时游戏照样能玩。</p></div>
+<div class="tut-f"><span></span><button class="chip-btn" data-close="">知道了</button></div>
+</div></dialog>
+<script src="../i18n/zh.js"></script>
+<script src="../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../auth.js"></script>
+<script src="../app.js"></script>
+<script src="../scene.js"></script>
+<script src="../shell.js"></script>
+</body>
+</html>

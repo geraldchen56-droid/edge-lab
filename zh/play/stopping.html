@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/stopping.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>停还是继续 · Edge Lab</title>
+<meta content="停还是继续：用一颗骰子学最优停止。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/stopping.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/stopping.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/stopping.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/stopping.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="停还是继续 · Edge Lab" property="og:title"/>
+<meta content="停还是继续：用一颗骰子学最优停止。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/stopping.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="stopping" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>自习室 · 3/6</small><b>停还是继续</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="stopping">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 重掷游戏求解器</div>
+<div class="row"><label for="stS">骰子面数</label><select id="stS"><option>4</option><option selected="">6</option><option>8</option><option>10</option><option>12</option><option>20</option></select>
+<label for="stK">允许重掷次数</label><input id="stK" max="8" min="0" type="range" value="1"/><span class="stat" id="stKv">1</span></div>
+<div class="tbl"><table id="stTable"></table></div>
+<div class="out" id="stOut"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="linear.html">← 线性与离散度</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="bayes.html">赔率形式的贝叶斯 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 自习室</small><h2 id="tutTitle">停还是继续</h2><div class="tags"><span class="tag">用于：面试中的期望值谜题、比大比小</span></div></div>
+<div class="tut-b"><p>当你在游戏中可以做选择时，从最后一个决策往前倒推。每一步，如果手上的比继续玩的期望值更好，就保留它。</p>
+<div class="formula">V₀ = (s+1)/2 Vₖ = E[ max(X, Vₖ₋₁) ]</div>
+<p>Vₖ 是用 s 面骰子、还剩 k 次重掷时这个游戏的价值。阈值规则是：保留严格大于 Vₖ₋₁ 的点数。</p>
+<details class="deep"><summary>原理：理解 Vₖ = E[ max(X, Vₖ₋₁) ]</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>s</td><td>骰子的面数。</td></tr>
+<tr><td>Vₖ</td><td>还剩 k 次重掷、并且你完美操作时，这个游戏值多少。</td></tr>
+<tr><td>V₀ = (s+1)/2</td><td>没有重掷机会时，你必须接受下一次的点数，所以游戏的价值就是掷一次的普通期望值。</td></tr>
+<tr><td>X</td><td>你即将看到的点数。</td></tr>
+<tr><td>Vₖ₋₁</td><td>如果扔掉这次的点数你能得到的价值：同一个游戏，少一次重掷。</td></tr>
+<tr><td>max(X, Vₖ₋₁)</td><td>看到 X 后的收益：保留 X，或者换成剩下的游戏。取两者中较大的。</td></tr>
+<tr><td>E[ … ]</td><td>对你可能看到的每个点数，把这个收益取平均。</td></tr>
+</tbody></table></div>
+<h4>例题：六面骰，一次重掷</h4>
+<p>V₀ = 3.5。掷出 1、2 或 3 时，重掷（价值 3.5）比保留好，所以 max = 3.5。掷出 4、5 或 6 就保留。所以 V₁ = (3.5 + 3.5 + 3.5 + 4 + 5 + 6) ÷ 6 = 25.5 ÷ 6 = <b>4.25</b>。</p>
+<p>有两次重掷时门槛升到 4.25，只保留 5 和 6：V₂ = (4 × 4.25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4.67</b>。</p>
+<p><b>为什么要倒推？</b>不知道继续玩值多少，就无法评估第一个决策。只有最后一个决策的后续是已知的（普通期望值），所以从那里开始，一步步往回推。这种方法叫逆向归纳，美式期权在二叉树上正是这样定价的：在每个节点，取立即行权和继续持有中的较大者。</p>
+</div></details>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>六面骰一次重掷 = 4.25。</b>两次重掷 = 4.67。记住这两个数。</li>
+<li><b>点数 &gt; 继续玩的价值就保留。</b>永远不要和总体平均值比。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

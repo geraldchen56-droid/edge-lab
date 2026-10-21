@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/stopping.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Parar o seguir · Edge Lab</title>
+<meta content="Parar o seguir: Parada óptima con un dado." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/stopping.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/stopping.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/stopping.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/stopping.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/stopping.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Parar o seguir · Edge Lab" property="og:title"/>
+<meta content="Parar o seguir: Parada óptima con un dado." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/stopping.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="stopping" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de estudio · 3/6</small><b>Parar o seguir</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="stopping">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · resolver el juego de volver a tirar</div>
+<div class="row"><label for="stS">Caras del dado</label><select id="stS"><option>4</option><option selected="">6</option><option>8</option><option>10</option><option>12</option><option>20</option></select>
+<label for="stK">Tiradas extra permitidas</label><input id="stK" max="8" min="0" type="range" value="1"/><span class="stat" id="stKv">1</span></div>
+<div class="tbl"><table id="stTable"></table></div>
+<div class="out" id="stOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="linear.html">← Linealidad y dispersión</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="bayes.html">Bayes en forma de odds →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de estudio</small><h2 id="tutTitle">Parar o seguir</h2><div class="tags"><span class="tag">Se usa en: acertijos de VE en entrevistas, Mayor o menor</span></div></div>
+<div class="tut-b"><p>Cuando puedes elegir durante un juego, resuelve desde la última decisión hacia atrás. En cada paso, quédate con lo que tienes si supera el VE de continuar.</p>
+<div class="formula">V₀ = (s+1)/2 Vₖ = E[ max(X, Vₖ₋₁) ]</div>
+<p>Vₖ es el valor del juego cuando te quedan k tiradas extra con un dado de s caras. La regla del umbral es: quédate con cualquier tirada estrictamente superior a Vₖ₋₁.</p>
+<details class="deep"><summary>Por dentro: cómo leer Vₖ = E[ max(X, Vₖ₋₁) ]</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>s</td><td>Número de caras del dado.</td></tr>
+<tr><td>Vₖ</td><td>Lo que vale el juego cuando aún te quedan k tiradas extra y juegas de forma perfecta.</td></tr>
+<tr><td>V₀ = (s+1)/2</td><td>Sin tiradas extra debes quedarte con la siguiente, así que el juego vale el VE simple de una tirada.</td></tr>
+<tr><td>X</td><td>La tirada que estás a punto de ver.</td></tr>
+<tr><td>Vₖ₋₁</td><td>Lo que valdrías si descartas esta tirada: el mismo juego con una tirada extra menos.</td></tr>
+<tr><td>max(X, Vₖ₋₁)</td><td>Tu pago tras ver X: quedarte con X o cambiarlo por el resto del juego. Tomas lo mayor.</td></tr>
+<tr><td>E[ … ]</td><td>Promedia ese pago sobre todas las tiradas que podrías ver.</td></tr>
+</tbody></table></div>
+<h4>Ejemplo: dado de seis caras, una tirada extra</h4>
+<p>V₀ = 3,5. Con un 1, 2 o 3, volver a tirar (vale 3,5) es mejor que quedarse, así que max = 3,5. Con 4, 5 o 6, te quedas. Así que V₁ = (3,5 + 3,5 + 3,5 + 4 + 5 + 6) ÷ 6 = 25,5 ÷ 6 = <b>4,25</b>.</p>
+<p>Con dos tiradas extra el listón sube a 4,25, así que solo te quedas con 5 y 6: V₂ = (4 × 4,25 + 5 + 6) ÷ 6 = 28 ÷ 6 = <b>4,67</b>.</p>
+<p><b>¿Por qué hacia atrás?</b> No puedes valorar la primera decisión sin saber cuánto vale continuar. Solo la última decisión tiene una continuación conocida (el VE simple), así que empiezas ahí y retrocedes paso a paso. Este método se llama inducción hacia atrás, y es exactamente como se valoran las opciones americanas en un árbol binomial: en cada nodo, el máximo entre ejercer ahora o mantener.</p>
+</div></details>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Dado de seis caras, una tirada extra = 4,25.</b> Dos tiradas extra = 4,67. Memoriza estos dos.</li>
+<li><b>Quédate si la tirada &gt; valor de continuar.</b> Nunca compares con la media global.</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

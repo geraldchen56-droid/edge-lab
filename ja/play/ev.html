@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/ev.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>期待値 · Edge Lab</title>
+<meta content="期待値：どんな賭けにも値を付け、分散を観察する。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/ev.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/ev.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/ev.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/ev.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/ev.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/ev.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="期待値 · Edge Lab" property="og:title"/>
+<meta content="期待値：どんな賭けにも値を付け、分散を観察する。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/ev.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="ev" data-scene3d="dice">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 1/6</small><b>期待値</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="ev">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 利得表を作る <span><button id="evDie">プリセット：サイコロ1個</button> <button id="evBet">プリセット：6が出たら$10</button> <button id="evAdd">行を追加</button></span></div>
+<div class="tbl"><table id="evTable"><thead><tr><th>利得 x</th><th>確率 p</th><th>p·x</th><th></th></tr></thead><tbody></tbody></table></div>
+<div class="stats" id="evStats" style="margin-top:10px"></div>
+<div class="out" id="evOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">デスク · 列ごとに分散を計算（上の利得表を使用）</div>
+<div class="tbl"><table id="varTable"></table></div>
+<div class="out" id="varOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="p-sites.html">← 練習できる場所</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="linear.html">線形性とばらつき →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">期待値</h2><div class="tags"><span class="tag">使う場面：すべてのゲーム</span></div></div>
+<div class="tut-b"><p>期待値とは、ランダムな利得の長期的な平均です。すべての結果を挙げ、それぞれに確率を掛けて足し合わせます。</p>
+<div class="formula">EV = Σ pᵢ · xᵢ</div>
+<p>分散は結果が平均の周りにどれだけ散らばるかを測り、標準偏差（σ）はその平方根です。期待値は取引<i>するかどうか</i>を、σは気配の幅と賭け金の大きさを教えてくれます。</p>
+<div class="formula">Var = Σ pᵢ · (xᵢ − EV)² = E[X²] − EV²</div>
+<details class="deep"><summary>仕組み：期待値と分散のすべての記号</summary><div class="deep-body">
+<h4>EV = Σ pᵢ · xᵢ の読み方</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>X</td><td>確率変数：サイコロの目のように、事象が起きるまで分からない数。</td></tr>
+<tr><td>i</td><td>起こりうる各結果のラベル。1、2、3……と数えます。サイコロならiは1から6。</td></tr>
+<tr><td>xᵢ</td><td>結果iの利得。サイコロなら x₁ = 1、x₂ = 2 … x₆ = 6。</td></tr>
+<tr><td>pᵢ</td><td>結果iの確率で、0から1の間。すべてのpᵢを足すとちょうど1になります。</td></tr>
+<tr><td>pᵢ · xᵢ</td><td>その結果が平均に寄与する分。</td></tr>
+<tr><td>Σ</td><td>ギリシャ文字の大文字シグマで、「すべてのiについて足す」という意味。結果ごとに同じことをして、足し合わせます。</td></tr>
+<tr><td>EV、E[X]、μ</td><td>同じ答えの3つの呼び名。他の式の中で使うときは、ふつうμ（ミュー）と書きます。</td></tr>
+</tbody></table></div>
+<p><b>なぜpを掛けるのか？</b>サイコロを600回振るとします。各目がおよそ100回ずつ出るので、合計は約 100·1 + 100·2 + … + 100·6 = 2,100、平均は 2,100 ÷ 600 = 3.5。各回数を600で割ると確率になり、(1/6)·1 + (1/6)·2 + … + (1/6)·6 となります。期待値は、各結果を起こる頻度に応じて数えるふつうの平均なのです。</p>
+<h4>Var(X) = Σ pᵢ · (xᵢ − μ)² の読み方</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>μ</td><td>上で求めた期待値：結果の中心。</td></tr>
+<tr><td>xᵢ − μ</td><td><b>偏差</b>：結果iが中心からどれだけ離れているか。マイナスは中心より下。</td></tr>
+<tr><td>( … )²</td><td><b>偏差の2乗</b>。2乗するとすべての距離が正になり、大きな外れを小さな外れよりずっと重く罰します（3外れれば9、1外れれば1）。</td></tr>
+<tr><td>pᵢ · ( … )²</td><td>各偏差の2乗を、起こる頻度で重み付けしたもの。</td></tr>
+<tr><td>Σ</td><td>すべて足します。分散は<b>中心からの距離の2乗の平均</b>です。</td></tr>
+<tr><td>σ = √Var</td><td>標準偏差（小文字のシグマ）。平方根を取ると2乗が打ち消され、利得と同じ単位（目、ドル）に戻るので、期待値と比べられます。</td></tr>
+</tbody></table></div>
+<p><b>なぜ偏差をそのまま平均せずに2乗するのか？</b>ふつうの平均偏差は<i>常にちょうどゼロ</i>だからです。中心はつり合いの点として定義されるので、上と下の外れが打ち消し合います。下の表がその証明で、p·(x − μ) の列は必ず0になります。絶対値 |x − μ| を使うこともできますが、2乗には後々すべてをうまく働かせる性質があります。独立な量の分散は足し算できるのです。√nルールはここから生まれます。</p>
+<p><b>近道 E[X²] − μ² が成り立つ理由。</b>E[X²] は「利得の2乗の平均」、つまり Σ pᵢxᵢ² です。(x − μ)² = x² − 2μx + μ² と展開し、各項を平均すると E[X²] − 2μ·E[X] + μ² = E[X²] − 2μ² + μ² = E[X²] − μ²。サイコロなら 91/6 − 3.5² = 15.17 − 12.25 = 2.92。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>一様分布 1…n → (n+1)/2。</b>サイコロ3.5、カード（A=1…K=13）7。</li>
+<li><b>サイコロの分散 = 35/12 ≈ 2.92</b>、σ ≈ 1.71。カードの分散 = 14、σ ≈ 3.74。</li>
+<li><b>確率の合計は1でなければならない。</b>毎回まずこれを確認。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

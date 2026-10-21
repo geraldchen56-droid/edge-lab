@@ -1,0 +1,180 @@
+dee2dd34|||vender
+b56ee1a1|||LIQUIDADO {0}
+8e383432|||Valor justo
+0bdeabb4|||Cinco cartas boca abajo. El justo empieza en 5 × 7 = 35.
+64af293a|||Opera contra la cotización del bot y luego revela una carta.
+1fea1ff6|||Máximo 2 lotes por paso. Revela la siguiente carta.
+6bb45f37|||COMPRA
+264137be|||VENTA
+b00a7eb8|||Compraste {0} a {1}.
+71bf9778|||Vendiste {0} a {1}.
+06a75212|||El justo es {0}, así que la ventaja = {1}.
+7db2fc14|||Carta {0}: {1} ({2}). Justo {3} → {4}.
+231cb19d|||LIQUIDACIÓN a {0}. P&L = efectivo {1} + posición {2} × {0} = {3}. Pulsa Revelar para una nueva partida.
+666e89d8|||P&L total {0}
+a8f3e1db|||Suma = {0}
+dfe0bb9e|||Cálculo: revelado {0} + {1} ocultas × ({2} ÷ {3}) = {4}.
+638d1619|||Total revelado {0} · quedan {1} cartas ocultas
+5de1b341|||Total revelado {0} · queda {1} carta oculta
+5586cf3d|||Ticker
+f174090c|||Acciones / unidad
+d1c69a85|||Último
+e4984898|||Var.
+6bad02fe|||coste {0}/unidad
+b27ef3d6|||Calcula el NAV y compáralo con el precio al que puedes operar.
+8ace904b|||Demasiado lento
+48e09e45|||Correcto
+b564001a|||Fallado
+666c906e|||en {0} s.
+a4ce3a2f|||Comprar ETF: NAV − ask − coste = {0} · Vender ETF: bid − NAV − coste = {1} → mejor: {2}. Ganaste {3}.
+4e42ee40|||no operar
+5b0e57ef|||comprar el ETF
+ddc8be11|||vender el ETF
+5bad025e|||P&L {0} · {1} decisiones
+3a1b0dfe|||Racha {0}
+ffe1077c|||Escribe una estimación mínima y una máxima para ver tu intervalo en escala logarítmica.
+63149508|||tu rango del 90 % · {0} órdenes de amplitud
+529e1a28|||real: {0}
+235f004c|||Introduce dos números positivos.
+d7d390bd|||acierto
+f749d76f|||fallo
+8deed4ef|||Dentro
+b7efb76a|||Fuera
+b8bf6703|||Respuesta real: {0}. Tu amplitud: {1} órdenes de magnitud → {2} puntos.
+c43515f8|||Calibración hasta ahora: {0}/{1} = {2} % (objetivo 90 %).
+3cbaca66|||Eres demasiado confiado: amplía tus rangos.
+27cf2af0|||Todo aciertos: puede que seas demasiado amplio. Prueba a estrechar.
+e85a3aff|||Aciertos {0}/{1} · puntos {2}
+52876b95|||tu cotización
+1b1bcb11|||p de Bayes {0}
+1b7e4b7a|||La cinta está vacía. Cotiza y abre el mercado.
+3bc1ba6f|||Introduce tu probabilidad y compruébala. Luego cotiza y abre el mercado.
+b93f3d7d|||A menos de 3 puntos.
+77d53275|||Te desvías {0} puntos.
+72fa3149|||previa {0} % → odds {1} × LR {2} = {3} → p = {4} %
+10303d1d|||Ahora cotiza alrededor de {0}¢.
+6f168399|||P&L {0} · calibración {1}/{2}
+50f9dbed|||El ask debe estar por encima del bid.
+b9646cf7|||INFORMADO
+9424ac79|||ruido
+7edc4eeb|||COMPRA
+9e570cf4|||VENDE
+5b6e19e9|||tu pos. {0}
+8fff0398|||SÍ
+a0509b77|||NO
+eb44d110|||Resultado: {0}. Ejecuciones: {1} de ruido, {2} informadas. Posición neta {3}.
+946595d2|||P&L = efectivo {0} + {1} × {2} = {3}¢
+520a65b9|||Cada ejecución de ruido gana en promedio la mitad de tu amplitud ({0}¢); cada ejecución informada pierde unos {1}¢. Sube la proporción de informados y mira cuánto tienes que ampliar.
+b2b67ec5|||mayor {0}/{1} = {2} %
+cb9caef8|||menor {0}/{1} = {2} %
+75a6021f|||bankroll · inicio 1.000
+31a2f7be|||Quedan {0} cartas
+aa708978|||Nueva baraja. Bankroll 1.000.
+662fae5f|||GANAS
+8df6be46|||PIERDES
+967673ec|||Antes de robar: p(mayor) = {0}/{1} = {2} %, p(menor) = {3}/{1} = {4} %.
+2083b008|||Elegiste {0} ({1} %) y apostaste el {2} %. Kelly en el mejor lado: {3}, 2p − 1 = {4} %.
+01efbb53|||mayor
+346e3ee1|||menor
+cae6a924|||Quiebra. Apostar de más produce esto incluso con ventaja.
+d3f06106|||Resultado
+f1d8b477|||Cuota
+b52b36b7|||Apostar
+c42084e4|||apostar a {0}
+13c0d621|||Apuesta a las líneas cuya cuota supera 1 ÷ probabilidad real y luego tira.
+db6cfb40|||Marca cada línea cuya cuota supere 1 ÷ probabilidad real.
+b0cc834f|||implícita
+587eac11|||APOSTAR
+c7e16815|||saltar
+8331c4d7|||apostaste
+09f7502e|||la perdiste
+4bc71cb3|||Tu VE por 1 apostado en cada una: {0} (máximo posible {1}).
+b2488aa5|||habría ganado
+2e91e22b|||Salió {0} + {1} = {2} · este tablero {3}
+9943adf4|||sin apuestas
+9dab9b9c|||Esperado {0} · realizado {1}
+ac9b80d4|||Las cuotas deben ser mayores que 1.
+d05fbe6e|||arbitraje
+d9161221|||sin arbitraje
+b3f55de5|||Apuesta {0} a A y {1} a B. Pase lo que pase recuperas {2} → beneficio asegurado {3} ({4} %).
+1580b53b|||Bote {0}
+9bf12252|||Apuesta {0}
+bb4ee405|||flop
+51ca99d7|||En el turn tienes {0} ({1} outs). El bote es {2}. El rival apuesta {3}. Supón que solo ganas si ligas y que no ganas nada extra después.
+1fe6cb17|||Compara la equity con B ÷ (P + 2B).
+346a2f5c|||Incorrecto
+eed6bfb4|||Necesaria
+0786ff3b|||Equity
+b55e22fe|||exacta
+31ffe63e|||VE de pagar
+b71bb26e|||{0}/{1} aciertos
+395ed46c|||LIGADA
+c3a5a328|||FALLADA
+cdc122d9|||Pagaste y ligaste: {0} fichas.
+36baf284|||Pagaste y fallaste: {0} fichas.
+18eec306|||Tiraste. Las cartas que salieron te habrían dado la jugada.
+a8fdeced|||Tiraste. Las cartas que salieron no te habrían dado la jugada.
+a206d5b6|||Un resultado es suerte; el VE es la decisión.
+4ea87c80|||Fichas {0}
+e879b0be|||Mesa
+a9ba9ede|||Revisa el formato: dos cartas cada uno, como AsKs, y 0/3/4/5 cartas en la mesa.
+1454f2a8|||Hay una carta repetida.
+0aa39879|||Gana {0} %  Empata {1} %  Pierde {2} %
+553bfe9c|||Equity = gana + empata/2 = {0} %  (± {1} % al 95 %, de √(p(1−p)/n))
+ee47c1c8|||Tu mano final:
+628c1363|||Apuesta / bote
+21e4414b|||Retiradas que necesita el farol
+db9f9d43|||El defensor debe continuar
+630e6d11|||Equity que necesita quien paga
+e2db35ec|||Faroles en el rango de apuesta
+bc1df41e|||Valor : farol
+94f798e4|||Total esperado
+5d0c5a87|||σ del total
+8c400393|||Estadístico t
+eb3b6b6d|||P(ir ganando tras n)
+2b7b0342|||n para t = 1,96
+c00d449b|||El beneficio esperado crece con n, pero el ruido crece con √n, así que t crece con √n.
+3e976e2c|||Con t ≥ 1,96 puedes rechazar «sin ventaja» al nivel del 5 %, que es un contraste de hipótesis de econometría.
+8aea6bea|||Ejemplo de póker: una tasa ganadora fuerte de 5 bb/100 con σ ≈ 100 bb/100 necesita unas {0} manos para ser estadísticamente convincente.
+7e1728bc|||Elige cualquier carta del abanico. Te diré la probabilidad de que la <b>siguiente</b> sea mayor.
+7973996a|||Carta devuelta. Elige otra.
+22201757|||Has sacado {0}. De las {1} cartas restantes, {2} son mayores, {3} menores y {4} empatan.
+4f927271|||P(mayor) = {0}/{1} = {2}. A la par, Kelly apuesta 2p − 1 = {3} a mayor.
+8480f261|||P(menor) = {0}/{1} = {2}. A la par, Kelly apuesta 2p − 1 = {3} a menor.
+03d7a641|||Sin ventaja: no apuestes.
+f80d6336|||N.º {0}
+3d9afdaa|||Salir de pantalla completa
+85dfa32c|||Cuenta
+e53407cf|||Jugador
+34aaa7bc|||Cuenta: {0}
+aeb1e06b|||Las puntuaciones se guardan en la clasificación.
+72d2c939|||Nombre en la clasificación
+efc007a3|||Guardar
+dc1649a1|||Cerrar sesión
+9d4af690|||Guardado.
+16dedbf4|||Usa entre 2 y 24 caracteres.
+ada2e9e9|||Iniciar sesión
+c504fd31|||Guarda tus puntuaciones
+eaf102d4|||Inicia sesión para guardar tus puntuaciones del Desafío diario, mantener una racha y aparecer en la clasificación. Todos los juegos son gratis sin cuenta.
+ccc5b0ed|||Continuar con Google
+166b25cb|||Tu nombre en la clasificación es tu nombre y la inicial de tu apellido. Puedes cambiarlo.
+791d4d57|||Tomar mercado
+62a32dc0|||Contrato: {0}. El mercado es {1} / {2}.
+32fc6791|||Comprar en el ask
+7cc6f3d8|||Vender en el bid
+fe34c4ec|||Valor justo = {0} ({1}). {2}
+0ce19876|||El justo está por encima del ask: compra.
+2df6ce30|||El justo está por debajo del bid: vende.
+56c7f5cb|||El justo está dentro de la cotización: pasa.
+c7bec43f|||Pot odds
+b9dcaf12|||Queda una carta. Tienes {0} outs entre 47 cartas no vistas. El bote es {1} y tu rival apuesta {2}.
+864147ce|||Necesitas B ÷ (P + 2B) = {0}. Tienes {1} ÷ 47 = {2}. {3}
+afb73eea|||La equity supera el precio: paga.
+eea88c77|||No hay equity suficiente: tira.
+d15dcb87|||Acciones
+3e8248e3|||Precio
+076c8935|||Arbitraje de ETF
+72941095|||Una unidad del ETF contiene estas acciones. El ETF cotiza {0} / {1} y operar la cesta cuesta 0,05 por unidad.
+aa178af7|||Comprar el ETF
+def8531a|||Vender el ETF
+f941ab6b|||NAV = {0}. Ventaja al comprar = NAV − ask − 0,05 = {1}. Ventaja al vender = bid − NAV − 0,05 = {2}.

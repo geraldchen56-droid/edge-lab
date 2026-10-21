@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/g-card.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>卡牌游戏 · Edge Lab</title>
+<meta content="卡牌游戏：给随机合约定价：买入、卖出或放弃。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-card.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/g-card.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/g-card.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/g-card.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/g-card.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="卡牌游戏 · Edge Lab" property="og:title"/>
+<meta content="卡牌游戏：给随机合约定价：买入、卖出或放弃。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/g-card.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="g-card" data-scene3d="deal">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>交易大厅 · 1/8</small><b>卡牌游戏</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="g-card">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 吃单还是放弃 <span class="hud"><span class="pill" id="cgStreak">连胜 0 · 最佳 0</span><label class="pill"><input id="cgClock" type="checkbox"/> 8 秒计时</label></span></div>
+<div class="duo">
+<div class="scene" id="cgScene"><div class="lbl">合约</div><div class="scene-q" id="cgQ"></div><div class="items" id="cgItems"></div><div class="settle" id="cgSettle"></div></div>
+<div class="screen" id="cgScreen"><div class="dim lbl">对方报价</div><div class="bigq"><span class="bidc" id="cgBidTxt"></span><span class="dim">/</span><span class="askc" id="cgAskTxt"></span></div><div class="dim small">买价 / 卖价 · 你在卖价买入，在买价卖出</div><div class="timer" hidden="" id="cgTimer"><i></i></div></div>
+</div>
+<div class="row"><button class="buy" id="cgBuy">以卖价买入</button><button class="sell" id="cgSell">以买价卖出</button><button id="cgPass">放弃</button><button class="go" id="cgNext">下一份合约</button></div>
+<div class="stats" id="cgStats"></div>
+<div class="out" id="cgOut">先算出公允价值再点击。</div>
+<p class="small" style="color:var(--muted)">你决定之后，每份合约都会真实结算。预期优势衡量决策质量；实际盈亏还掺杂运气。交易次数多了，两者会趋于一致。</p>
+</div>
+<nav aria-label="更多牌桌" class="pager"><span></span><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="g-dice.html">骰子做市 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 交易大厅</small><h2 id="tutTitle">卡牌游戏</h2><div class="tags"><span class="tag">技能：期望值、识别优势</span><span class="tag">对应公司：SIG</span></div></div>
+<div class="tut-b"><p>有人对一个随机数量报出双边价格。你可以<b>在对方卖价买入</b>、<b>在对方买价卖出</b>，或者放弃。你唯一的任务是快速算出公允价值并比较。</p>
+<ul class="steps"><li>公允价值高于卖价 → 买入。优势 = 公允价值 − 卖价。</li><li>公允价值低于买价 → 卖出。优势 = 买价 − 公允价值。</li><li>公允价值在报价之间 → 放弃。在这里成交平均会亏钱。</li></ul>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>两颗骰子的最大值 = 161/36 ≈ 4.47，最小值 = 91/36 ≈ 2.53。</b>两者之和为 7。</li>
+<li><b>概率为 p 的事件，等待次数 → 1/p。</b>掷出 6 平均要掷 6 次。</li>
+<li><b>独立变量的乘积 → 期望相乘。</b>两颗骰子：3.5² = 12.25。</li>
+<li><b>E[X²] = 方差 + 期望²。</b>一颗骰子的平方：35/12 + 12.25 = 15.17。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

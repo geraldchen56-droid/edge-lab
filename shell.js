@@ -24,7 +24,7 @@ document.addEventListener("click",e=>{
 addEventListener("pageshow",e=>{if(e.persisted)body.classList.remove("leaving")});
 
 /* ---------- lobby ---------- */
-const tabs=[...document.querySelectorAll(".tab")];
+const tabs=[...document.querySelectorAll(".tab[data-tab]")];
 if(tabs.length){
   const show=k=>{tabs.forEach(t=>{const on=t.dataset.tab===k;t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1;$("floor-"+t.dataset.tab).hidden=!on});store.set("edgelab-room",k)};
   tabs.forEach((t,i)=>{t.addEventListener("click",()=>show(t.dataset.tab));
@@ -52,12 +52,45 @@ if(tut&&game){
   if(!store.get(key))setTimeout(open,reduce?0:550);
 }
 
+/* ---------- languages ---------- */
+const T=window.T||(s=>s),H=document.documentElement.dataset,LANG=H.lang||"en",SITE=H.site||"",PAGE=H.page||"index.html";
+const langUrl=l=>SITE+(l==="en"?"":l+"/")+PAGE;
+const sel=$("langSel");
+if(sel){sel.value=LANG;sel.addEventListener("change",()=>{store.set("edgelab-lang",sel.value);leave(langUrl(sel.value))})}
+/* first visit to the English site from a zh/ja/es browser: offer (never force) a translated version */
+if(LANG==="en"&&!store.get("edgelab-lang")){
+  const nav=(navigator.languages||[navigator.language||""]).map(s=>s.toLowerCase());
+  const want=nav.find(s=>/^(zh|ja|es)/.test(s));const l=want&&want.slice(0,2);
+  const NAME={zh:"切换到简体中文",ja:"日本語で表示",es:"Ver en español"};
+  if(l&&NAME[l]&&!(l==="zh"&&/(tw|hk|mo|hant)/.test(want))){
+    const b=document.createElement("div");b.className="langhint";b.innerHTML=`<a href="${langUrl(l)}" data-nav>${NAME[l]} →</a><button aria-label="Close">×</button>`;
+    b.querySelector("a").addEventListener("click",()=>store.set("edgelab-lang",l));
+    b.querySelector("button").addEventListener("click",()=>{store.set("edgelab-lang","en");b.remove()});document.body.appendChild(b)}}
+
+/* ---------- installable app ---------- */
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&!/claude\.ai|claudeusercontent/.test(location.hostname)){
+  addEventListener("load",()=>{navigator.serviceWorker.register(SITE+"sw.js").catch(()=>{})})}
+const inst=$("installBtn");let deferred=null;
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+if(inst&&!standalone){
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;inst.hidden=false});
+  if(ios)inst.hidden=false;
+  inst.addEventListener("click",async()=>{
+    if(deferred){deferred.prompt();try{await deferred.userChoice}catch(e){}deferred=null;inst.hidden=true;return}
+    const d=$("installHelp");if(d&&d.showModal)d.showModal()});
+  addEventListener("appinstalled",()=>{inst.hidden=true})}
+const ih=$("installHelp");if(ih){ih.addEventListener("click",e=>{if(e.target===ih||e.target.closest("[data-close]"))ih.close()})}
+
+/* ---------- daily number in the lobby ---------- */
+const dn=$("dailyNo");if(dn){const d=new Date();dn.textContent=T("No. {0}",Math.floor((Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-Date.UTC(2026,9,21))/864e5)+1)}
+
 /* ---------- full screen ---------- */
 const fs=$("fsBtn"),root=document.documentElement;
 const fsOn=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
 if(fs&&(document.fullscreenEnabled||document.webkitFullscreenEnabled)){
   fs.hidden=false;
-  const label=()=>{fs.textContent=fsOn()?"Exit full screen":"Full screen";fs.setAttribute("aria-pressed",fsOn());body.classList.toggle("is-fs",fsOn())};
+  const label=()=>{fs.textContent=fsOn()?T("Exit full screen"):T("Full screen");fs.setAttribute("aria-pressed",fsOn());body.classList.toggle("is-fs",fsOn())};
   fs.addEventListener("click",()=>{try{if(fsOn())(document.exitFullscreen||document.webkitExitFullscreen).call(document);
     else(root.requestFullscreen||root.webkitRequestFullscreen).call(root)}catch(e){}});
   document.addEventListener("fullscreenchange",label);document.addEventListener("webkitfullscreenchange",label);label();

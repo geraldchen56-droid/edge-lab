@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="es" data-page="play/bayes.html" data-root="../../es/" data-site="../../" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Bayes en forma de odds · Edge Lab</title>
+<meta content="Bayes en forma de odds: Odds previas × razón de verosimilitud = posterior." name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/es/play/bayes.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bayes.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bayes.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bayes.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="Bayes en forma de odds · Edge Lab" property="og:title"/>
+<meta content="Bayes en forma de odds: Odds previas × razón de verosimilitud = posterior." property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/es/play/bayes.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../es/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bayes" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="Volver a todas las mesas" class="back tb-btn" data-nav="" href="../index.html">← Mesas</a>
+<div class="gtitle"><small>Sala de estudio · 4/6</small><b>Bayes en forma de odds</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">Cómo jugar</button><button aria-pressed="false" class="tb-btn" data-done="bayes">Marcar hecho</button><button aria-pressed="false" class="tb-btn" id="sndBtn">Sonido no</button><button class="tb-btn" hidden="" id="fsBtn">Pantalla completa</button><label class="langsel"><span class="sr">Idioma</span><select aria-label="Idioma" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">Mesa · actualiza una creencia</div>
+<div class="grid2">
+<div><label for="byP">Probabilidad previa</label><div class="row"><input id="byP" max="99" min="1" type="range" value="20"/><span class="stat" id="byPv">20%</span></div></div>
+<div><label for="byL">Razón de verosimilitud de la noticia</label><div class="row"><input id="byL" max="30" min="-30" type="range" value="10"/><span class="stat" id="byLv">3.0×</span></div></div>
+</div>
+<canvas height="90" id="byCanvas" width="760"></canvas>
+<div class="out" id="byOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">Mesa · frecuencias naturales</div>
+<div class="grid2">
+<div><label for="nfP">P(H) previa</label><div class="row"><input id="nfP" max="90" min="1" type="range" value="20"/><span class="stat" id="nfPv">20%</span></div></div>
+<div><label for="nfA">P(E | H): tasa de evidencia si es cierto</label><div class="row"><input id="nfA" max="100" min="1" type="range" value="70"/><span class="stat" id="nfAv">70%</span></div></div>
+<div><label for="nfB">P(E | no H): tasa de evidencia si es falso</label><div class="row"><input id="nfB" max="100" min="1" type="range" value="20"/><span class="stat" id="nfBv">20%</span></div></div>
+</div>
+<div class="legend"><span><i style="background:var(--felt)"></i>H y evidencia</span><span><i style="background:var(--felt);opacity:.25"></i>H, sin evidencia</span><span><i style="background:var(--ask)"></i>no H, evidencia</span><span><i style="background:var(--muted);opacity:.25"></i>no H, sin evidencia</span></div>
+<canvas height="475" id="nfCanvas" width="760"></canvas>
+<div class="out" id="nfOut"></div>
+</div>
+<nav aria-label="Más mesas" class="pager"><a data-nav="" href="stopping.html">← Parar o seguir</a><a class="lob" data-nav="" href="../index.html">Todas las mesas</a><a data-nav="" href="kelly.html">Apuesta de Kelly →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>Instrucciones · Sala de estudio</small><h2 id="tutTitle">Bayes en forma de odds</h2><div class="tags"><span class="tag">Se usa en: Contratos de eventos, Fermi, Juego de trading, lecturas en póker</span></div></div>
+<div class="tut-b"><p>Los traders actualizan probabilidades en <b>odds</b>, porque la aritmética se reduce a una multiplicación. Las odds son p / (1 − p). Una razón de verosimilitud (LR) indica cuántas veces más probable es la noticia si el evento es cierto que si es falso.</p>
+<div class="formula">odds posteriores = odds previas × LR p = odds / (1 + odds)</div>
+<details class="deep"><summary>Por dentro: previa, verosimilitud, posterior</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>H</td><td>La <b>hipótesis</b>: aquello de lo que no estás seguro, p. ej. «hoy llueve».</td></tr>
+<tr><td>E</td><td>La <b>evidencia</b>: la noticia que observas, p. ej. «la mañana está nublada».</td></tr>
+<tr><td>P(H)</td><td>La <b>previa</b>: tu probabilidad <i>antes</i> de ver la evidencia (del latín <i>prior</i>, «anterior»). Suele ser una tasa base, como «llueve el 20 % de los días este mes».</td></tr>
+<tr><td>P(E | H)</td><td>Una <b>verosimilitud</b>: con qué frecuencia verías esta evidencia <i>si H fuera cierta</i>. La barra «|» se lee «dado». Ejemplo: los días de lluvia, la mañana está nublada el 70 % de las veces.</td></tr>
+<tr><td>P(E | no H)</td><td>Con qué frecuencia verías la misma evidencia si H fuera falsa. Ejemplo: los días secos, el 20 % de las mañanas están nubladas.</td></tr>
+<tr><td>P(H | E)</td><td>La <b>posterior</b>: tu probabilidad <i>después</i> de la evidencia (del latín <i>posterior</i>, «que viene después»). Es lo que de verdad quieres. La posterior de hoy se convierte en la previa de mañana cuando llega una nueva noticia.</td></tr>
+<tr><td>odds = p ÷ (1 − p)</td><td>Probabilidad a favor frente a probabilidad en contra. 20 % → 0,2 ÷ 0,8 = 0,25, que se dice «1 a 4».</td></tr>
+<tr><td>LR</td><td><b>Razón de verosimilitud</b> = P(E | H) ÷ P(E | no H). Cuántas veces más frecuente es la evidencia cuando H es cierta: 0,7 ÷ 0,2 = 3,5. Es la fuerza de la noticia.</td></tr>
+</tbody></table></div>
+<h4>De dónde sale la forma en odds</h4>
+<p>La regla de Bayes es <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>. Escribe la misma regla para «no H» y divide una entre otra. El incómodo término P(E) se cancela y obtienes <span class="mono">odds posteriores = odds previas × LR</span>. Ejemplo de la lluvia: 0,25 × 3,5 = 0,875, y 0,875 ÷ 1,875 = 46,7 %.</p>
+<h4>Míralo como 1.000 casos</h4>
+<p>La forma más clara de entender una posterior es contar. Cada punto de abajo es un día. En cuanto ves la evidencia, estás sobre uno de los puntos sólidos, así que descarta los difuminados. La posterior es la proporción de puntos sólidos que son verdes.</p>
+<h4>La trampa clásica</h4>
+<p>P(E | H) no es P(H | E). Supón que un sistema detecta el 90 % de las operaciones fraudulentas y marca por error el 5 % de las buenas, y que el 1 % de las operaciones son fraude. Una operación marcada parece un 90 % probable de ser fraude, pero: odds previas 1:99, LR = 0,90 ÷ 0,05 = 18, odds posteriores = 18/99 ≈ 0,18, así que p ≈ <b>15 %</b>. Una tasa base baja ahoga incluso una evidencia fuerte. Pon los controles en 1 %, 90 % y 5 % para verlo.</p>
+</div></details>
+<div class="tip"><b class="lbl">Atajos</b><ul>
+<li><b>Convierte, multiplica y vuelve a convertir.</b> 20 % → 1:4 → ×3 → 3:4 → 3/7 ≈ 43 %.</li>
+<li><b>LR = 1 significa que la noticia no dice nada.</b> Una LR menor que 1 te hace bajar.</li>
+<li><b>Dos pistas independientes → multiplica ambas LR.</b></li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">Vuelve a abrirlo cuando quieras con <b>Cómo jugar</b>.</span><button autofocus="" class="chip-btn" id="tutGo">Repárteme</button></div>
+</div>
+</dialog>
+<script src="../../i18n/es.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

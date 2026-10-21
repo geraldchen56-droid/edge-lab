@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/bayes.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>オッズ形式のベイズ · Edge Lab</title>
+<meta content="オッズ形式のベイズ：事前オッズ × 尤度比 = 事後。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bayes.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bayes.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bayes.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bayes.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bayes.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="オッズ形式のベイズ · Edge Lab" property="og:title"/>
+<meta content="オッズ形式のベイズ：事前オッズ × 尤度比 = 事後。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/bayes.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bayes" data-scene3d="chips">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 4/6</small><b>オッズ形式のベイズ</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="bayes">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · 信念を更新する</div>
+<div class="grid2">
+<div><label for="byP">事前確率</label><div class="row"><input id="byP" max="99" min="1" type="range" value="20"/><span class="stat" id="byPv">20%</span></div></div>
+<div><label for="byL">ニュースの尤度比</label><div class="row"><input id="byL" max="30" min="-30" type="range" value="10"/><span class="stat" id="byLv">3.0×</span></div></div>
+</div>
+<canvas height="90" id="byCanvas" width="760"></canvas>
+<div class="out" id="byOut"></div>
+</div>
+<div class="desk">
+<div class="desk-h">デスク · 自然頻度</div>
+<div class="grid2">
+<div><label for="nfP">事前 P(H)</label><div class="row"><input id="nfP" max="90" min="1" type="range" value="20"/><span class="stat" id="nfPv">20%</span></div></div>
+<div><label for="nfA">P(E | H)：真のときに証拠が出る率</label><div class="row"><input id="nfA" max="100" min="1" type="range" value="70"/><span class="stat" id="nfAv">70%</span></div></div>
+<div><label for="nfB">P(E | Hでない)：偽のときに証拠が出る率</label><div class="row"><input id="nfB" max="100" min="1" type="range" value="20"/><span class="stat" id="nfBv">20%</span></div></div>
+</div>
+<div class="legend"><span><i style="background:var(--felt)"></i>Hかつ証拠あり</span><span><i style="background:var(--felt);opacity:.25"></i>H、証拠なし</span><span><i style="background:var(--ask)"></i>Hでない、証拠あり</span><span><i style="background:var(--muted);opacity:.25"></i>Hでない、証拠なし</span></div>
+<canvas height="475" id="nfCanvas" width="760"></canvas>
+<div class="out" id="nfOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="stopping.html">← 止めるか、続けるか</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><a data-nav="" href="kelly.html">ケリー基準のベットサイズ →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">オッズ形式のベイズ</h2><div class="tags"><span class="tag">使う場面：イベント契約、フェルミ推定、トレーディングゲーム、ポーカーの読み</span></div></div>
+<div class="tut-b"><p>トレーダーは確率を<b>オッズ</b>で更新します。計算が掛け算1回で済むからです。オッズは p / (1 − p)。尤度比（LR）は、そのニュースが事象が真のとき偽のときの何倍出やすいかを表します。</p>
+<div class="formula">事後オッズ = 事前オッズ × LR p = オッズ / (1 + オッズ)</div>
+<details class="deep"><summary>仕組み：事前、尤度、事後</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>H</td><td><b>仮説</b>：確信が持てない事柄。例「今日は雨が降る」。</td></tr>
+<tr><td>E</td><td><b>証拠</b>：観察したニュース。例「朝が曇っている」。</td></tr>
+<tr><td>P(H)</td><td><b>事前確率</b>：証拠を見る<i>前</i>の確率（ラテン語 <i>prior</i>「より前の」）。ふつうはベースレートで、たとえば「今月は20%の日に雨が降る」。</td></tr>
+<tr><td>P(E | H)</td><td><b>尤度</b>：<i>Hが真なら</i>この証拠をどれくらいの頻度で見るか。縦棒「|」は「〜のもとで」と読みます。例：雨の日は70%の朝が曇り。</td></tr>
+<tr><td>P(E | Hでない)</td><td>Hが偽のとき、同じ証拠をどれくらいの頻度で見るか。例：晴れの日は20%の朝が曇り。</td></tr>
+<tr><td>P(H | E)</td><td><b>事後確率</b>：証拠を見た<i>後</i>の確率（ラテン語 <i>posterior</i>「後に来る」）。本当に知りたいのはこれです。新しいニュースが来れば、今日の事後が明日の事前になります。</td></tr>
+<tr><td>オッズ = p ÷ (1 − p)</td><td>起こる確率 対 起こらない確率。20% → 0.2 ÷ 0.8 = 0.25、「1対4」と読みます。</td></tr>
+<tr><td>LR</td><td><b>尤度比</b> = P(E | H) ÷ P(E | Hでない)。Hが真のとき、証拠が何倍よく見られるか：0.7 ÷ 0.2 = 3.5。これがニュースの強さです。</td></tr>
+</tbody></table></div>
+<h4>オッズ形式はどこから来るのか</h4>
+<p>ベイズの定理は <span class="mono">P(H | E) = P(E | H) · P(H) ÷ P(E)</span>。「Hでない」についても同じ式を書き、一方を他方で割ります。厄介な P(E) が消えて <span class="mono">事後オッズ = 事前オッズ × LR</span> が得られます。雨の例：0.25 × 3.5 = 0.875、0.875 ÷ 1.875 = 46.7%。</p>
+<h4>1,000ケースで考える</h4>
+<p>事後確率を理解する一番分かりやすい方法は数えることです。下の点はそれぞれ1日を表します。証拠を見たら、あなたは塗りつぶされた点のどれかの上にいるので、薄い点は捨てます。事後確率は、塗りつぶされた点のうち緑の点の割合です。</p>
+<h4>よくある落とし穴</h4>
+<p>P(E | H) は P(H | E) ではありません。不正取引の90%を検出し、正常な取引の5%を誤って検出するシステムがあり、不正は全取引の1%だとします。検出された取引は90%不正に思えますが、事前オッズ 1:99、LR = 0.90 ÷ 0.05 = 18、事後オッズ = 18/99 ≈ 0.18 なので p ≈ <b>15%</b>。低いベースレートは強い証拠さえ飲み込みます。スライダーを1%、90%、5%にして確かめましょう。</p>
+</div></details>
+<div class="tip"><b class="lbl">覚え方</b><ul>
+<li><b>変換して、掛けて、戻す。</b>20% → 1:4 → ×3 → 3:4 → 3/7 ≈ 43%。</li>
+<li><b>LR = 1 はニュースが何も語らないこと。</b>LRが1未満なら確率は下がります。</li>
+<li><b>独立な手がかりが2つ → 両方のLRを掛ける。</b></li>
+</ul></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

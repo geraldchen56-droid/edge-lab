@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html data-lang="ja" data-page="play/bridge.html" data-root="../../ja/" data-site="../../" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>金融と計量経済学 · Edge Lab</title>
+<meta content="金融と計量経済学：t統計量：腕前を証明するには何ハンド必要か。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bridge.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/bridge.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/bridge.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/bridge.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/bridge.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="金融と計量経済学 · Edge Lab" property="og:title"/>
+<meta content="金融と計量経済学：t統計量：腕前を証明するには何ハンド必要か。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/ja/play/bridge.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../ja/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="bridge" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="すべてのテーブルに戻る" class="back tb-btn" data-nav="" href="../index.html">← テーブル</a>
+<div class="gtitle"><small>スタディホール · 6/6</small><b>金融と計量経済学</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">遊び方</button><button aria-pressed="false" class="tb-btn" data-done="bridge">完了にする</button><button aria-pressed="false" class="tb-btn" id="sndBtn">サウンド オフ</button><button class="tb-btn" hidden="" id="fsBtn">全画面</button><label class="langsel"><span class="sr">言語</span><select aria-label="言語" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">デスク · エッジか運か？</div>
+<div class="row"><label for="brM">1取引/1ハンドあたりのエッジ</label><input id="brM" step="0.01" type="number" value="0.05"/><label for="brS">1取引/1ハンドあたりのσ</label><input id="brS" step="0.1" type="number" value="1"/><label for="brN">回数 n</label><input id="brN" max="5" min="1" step="0.05" type="range" value="3"/><span class="stat" id="brNv">1,000</span></div>
+<div class="stats" id="brStats"></div>
+<div class="out" id="brOut"></div>
+</div>
+<nav aria-label="他のテーブル" class="pager"><a data-nav="" href="kelly.html">← ケリー基準のベットサイズ</a><a class="lob" data-nav="" href="../index.html">すべてのテーブル</a><span></span></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>ブリーフィング · スタディホール</small><h2 id="tutTitle">金融と計量経済学</h2></div>
+<div class="tut-b"><p>ここに寄り道は一つもありません。ゲームで使った道具はどれも、金融経済学と計量経済学で名前を変えて再登場します。</p>
+<div class="tbl"><table>
+<thead><tr><th>ここでは</th><th>金融では</th><th>計量経済学では</th></tr></thead>
+<tbody>
+<tr><td>期待値</td><td>期待リターン、リスク中立評価（オプション価格 = 割り引いた期待利得）</td><td>母平均、条件付き期待値 E[Y|X]、回帰の対象</td></tr>
+<tr><td>分散、σ√n</td><td>ボラティリティ、ポートフォリオのリスク、分散投資</td><td>標準誤差は√nで縮む。サンプルサイズが重要な理由</td></tr>
+<tr><td>線形性</td><td>ポートフォリオのリターン = 各資産リターンの加重和</td><td>OLS：Y = β₀ + β₁X + ε、パラメータについて線形</td></tr>
+<tr><td>条件付き期待値の更新</td><td>価格はニュースに反応する。効率的市場仮説</td><td>コントロール変数で条件付ける。しないと欠落変数バイアス</td></tr>
+<tr><td>オッズ形式のベイズ</td><td>予測の更新、信用デフォルトモデル</td><td>ベイズ推定、ロジスティック回帰（対数オッズは線形）</td></tr>
+<tr><td>ケリー基準のサイズ</td><td>ポジションサイズ、レバレッジ、シャープレシオ</td><td>期待対数効用の最大化。幾何平均と算術平均</td></tr>
+<tr><td>逆選択</td><td>ビッド・アスク・スプレッドの理論（Glosten–Milgrom、Kyle）</td><td>セレクションバイアス、内生性</td></tr>
+<tr><td>キャリブレーションされた区間</td><td>バリュー・アット・リスク、予測の信頼度</td><td>信頼区間と仮説検定</td></tr>
+<tr><td>モンテカルロでのエクイティ</td><td>モンテカルロによるオプション評価</td><td>ブートストラップ、シミュレーションに基づく推論</td></tr>
+</tbody></table></div>
+<p>最も重要な橋渡しは統計的有意性です。あなたの戦略やポーカーの勝率は本物のエッジか、運か。答えはt統計量、計量経済学の中心となる検定統計量です。</p>
+<div class="formula">t =（1取引あたりの平均エッジ）× √n ÷ σ P(n回後に利益) ≈ Φ(t)</div>
+<details class="deep"><summary>仕組み：t = m · √n ÷ σ の読み方</summary><div class="deep-body">
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>m</td><td>1取引または1ハンドあたりの平均エッジ：1回の繰り返しの期待値。</td></tr>
+<tr><td>σ</td><td>1取引の結果の標準偏差：1回ごとのノイズの大きさ。</td></tr>
+<tr><td>n</td><td>これまでの取引数またはハンド数。</td></tr>
+<tr><td>m · n</td><td>期待される総利益。nに比例して増えます。</td></tr>
+<tr><td>σ · √n</td><td>総利益のばらつき。√nルールにより、よりゆっくり増えます。</td></tr>
+<tr><td>t</td><td>シグナル ÷ ノイズ = (m·n) ÷ (σ·√n) = m·√n ÷ σ。結果がゼロから標準偏差いくつ分離れているかを数えます。</td></tr>
+<tr><td>Φ(t)</td><td>正規分布の累積確率：釣り鐘型の変数がt以下になる確率。ここではn回の取引後にプラスである確率。</td></tr>
+<tr><td>1.96</td><td>運だけの結果のうち5%しかこれほど良く見えないときのt。これを超えると、計量経済学者はエッジを「統計的に有意」と呼びます。</td></tr>
+</tbody></table></div>
+</div></details>
+<h3 style="margin-top:28px;font-family:var(--f-display);font-size:20px">読書ガイド</h3>
+<div class="tbl"><table>
+<thead><tr><th>段階</th><th>教材</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>今</td><td>Blitzstein &amp; Hwang『<i>Introduction to Probability</i>』（ハーバード Stat 110、無料講義）</td><td>ここのすべてのゲームの背後にある確率論を、直感的に学べる</td></tr>
+<tr><td>今</td><td>Zhou『<i>A Practical Guide to Quantitative Finance Interviews</i>』、Crack『<i>Heard on the Street</i>』</td><td>定番の面接問題集</td></tr>
+<tr><td>今</td><td>Mosteller『<i>Fifty Challenging Problems in Probability</i>』</td><td>短くて古典的な期待値パズル</td></tr>
+<tr><td>1年目</td><td>Wooldridge『<i>Introductory Econometrics</i>』</td><td>回帰、標準誤差、因果関係。計量経済学副専攻の中核</td></tr>
+<tr><td>1〜2年目</td><td>Hull『<i>Options, Futures and Other Derivatives</i>』、Natenberg『<i>Option Volatility and Pricing</i>』</td><td>トレーダーが実際にどう値付けしヘッジするか</td></tr>
+<tr><td>2年目以降</td><td>Harris『<i>Trading and Exchanges</i>』</td><td>マーケット・マイクロストラクチャー：スプレッドはなぜ存在し、誰と取引しているのか</td></tr>
+</tbody></table></div></div>
+<div class="tut-f"><span class="hint"><b>遊び方</b>からいつでも再表示できます。</span><button autofocus="" class="chip-btn" id="tutGo">配ってくれ</button></div>
+</div>
+</dialog>
+<script src="../../i18n/ja.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>

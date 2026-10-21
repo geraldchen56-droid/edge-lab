@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html data-lang="zh" data-page="play/linear.html" data-root="../../zh/" data-site="../../" lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>线性与离散度 · Edge Lab</title>
+<meta content="线性与离散度：为什么风险按 n 的平方根增长。" name="description"/>
+<meta content="#050a08" name="theme-color"/>
+<link href="https://edgelab-games.vercel.app/zh/play/linear.html" rel="canonical"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="en" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/zh/play/linear.html" hreflang="zh-Hans" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/ja/play/linear.html" hreflang="ja" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/es/play/linear.html" hreflang="es" rel="alternate"/>
+<link href="https://edgelab-games.vercel.app/play/linear.html" hreflang="x-default" rel="alternate"/>
+<meta content="website" property="og:type"/>
+<meta content="Edge Lab" property="og:site_name"/>
+<meta content="线性与离散度 · Edge Lab" property="og:title"/>
+<meta content="线性与离散度：为什么风险按 n 的平方根增长。" property="og:description"/>
+<meta content="https://edgelab-games.vercel.app/zh/play/linear.html" property="og:url"/>
+<meta content="https://edgelab-games.vercel.app/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../../zh/manifest.webmanifest" rel="manifest"/>
+<link href="../../icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="../../icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Edge Lab" name="apple-mobile-web-app-title"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
+</head>
+<body class="game-page" data-game="linear" data-scene3d="bell">
+<canvas aria-hidden="true" id="stage"></canvas>
+<div aria-hidden="true" class="veil veil-game"></div>
+<div aria-hidden="true" class="curtain in"></div>
+<header class="topbar">
+<a aria-label="返回全部牌桌" class="back tb-btn" data-nav="" href="../index.html">← 牌桌</a>
+<div class="gtitle"><small>自习室 · 2/6</small><b>线性与离散度</b></div>
+<div class="tb-r"><button aria-haspopup="dialog" class="tb-btn gold" id="tutBtn">玩法说明</button><button aria-pressed="false" class="tb-btn" data-done="linear">标记完成</button><button aria-pressed="false" class="tb-btn" id="sndBtn">声音关</button><button class="tb-btn" hidden="" id="fsBtn">全屏</button><label class="langsel"><span class="sr">语言</span><select aria-label="语言" id="langSel"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="es">ES</option></select></label></div>
+</header>
+<main class="gstage">
+<div class="game" id="game">
+<div class="desk">
+<div class="desk-h">操作台 · 掷 n 颗骰子 4,000 次</div>
+<div class="row"><label for="ldN">骰子数 n</label><input id="ldN" max="12" min="1" type="range" value="2"/><span class="stat" id="ldNv">2</span><button class="go" id="ldRoll">掷骰</button></div>
+<canvas height="230" id="ldCanvas" width="760"></canvas>
+<div class="stats" id="ldStats" style="margin-top:10px"></div>
+</div>
+<nav aria-label="更多牌桌" class="pager"><a data-nav="" href="ev.html">← 期望值</a><a class="lob" data-nav="" href="../index.html">全部牌桌</a><a data-nav="" href="stopping.html">停还是继续 →</a></nav>
+</div>
+</main>
+<dialog aria-labelledby="tutTitle" class="tut" id="tut">
+<div class="tut-in">
+<div class="tut-h"><small>简报 · 自习室</small><h2 id="tutTitle">线性与离散度</h2><div class="tags"><span class="tag">用于：骰子做市、交易游戏、卡牌游戏</span></div></div>
+<div class="tut-b"><p>和的期望值等于期望值的和。即使各部分相互依赖也成立，所以给两颗骰子定价时，你永远不必列出 36 种结果。</p>
+<div class="formula">E[X + Y] = E[X] + E[Y]</div>
+<p>只有各部分独立时，方差才能相加。所以 σ 按部分数量的<i>平方根</i>增长：十颗骰子的期望是一颗的十倍，但离散度只有约 3.2 倍。这就是为什么和的分布看起来像钟形曲线，也是为什么你的报价宽度应该比公允价值增长得慢。</p>
+<div class="formula">σ(n 个独立量之和) = σ₁ · √n</div>
+<details class="deep"><summary>原理：为什么期望总能相加，而离散度不能</summary><div class="deep-body">
+<h4>理解 E[X + Y] = E[X] + E[Y]</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>E[ · ]</td><td>括号里的东西的“期望值”。</td></tr>
+<tr><td>X, Y</td><td>两个随机量，比如第 1 颗和第 2 颗骰子。</td></tr>
+<tr><td>X + Y</td><td>一个新的随机量：每次掷骰的两者之和。</td></tr>
+</tbody></table></div>
+<p><b>为什么它总是成立。</b>平均数就是“全部加起来再除”，加的顺序无关紧要。掷两颗骰子 600 次，所有和的总数等于第 1 颗那一列的总数加第 2 颗那一列的总数。依赖关系改变的是<i>哪些</i>值出现在同一行，而不是每一列加起来是多少。</p>
+<h4>理解 Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)</h4>
+<div class="tbl"><table class="sym"><tbody>
+<tr><td>Cov(X, Y)</td><td><b>协方差</b>：X 和 Y 是倾向于同时偏高（正），朝相反方向变动（负），还是互不相干（零）？它是 (X − μₓ)(Y − μᵧ) 的平均值。</td></tr>
+<tr><td>独立</td><td>知道一个对另一个毫无信息。此时 Cov = 0，方差直接相加。</td></tr>
+</tbody></table></div>
+<div class="tbl"><table><thead><tr><th>设定</th><th>关系</th><th class="n">方差</th><th class="n">σ</th></tr></thead><tbody>
+<tr><td>两颗不同的骰子，X + Y</td><td>独立，Cov = 0</td><td class="n">2.92 + 2.92 = 5.83</td><td class="n">2.42</td></tr>
+<tr><td>同一颗骰子算两次，X + X</td><td>完全同向</td><td class="n">4 × 2.92 = 11.67</td><td class="n">3.42</td></tr>
+<tr><td>X + (7 − X)</td><td>完全反向</td><td class="n">0</td><td class="n">0</td></tr>
+</tbody></table></div>
+<p>最后一行是<b>对冲</b>：两个有风险的头寸，误差恰好抵消。三种设定的期望值都是 7，只有离散度不同。</p>
+<h4>√n 从哪里来</h4>
+<p>把 n 个独立的复制品相加，每个方差为 σ₁²。方差相加得 n·σ₁²，所以 σ = √(n·σ₁²) = σ₁·√n。十颗骰子：1.71 × √10 ≈ 5.40，而期望值是 35。在金融里，这就是分散投资有效的原因：持有许多并非完全相关的资产，预期收益的增长快于风险的增长。</p>
+</div></details>
+<div class="tip"><b class="lbl">速记</b><ul>
+<li><b>求和 → 期望相加。</b>n 颗骰子 = 3.5n。n 张不放回的牌 = 7n。</li>
+<li><b>离散度 → √n。</b>n 颗骰子 σ ≈ 1.71√n。大约 95% 的结果落在 2σ 以内。</li>
+<li><b>已知部分 → 直接代入。</b>一颗骰子是 5：两颗骰子的公允价值是 5 + 3.5 = 8.5。</li>
+<li><b>不放回时：</b>未知牌的平均值是<i>剩余</i>牌堆的平均值，而不是 7。</li>
+</ul></div></div>
+<div class="tut-f"><span class="hint">随时点<b>玩法说明</b>重新打开。</span><button autofocus="" class="chip-btn" id="tutGo">发牌吧</button></div>
+</div>
+</dialog>
+<script src="../../i18n/zh.js"></script>
+<script src="../../i18n.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+<script src="../../auth.js"></script>
+<script src="../../app.js"></script>
+<script src="../../scene.js"></script>
+<script src="../../shell.js"></script>
+</body>
+</html>
