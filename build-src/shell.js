@@ -68,7 +68,7 @@ if(LANG==="en"&&!store.get("edgelab-lang")){
     b.querySelector("button").addEventListener("click",()=>{store.set("edgelab-lang","en");b.remove()});document.body.appendChild(b)}}
 
 /* ---------- installable app ---------- */
-if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&!/claude\.ai|claudeusercontent/.test(location.hostname)){
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&window.self===window.top){
   addEventListener("load",()=>{navigator.serviceWorker.register(SITE+"sw.js").catch(()=>{})})}
 const inst=$("installBtn");let deferred=null;
 const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;

@@ -59,7 +59,7 @@ python3 build.py           # regenerates every page and language
 
 ## Credits
 
-Edge Lab was conceived, designed and built by **Gerald Chen** ([@geraldchen56-droid](https://github.com/geraldchen56-droid)): the idea, the games, the code and the deployment. Claude (Anthropic) was used as an editing and coding assistant along the way.
+Edge Lab was conceived, designed and built by **Gerald Chen** ([@geraldchen56-droid](https://github.com/geraldchen56-droid)): the idea, the games, the code and the deployment.
 
 ## Run locally
 
